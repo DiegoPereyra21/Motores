@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{391A1136-B46F-4E48-81B0-6223226F0306}" SchemaVersion="133">
+	<Containers>
+		<WorkUnit Name="Default Work Unit" ID="{391A1136-B46F-4E48-81B0-6223226F0306}" PersistMode="Standalone">
+			<ChildrenList>
+				<Folder Name="Tracks" ID="{26F0BBE4-8B5F-4176-88CF-804D848476B5}" ShortID="198461074">
+					<ChildrenList>
+						<Sound Name="freesound_community-music-box-69223" ID="{9307BB10-C45E-4564-898C-232272829FA3}" ShortID="549074485">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{006238EA-47C7-493B-A533-76C692DB3DB6}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Main Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{9A4AB6A9-8B8C-4A69-A84A-0492BF27DB87}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="freesound_community-music-box-69223" ID="{5C8F8A8A-54AA-4F33-931C-2C46D691BDFB}">
+									<Language>SFX</Language>
+									<AudioFile>freesound_community-music-box-69223.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="675047386"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="freesound_community-music-box-69223" ID="{5C8F8A8A-54AA-4F33-931C-2C46D691BDFB}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</Folder>
+			</ChildrenList>
+		</WorkUnit>
+	</Containers>
+</WwiseDocument>

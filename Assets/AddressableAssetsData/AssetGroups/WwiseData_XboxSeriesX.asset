@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: WwiseData_XboxSeriesX
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: WwiseData_XboxSeriesX
+  m_GUID: 697753063f55e304ba994b65cf159fe0
+  m_SerializeEntries:
+  - m_GUID: 08b85c6bd338f55458134e540340b81d
+    m_Address: Assets/WwiseData/Bank/XboxSeriesX/Event/Stop_Test.bnk
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3be84432bd0da344c9c5d9d9be9195ed
+    m_Address: Assets/WwiseData/Bank/XboxSeriesX/Event/Play_Test.bnk
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 68b7915f4d27dce4bb3e0215b55a89cc
+    m_Address: Assets/WwiseData/Bank/XboxSeriesX/Media/675047386.wem
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 3ebacbe5c6b1dfc4caa68d1917804e17, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 481a821d83bac044f8aa50b21535999b, type: 2}
