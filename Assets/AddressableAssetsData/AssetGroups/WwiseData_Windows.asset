@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: WwiseData_Windows
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: WwiseData_Windows
+  m_GUID: d818359e4b6c5a8449e985cb403e28f1
+  m_SerializeEntries:
+  - m_GUID: 49627e944bff2fe4b98f7aa84f442cdd
+    m_Address: Assets/WwiseData/Bank/Windows/Event/Stop_Test.bnk
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 83b57a32fcfa57045a26e0e5a2c840df
+    m_Address: Assets/WwiseData/Bank/Windows/Media/675047386.wem
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a17f154f0ff8bc44eb4bfa536ed7fa8e
+    m_Address: Assets/WwiseData/Bank/Windows/Event/Play_Test.bnk
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 3ebacbe5c6b1dfc4caa68d1917804e17, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: ab582536e8bb8b84badde67f1370e573, type: 2}

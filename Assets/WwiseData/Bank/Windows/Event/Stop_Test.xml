@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="16" SoundBankVersion="172">
+	<SoundBanks>
+		<SoundBank Id="2051061508" Type="Event" GUID="{00FEC972-0F59-4B29-8D63-D56696159BBE}" Language="SFX" Hash="{2238C13A-9ECA-AC80-11E2-D12BF8D6456E}">
+			<ObjectPath>Stop_Test</ObjectPath>
+			<ShortName>Stop_Test</ShortName>
+			<Path>Event/Stop_Test.bnk</Path>
+			<Events>
+				<Event Id="2051061508" Name="Stop_Test" ObjectPath="\Events\Default Work Unit\Stop_Test" GUID="{00FEC972-0F59-4B29-8D63-D56696159BBE}" MaxAttenuation="0" DurationType="OneShot" DurationMin="0" DurationMax="0"/>
+			</Events>
+		</SoundBank>
+	</SoundBanks>
+	<FileHash>{2334937F-C477-E925-2DC1-415859EE9BEE}</FileHash>
+</SoundBanksInfo>

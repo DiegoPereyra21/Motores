@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: WwiseData_XboxOne
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: WwiseData_XboxOne
+  m_GUID: 663bf63ad3d0b1842b93bbd653ea39b1
+  m_SerializeEntries:
+  - m_GUID: 2250098b561b74243b849569d91226fe
+    m_Address: Assets/WwiseData/Bank/XboxOne/Media/675047386.wem
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 257a9dac0f074b34cb5ffd0e45d0bf32
+    m_Address: Assets/WwiseData/Bank/XboxOne/Event/Stop_Test.bnk
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a803df7b6d3ea334eada93ab981cee8e
+    m_Address: Assets/WwiseData/Bank/XboxOne/Event/Play_Test.bnk
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 3ebacbe5c6b1dfc4caa68d1917804e17, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 4bd1a0e2fdf6fb24ca11acdd7ca98ebc, type: 2}

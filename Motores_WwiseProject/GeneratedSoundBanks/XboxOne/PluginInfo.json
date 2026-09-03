@@ -1,0 +1,19 @@
+{
+ "PluginInfo": {
+  "Platform": "XboxOne",
+  "BasePlatform": "XboxOne",
+  "PluginLibs": [
+   {
+    "LibName": "System",
+    "LibId": "11403271",
+    "Type": "AudioDevice"
+   },
+   {
+    "LibName": "No Output",
+    "LibId": "11862023",
+    "Type": "AudioDevice"
+   }
+  ],
+  "FileHash": "{16E64944-4068-F122-D908-DDC8110AABF1}"
+ }
+}

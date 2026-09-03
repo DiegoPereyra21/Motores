@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{4C8760C9-F02B-490E-9CE4-5F8D20176F32}" SchemaVersion="133">
+	<Events>
+		<WorkUnit Name="Default Work Unit" ID="{4C8760C9-F02B-490E-9CE4-5F8D20176F32}" PersistMode="Standalone">
+			<ChildrenList>
+				<Event Name="Play_Test" ID="{A7716F8A-4AD4-4B35-917C-5AEC68ACEE89}">
+					<ChildrenList>
+						<Action Name="" ID="{CCB72864-0C0B-4BBD-BB1C-3F659E41D57C}" ShortID="510211874">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="freesound_community-music-box-69223" ID="{9307BB10-C45E-4564-898C-232272829FA3}" WorkUnitID="{391A1136-B46F-4E48-81B0-6223226F0306}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Stop_Test" ID="{00FEC972-0F59-4B29-8D63-D56696159BBE}">
+					<ChildrenList>
+						<Action Name="" ID="{72684006-9F58-41F5-B0EF-5F877CF4999A}" ShortID="76516984">
+							<PropertyList>
+								<Property Name="ActionType" Type="int16" Value="2"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="freesound_community-music-box-69223" ID="{9307BB10-C45E-4564-898C-232272829FA3}" WorkUnitID="{391A1136-B46F-4E48-81B0-6223226F0306}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

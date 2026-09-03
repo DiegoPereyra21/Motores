@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectInfo>
+	<Project Name="Motores_WwiseProject" GUID="{15B254C4-0D68-4E42-BFD3-B01CA3243248}" Generator="2025.1.10.9233"/>
+	<CacheRoot>../../../../Motores_WwiseProject/.cache</CacheRoot>
+	<Platforms>
+		<Platform Name="Mac" GUID="{5772B401-6C78-4D13-9E10-03315BD728B0}" BasePlatform="Mac" BasePlatformGUID="{9C6217D5-DD11-4795-87C1-6CE02853C540}" Path="../../../../Motores_WwiseProject/GeneratedSoundBanks/Mac"/>
+		<Platform Name="Web" GUID="{3AC1194E-8AF9-440E-8A43-E8067A731474}" BasePlatform="Web" BasePlatformGUID="{639AD233-23F2-4C0F-9127-79F44C15E1DA}" Path="../../../../Motores_WwiseProject/GeneratedSoundBanks/Web"/>
+		<Platform Name="Windows" GUID="{90A0C364-B2AB-42D4-BD95-A369C16F19D0}" BasePlatform="Windows" BasePlatformGUID="{6E0CB257-C6C8-4C5C-8366-2740DFC441EB}" Path="../../../../Motores_WwiseProject/GeneratedSoundBanks/Windows"/>
+		<Platform Name="XboxOne" GUID="{12E9A86F-41F1-4728-8A4B-8F4595C00DBB}" BasePlatform="XboxOne" BasePlatformGUID="{B131584B-9961-4BB5-9C58-A3E9ABFFBBF6}" Path="../../../../Motores_WwiseProject/GeneratedSoundBanks/XboxOne"/>
+		<Platform Name="XboxSeriesX" GUID="{79A2A1D5-E441-465D-9D02-A92875DD4C00}" BasePlatform="XboxSeriesX" BasePlatformGUID="{26352FC0-7716-4F97-8DAF-3665EC2BB501}" Path="../../../../Motores_WwiseProject/GeneratedSoundBanks/XboxSeriesX"/>
+	</Platforms>
+	<Languages>
+		<Language Name="English(US)" Id="684519430" GUID="{35F58D41-EF76-46F9-B518-DC9DB0ED8DE5}" Default="true" UseAsStandIn="true"/>
+	</Languages>
+	<FileHash>{7BD5EA38-ECD4-6076-7AFF-6FBABF352B22}</FileHash>
+</ProjectInfo>
