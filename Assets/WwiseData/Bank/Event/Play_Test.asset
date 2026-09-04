@@ -114,11 +114,11 @@ MonoBehaviour:
           m_EditorAssetChanged: 0
           id: 675047386
   currentPlatformAssets:
-    WwisePlatform: Web
+    WwisePlatform: Windows
     LocalizedBankKeys:
     - SFX
     LocalizedBanksValues:
-    - m_AssetGUID: dd3cb3aabf2e9864a9b2139458f15db2
+    - m_AssetGUID: a17f154f0ff8bc44eb4bfa536ed7fa8e
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -128,7 +128,7 @@ MonoBehaviour:
     LocalizedStreamingMediaValues:
       localizedMediaList:
       - media:
-        - m_AssetGUID: d4cbac77f67ca0b4496e8c1bf63d9bc2
+        - m_AssetGUID: 83b57a32fcfa57045a26e0e5a2c840df
           m_SubObjectName: 
           m_SubObjectType: 
           m_SubObjectGUID: 
