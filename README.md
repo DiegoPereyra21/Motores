@@ -12,6 +12,7 @@
     <tr>
       <th>Categoría</th>
       <th>Recurso</th>
+      <th>Recurso</th>
     </tr>
   </thead>
   <tbody>
