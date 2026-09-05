@@ -18,6 +18,7 @@
     <tr>
       <td><b>Creación de Terreno</b></td>
       <td><a href="https://www.youtube.com/playlist?list=PLS7jk2aVN8G4gjIPTeyVhK0HYEbVY7xSa">Videos sobre crear terreno</a></td>
+      <td><a href="https://www.youtube.com/watch?v=vaUpzY9rA5o">Video sobre esculpir terreno</a></td>
     </tr>
   </tbody>
 </table>
