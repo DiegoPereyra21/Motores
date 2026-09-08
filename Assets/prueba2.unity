@@ -312,7 +312,7 @@ Terrain:
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 404088a23c02ddd459dd4195daec83e6, type: 2}
+  m_MaterialTemplate: {fileID: -876546973899608171, guid: 35dfdc72beb564443a25c01748f68bac, type: 3}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -390,7 +390,7 @@ Terrain:
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 404088a23c02ddd459dd4195daec83e6, type: 2}
+  m_MaterialTemplate: {fileID: -876546973899608171, guid: def488a52add6574d9f295a507032cb8, type: 3}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -517,7 +517,7 @@ Terrain:
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 404088a23c02ddd459dd4195daec83e6, type: 2}
+  m_MaterialTemplate: {fileID: -876546973899608171, guid: def488a52add6574d9f295a507032cb8, type: 3}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -696,7 +696,7 @@ Terrain:
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 404088a23c02ddd459dd4195daec83e6, type: 2}
+  m_MaterialTemplate: {fileID: -876546973899608171, guid: 35dfdc72beb564443a25c01748f68bac, type: 3}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -1137,7 +1137,7 @@ Terrain:
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 404088a23c02ddd459dd4195daec83e6, type: 2}
+  m_MaterialTemplate: {fileID: -876546973899608171, guid: 35dfdc72beb564443a25c01748f68bac, type: 3}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -1206,7 +1206,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 127
   m_IsActive: 1
 --- !u!4 &1383105726
 Transform:
@@ -1270,7 +1270,7 @@ Terrain:
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 404088a23c02ddd459dd4195daec83e6, type: 2}
+  m_MaterialTemplate: {fileID: -876546973899608171, guid: 35dfdc72beb564443a25c01748f68bac, type: 3}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -1363,7 +1363,7 @@ Terrain:
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 404088a23c02ddd459dd4195daec83e6, type: 2}
+  m_MaterialTemplate: {fileID: -876546973899608171, guid: 35dfdc72beb564443a25c01748f68bac, type: 3}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -1696,7 +1696,7 @@ Terrain:
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 404088a23c02ddd459dd4195daec83e6, type: 2}
+  m_MaterialTemplate: {fileID: -876546973899608171, guid: 35dfdc72beb564443a25c01748f68bac, type: 3}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -1789,7 +1789,7 @@ Terrain:
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
   m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 2100000, guid: 404088a23c02ddd459dd4195daec83e6, type: 2}
+  m_MaterialTemplate: {fileID: -876546973899608171, guid: 35dfdc72beb564443a25c01748f68bac, type: 3}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
