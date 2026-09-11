@@ -969,6 +969,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5953249167122860971, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1051408189}
+    - targetCorrespondingSourceObject: {fileID: 5953249167122860971, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1051408190}
     - targetCorrespondingSourceObject: {fileID: 469405157819441632, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
       insertIndex: -1
       addedObject: {fileID: 583753338}
@@ -998,7 +1001,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &992474041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1143,7 +1146,7 @@ Transform:
   m_GameObject: {fileID: 992474040}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.67956966, z: 0, w: 0.73361105}
-  m_LocalPosition: {x: 316.5447, y: 11.72, z: 113.73591}
+  m_LocalPosition: {x: 316.5447, y: 11.45, z: 113.73591}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1205,6 +1208,20 @@ MonoBehaviour:
   onDied:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1051408190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051408185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c8da92a837fe6a45baa12b738a0d57b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDeath
+  playerController: {fileID: 0}
+  cameraPivot: {fileID: 0}
 --- !u!1 &1231172438
 GameObject:
   m_ObjectHideFlags: 0
