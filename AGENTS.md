@@ -2,7 +2,7 @@
 - Project name: Motores
 - Unity version: Unity 6000.3.5f2
 - Active game object:
-  - Name: ZSpawn1
-  - Tag: Untagged
+  - Name: Main Camera
+  - Tag: MainCamera
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
