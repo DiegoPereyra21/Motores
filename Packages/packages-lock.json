@@ -9,6 +9,12 @@
       },
       "hash": "84391faf9596b30a090417ed43953d36b557e5f3"
     },
+    "com.merry-yellow.code-assist": {
+      "version": "file:com.merry-yellow.code-assist",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.addressables": {
       "version": "2.8.0",
       "depth": 1,
