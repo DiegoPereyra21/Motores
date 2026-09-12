@@ -6,13 +6,15 @@ public class ZombieAttack : MonoBehaviour
     //config de ataque
     [SerializeField] private float damage = 10f; //daño por golpe
     [SerializeField] private float attackCooldown = 1.2f; //segundos entre golpes
-    [SerializeField] private float attackWindup = 0.5f; //tiempo que "tarda" en golpear, simula la animacion
+    [SerializeField] private float attackWindup = 0.5f; //tiempo que "tarda" en golpear hasta que tengamos animaciones (para que el player pueda esquivar)
+
+    //privadas
     private ZombieController zombieController;
     private float nextAttackTime; //momento en que puede iniciar un nuevo golpe
     private bool isWindingUp; //true mientras esta "preparando" el golpe
     private float windupEndTime; //momento (Time.time) en que el golpe conecta
 
-    public bool IsWindingUp => isWindingUp; //para animaciones, saber si esta en windup
+    public bool IsWindingUp => isWindingUp; //para la futura animacion
 
     private void Awake()
     {
@@ -21,6 +23,9 @@ public class ZombieAttack : MonoBehaviour
 
     private void Update()
     {
+        //si no hay player o ya murio, no ataca ni loguea nada mas
+        if (zombieController.Player == null || zombieController.IsPlayerDead) return;
+
         //si el player se aleja durante el windup, se cancela el golpe (no deberia pegar "a traves" de una esquivada)
         if (isWindingUp && !zombieController.InAttackRange)
         {
@@ -48,7 +53,7 @@ public class ZombieAttack : MonoBehaviour
     {
         isWindingUp = true;
         windupEndTime = Time.time + attackWindup;
-        //dejo animator.SetTrigger("Attack") cuando pongamos animaciones
+        //aca despues se puede disparar animator.SetTrigger("Attack") cuando tengan animaciones
     }
 
     private void CancelWindup()

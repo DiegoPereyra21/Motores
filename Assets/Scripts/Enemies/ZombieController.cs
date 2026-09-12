@@ -6,7 +6,7 @@ public class ZombieController : MonoBehaviour
     //movimiento
     [SerializeField] private float moveSpeed = 2.5f; //velocidad al perseguir
     [SerializeField] private float rotationSpeed = 8f; //que tan rapido gira hacia el player
-    [SerializeField] private float gravity = -15f; //misma logica que el playercontroller
+    [SerializeField] private float gravity = -15f; //misma logica que el player
 
     //referencias
     [SerializeField] private Transform player; //si se deja vacio, se busca solo por tag
@@ -17,11 +17,13 @@ public class ZombieController : MonoBehaviour
     //privadas
     private CharacterController controller;
     private float verticalVelocity;
+    private Health playerHealth; //referencia al Health del player, para saber si ya murio
 
-    //propiedades publicas, ZombieAttack usa de aca
+    //propiedades publicas para que ZombieAttack pueda leerlas sin duplicar logica
     public Transform Player => player;
     public bool InAttackRange =>
         player != null && Vector3.Distance(transform.position, player.position) <= attackRange;
+    public bool IsPlayerDead => playerHealth != null && playerHealth.IsDead; //true si el player ya murio
 
     private void Awake()
     {
@@ -30,7 +32,7 @@ public class ZombieController : MonoBehaviour
 
     private void Start()
     {
-        //busca por tag el player sino se asigno manualmente
+        //si no asignaron el player manualmente, lo busca por tag
         if (player == null)
         {
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -39,11 +41,15 @@ public class ZombieController : MonoBehaviour
             else
                 Debug.LogWarning($"{name}: no se encontro ningun GameObject con tag 'Player'. Asignalo manualmente en el inspector o revisa el tag del jugador.");
         }
+
+        //cachea el Health del player para poder chequear si ya murio
+        if (player != null)
+            playerHealth = player.GetComponent<Health>();
     }
 
     private void Update()
     {
-        if (player == null) return; 
+        if (player == null || IsPlayerDead) return; //sin player o ya muerto, no hay nada que perseguir
 
         //si ya esta en rango de ataque, deja de avanzar y solo aplica gravedad (ZombieAttack hace el resto)
         if (InAttackRange)
@@ -52,12 +58,12 @@ public class ZombieController : MonoBehaviour
             return;
         }
 
-        //direccion al player
+        //direccion hacia el player, ignorando diferencia de altura
         Vector3 direction = player.position - transform.position;
         direction.y = 0f;
         direction.Normalize();
 
-        //rotacion suave
+        //rotar suavemente hacia esa direccion
         if (direction != Vector3.zero)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
