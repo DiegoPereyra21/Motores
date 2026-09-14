@@ -12,11 +12,10 @@ GameObject:
   - component: {fileID: 4238144232542185884}
   - component: {fileID: 202420375821585163}
   - component: {fileID: 6450627014329842034}
-  - component: {fileID: 5493818637624557998}
   - component: {fileID: 8369253516307028196}
   - component: {fileID: 4108038495229025409}
-  - component: {fileID: 2828696614278634721}
-  - component: {fileID: 5420843484840725535}
+  - component: {fileID: 834852195632275447}
+  - component: {fileID: 8733183106101591096}
   m_Layer: 0
   m_Name: Zombie1
   m_TagString: Enemy
@@ -119,31 +118,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!143 &5493818637624557998
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 274235104033748673}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8369253516307028196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,7 +150,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDeath
   destroyDelay: 2
---- !u!114 &2828696614278634721
+--- !u!195 &834852195632275447
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274235104033748673}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 1.2
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 1
+--- !u!114 &8733183106101591096
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -185,25 +181,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 274235104033748673}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18e9386af23b97944b1754b744095a90, type: 3}
+  m_Script: {fileID: 11500000, guid: d719c79a2f52318489e89f6068d34402, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ZombieController
+  m_EditorClassIdentifier: Assembly-CSharp::ZombieControllerNavMesh
   moveSpeed: 2.5
   rotationSpeed: 8
-  gravity: -15
   player: {fileID: 0}
   attackRange: 1.5
---- !u!114 &5420843484840725535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 274235104033748673}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 074d4a304d9a28144ba41e1aa3644587, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ZombieAttack
-  damage: 10
-  attackCooldown: 1.2
