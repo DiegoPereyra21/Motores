@@ -1,6 +1,6 @@
 using UnityEngine;
-
-[RequireComponent(typeof(ZombieController))]
+//me esta volviendo loco el sonido de wwise al probar el game
+[RequireComponent(typeof(ZombieControllerNavMesh))]//cambio a navmesh, la verdad tendria que haber reutilizado zombiecontroller, pero queria diferenciarlo porque eran muchos cambios
 public class ZombieAttack : MonoBehaviour
 {
     //config de ataque
@@ -9,7 +9,7 @@ public class ZombieAttack : MonoBehaviour
     [SerializeField] private float attackWindup = 0.5f; //tiempo que "tarda" en golpear hasta que tengamos animaciones (para que el player pueda esquivar)
 
     //privadas
-    private ZombieController zombieController;
+    private ZombieControllerNavMesh zombieController;
     private float nextAttackTime; //momento en que puede iniciar un nuevo golpe
     private bool isWindingUp; //true mientras esta "preparando" el golpe
     private float windupEndTime; //momento (Time.time) en que el golpe conecta
@@ -18,7 +18,7 @@ public class ZombieAttack : MonoBehaviour
 
     private void Awake()
     {
-        zombieController = GetComponent<ZombieController>();
+            zombieController = GetComponent<ZombieControllerNavMesh>();
     }
 
     private void Update()
