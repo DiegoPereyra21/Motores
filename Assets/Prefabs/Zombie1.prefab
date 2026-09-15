@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 834852195632275447}
   - component: {fileID: 8733183106101591096}
   - component: {fileID: 4867865377819102709}
+  - component: {fileID: 6749448733652791865}
   m_Layer: 0
   m_Name: Zombie1
   m_TagString: Enemy
@@ -150,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1e64c127d3bc4439dac247e5d68ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDeath
-  destroyDelay: 2
+  destroyDelay: 0
 --- !u!195 &834852195632275447
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -201,6 +202,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 074d4a304d9a28144ba41e1aa3644587, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZombieAttack
-  damage: 10
-  attackCooldown: 1.2
+  damage: 20
+  attackCooldown: 1
   attackWindup: 0.5
+--- !u!114 &6749448733652791865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274235104033748673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 886bf9609d21f794085b2664fed9f226, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageFlash
+  renderers:
+  - {fileID: 202420375821585163}
