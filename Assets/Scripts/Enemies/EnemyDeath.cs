@@ -5,7 +5,7 @@ using UnityEngine.AI;
 public class EnemyDeath : MonoBehaviour
 {
     //config muerte
-    [SerializeField] private float destroyDelay = 2f;//dependera de la animacion de muerte 
+    [SerializeField] private float destroyDelay = 2f;//dependera de la animacion de muerte(PONGO EN 0 PORQUE AL HACER TEST ES RARO, LUEGO CAMBIAR)
     //privadas
     private Health health;
     private Collider enemyCollider;

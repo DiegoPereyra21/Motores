@@ -23,6 +23,10 @@ public class PlayerController : MonoBehaviour
     private float currentSpeed;
     private float verticalVelocity;
     private float rotationVelocity;
+    //publicas
+    public bool MovementLocked { get; set; } //lo usa PlayerAttack para frenar al player mientras ataca
+
+
 
     private void Awake()
     {
@@ -41,8 +45,8 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        Vector2 input = moveAction.action.ReadValue<Vector2>();
-        bool isRunning = sprintAction.action.IsPressed();
+        Vector2 input = MovementLocked ? Vector2.zero : moveAction.action.ReadValue<Vector2>();
+        bool isRunning = !MovementLocked && sprintAction.action.IsPressed();
         //calc velocidad
         float targetSpeed = input == Vector2.zero ? 0f : (isRunning ? runSpeed : walkSpeed);
         currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, acceleration * Time.deltaTime);
