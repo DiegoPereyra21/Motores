@@ -80,6 +80,7 @@ public class DayNightCycle : MonoBehaviour
             }
 
             CurrentPhase = DayNightPhase.Day;
+            Debug.Log($"[DayNightCycle] Cambio de fase -> DIA (despues de la Noche {CurrentNight})"); //DEBUG TEMPORAL: confirma en consola que el cambio de fase realmente ocurre
             onDayStart.Invoke();
         }
         else
@@ -93,6 +94,7 @@ public class DayNightCycle : MonoBehaviour
     {
         CurrentNight++;
         CurrentPhase = DayNightPhase.Night;
+        Debug.Log($"[DayNightCycle] Cambio de fase -> NOCHE {CurrentNight}"); //DEBUG TEMPORAL: confirma en consola que el cambio de fase realmente ocurre
         onNightStart.Invoke();
     }
 
@@ -100,6 +102,7 @@ public class DayNightCycle : MonoBehaviour
     private void EndDemo()
     {
         demoEnded = true;
+        Debug.Log("[DayNightCycle] Demo terminada"); //DEBUG TEMPORAL
         onDemoEnd.Invoke();
     }
 }
