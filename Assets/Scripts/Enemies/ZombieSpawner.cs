@@ -1,7 +1,7 @@
 using UnityEngine;
 
-//Spawner de zombies para la noche, limpieza de zombies para el dia. Escucha eventos de DayNightCycle.cs.
-//Poner tag "Enemy" a los zombies (para deteccion de golpe del player y para la cuenta de zombies vivos).
+//Spawner de zombies para la noche. Escucha eventos de DayNightCycle.cs.
+//IMPORTANTE QUE LOS ZOMBIES TENGAN EL TAG DE ENEMY!!!
 
 public class ZombieSpawner : MonoBehaviour
 {
@@ -10,6 +10,7 @@ public class ZombieSpawner : MonoBehaviour
     [SerializeField] private Transform[] spawnPoints; //puntos posibles de aparicion
     [SerializeField] private float timeBetweenSpawns = 4f; //segundos entre spawns
     [SerializeField] private int maxZombiesAlive = 10; //limite de zombies vivos a la vez (podemos ampliarlo para que varie segun la oleada)
+    [SerializeField] private float initialSpawnDelay = 15f; //segundos de espera antes del primer spawn de cada noche. Al arrancar la Noche todavia se ve como atardecer (la rotacion del sol arranca donde termino el Dia anterior), asi que no tiene sentido que aparezcan zombies de una.
 
     [Header("Ciclo dia/noche")]
 
@@ -34,33 +35,23 @@ public class ZombieSpawner : MonoBehaviour
         dayNightCycle.onDemoEnd.RemoveListener(HandleDemoEnd);
     }
 
-    //se ejecuta al arrancar cada noche (Noche 1, 2 o 3): habilita el spawn y hace que el primer zombie aparezca de inmediato en vez de esperar timeBetweenSpawns.
+    //se ejecuta al arrancar cada noche (noche 1, 2 o 3): habilita el spawn, pero el primer zombie recien aparece despues de initialSpawnDelay (ver comentario en la variable).
     private void HandleNightStart()
     {
         nightActive = true;
-        nextSpawnTime = Time.time;
+        nextSpawnTime = Time.time + initialSpawnDelay;
     }
 
-    //apaga el spawn y limpia todos los zombies vivos de la escena. Se ejecuta al llegar el dia
+    //apaga el spawn al llegar el dia.
     private void HandleDayStart()
     {
         nightActive = false;
-        ClearAllZombies();
     }
 
-    //Esto apaga el spawn pero no limpia los zombies porque aca termina la demo.
+    //Spawn apagado
     private void HandleDemoEnd()
     {
         nightActive = false;
-    }
-
-    //Destruye gameobjects con tag "Enemy".
-    private void ClearAllZombies()
-    {
-        foreach (GameObject zombie in GameObject.FindGameObjectsWithTag("Enemy"))
-        {
-            Destroy(zombie);
-        }
     }
 
     private void Update()
