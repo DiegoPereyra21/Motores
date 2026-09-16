@@ -66,7 +66,8 @@ public class ZombieSpawner : MonoBehaviour
     private void Update()
     //condiciones de no spawn: no es de noche, no hay prefab o spawn points, o ya hay demasiados zombies vivos.
     {
-        if (!nightActive) return; 
+        if (!nightActive) return;
+        if (Time.time < nextSpawnTime) return; //con esto arregle que spawneara todos los zombies de golpe
         if (zombiePrefab == null || spawnPoints == null || spawnPoints.Length == 0) return; 
 
         //cuenta cuantos zombies hay vivos usando el tag Enemy
@@ -81,6 +82,7 @@ public class ZombieSpawner : MonoBehaviour
     {
         //elige un spawn point al azar e instancia el prefab ahi
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+        Debug.Log(Time.time);
         Instantiate(zombiePrefab, spawnPoint.position, spawnPoint.rotation);
     }
 }
