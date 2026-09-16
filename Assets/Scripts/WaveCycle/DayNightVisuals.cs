@@ -17,8 +17,13 @@ public class DayNightVisuals : MonoBehaviour
     [SerializeField] private Color nightColor = new Color(0.15f, 0.2f, 0.35f); //azulado tenue, luz de luna
     [SerializeField] private float nightIntensity = 0.05f; //intensidad muy baja, casi oscuridad total
 
+    //Angulo Y original de la luz como valor fijo
+    private float sunYAngle;
+
     private void OnEnable()
     {
+        sunYAngle = sunLight.transform.eulerAngles.y; //se guarda una unica vez, al activarse el script
+
         //suscriptor de los 3 eventos de DayNightCycle. LLama al OnEnable() antes del Start.
         dayNightCycle.onDayStart.AddListener(HandleDayStart);
         dayNightCycle.onNightStart.AddListener(HandleNightStart);
@@ -55,7 +60,7 @@ public class DayNightVisuals : MonoBehaviour
             ? Mathf.Lerp(daySunriseAngle, daySunsetAngle, progress01)
             : Mathf.Lerp(daySunsetAngle, daySunriseAngle + 360f, progress01);
 
-        Vector3 currentEuler = sunLight.transform.eulerAngles;
-        sunLight.transform.rotation = Quaternion.Euler(angle, currentEuler.y, 0f); //solo tocamos X, dejamos Y como esta
+        //usamos el angulo Y cacheado en Awake/OnEnable en vez de releerlo del transform (ver comentario en sunYAngle). Esto me hacia flickering en la luz del dia.
+        sunLight.transform.rotation = Quaternion.Euler(angle, sunYAngle, 0f);
     }
 }
