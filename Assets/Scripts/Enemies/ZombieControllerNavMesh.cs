@@ -11,13 +11,14 @@ public class ZombieControllerNavMesh : MonoBehaviour
     [SerializeField] private Transform player; //si me olvido de asignar se autoasigna 
     //ataque (lo lee ZombieAttack, asi no duplico logica)
     [SerializeField] private float attackRange = 1.5f;
+    [SerializeField] private float attackRangeBuffer = 0.3f; //margen extra para salir del rango de ataque. Sin esto, justo en el limite del attackRange el agente entraba y salia del estado "parado" frame a frame y terminaba empujando al player.
     //privadas
     private NavMeshAgent agent;
     private Health playerHealth; //para saber si ya murio
+    private bool inAttackRange; //estado, lo actualiza UpdateAttackRangeState() en vez de recalcularlo de una con un solo umbral
     //propiedades publicas para q zombie attack pueda leerlas y no duplicar cosas
     public Transform Player => player;
-    public bool InAttackRange =>
-        player != null && Vector3.Distance(transform.position, player.position) <= attackRange;
+    public bool InAttackRange => inAttackRange;
     public bool IsPlayerDead => playerHealth != null && playerHealth.IsDead; //verdadero si el player murio
 
     private void Awake()
@@ -53,12 +54,17 @@ public class ZombieControllerNavMesh : MonoBehaviour
         if (player == null || IsPlayerDead)
         {
             agent.isStopped = true;
+            agent.velocity = Vector3.zero;
             return;
         }
+
+        UpdateAttackRangeState();
+
         //frena el movimiento si esta en rango, y intenta golpear con zombieattack
-        if (InAttackRange)
+        if (inAttackRange)
         {
             agent.isStopped = true;
+            agent.velocity = Vector3.zero; //isStopped solo no frena instantaneo, el agent sigue desacelerando solo unos frames y eso era lo que empujaba al player
             RotateTowards(player.position - transform.position);
             return;
         }
@@ -68,6 +74,23 @@ public class ZombieControllerNavMesh : MonoBehaviour
         agent.SetDestination(player.position);
         //importante, para q mire hacia donde va, no hacia el player todo el rato
         RotateTowards(agent.desiredVelocity);
+    }
+
+    //actualiza inAttackRange con histeresis: entra en rango de ataque a attackRange, pero solo sale cuando supera attackRange + attackRangeBuffer.
+    private void UpdateAttackRangeState()
+    {
+        float distance = Vector3.Distance(transform.position, player.position);
+
+        if (inAttackRange)
+        {
+            if (distance > attackRange + attackRangeBuffer)
+                inAttackRange = false;
+        }
+        else
+        {
+            if (distance <= attackRange)
+                inAttackRange = true;
+        }
     }
     private void RotateTowards(Vector3 direction)
     {
