@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 4867865377819102709}
   - component: {fileID: 6749448733652791865}
   - component: {fileID: 1613244549455465344}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Zombie1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74718df5518103e498ac00f929723698, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Lootable
-  lootTable: {fileID: 0}
+  lootTable: {fileID: 11400000, guid: 9d223c815f964544baf2f1c7a911ae69, type: 2}
   requireZombieDeath: 1
   onLooted:
     m_PersistentCalls:
