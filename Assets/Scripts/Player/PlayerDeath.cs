@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Health))]//aunque se sobreentienda q el player debe tener health, por las dudas
 public class PlayerDeath : MonoBehaviour
@@ -6,8 +7,11 @@ public class PlayerDeath : MonoBehaviour
     //referencias
     [SerializeField] private PlayerController playerController;
     [SerializeField] private CameraPivot cameraPivot;
-    [SerializeField] private GameObject playerVisual; //el modelo/geometria del player (ej. "Geometry"), se oculta al morir (esto es hasta que tengamos death animation)
-    [SerializeField] private GameObject gameOverUI; //texto/panel de "Has muerto", desactivado por defecto en la escena
+    [SerializeField] private GameObject playerVisual; //ESTA SOLUCION HASTA Q TENGAMOS ANIMACION DE MUERTE
+    [SerializeField] private GameObject gameOverUI;
+    //volver al menu
+    [SerializeField] private float secondsBeforeMainMenu = 3f; //cuanto se queda el panel antes de volver
+    private string mainMenuSceneName = "MainMenu"; //creo q nunca cambiara de nombre pero x las dudas
 
     private Health health;
 
@@ -33,7 +37,7 @@ public class PlayerDeath : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        //ocultar al player al morir
+        //ocultar al player al morir (LUEGO ANIMACION DE MUERTE)
         if (playerVisual != null)
             playerVisual.SetActive(false);
 
@@ -41,9 +45,19 @@ public class PlayerDeath : MonoBehaviour
         if (gameOverUI != null)
             gameOverUI.SetActive(true);
 
-        //pausa el juego: frena zombies, fisica y cualquier timer basado en Time.deltaTime/Time.time
+        //frena todo
         Time.timeScale = 0f;
 
-        Debug.Log("Player died");
+        //waitforsecondsrealtime ignora el timescale, por eso funciona con el juego pausado
+        StartCoroutine(GoToMainMenuAfterDelay());
+    }
+
+    private System.Collections.IEnumerator GoToMainMenuAfterDelay()
+    {
+        yield return new WaitForSecondsRealtime(secondsBeforeMainMenu);
+
+        //reactivo el timeScale antes de cargar, sino el menu tambien queda congelado
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(mainMenuSceneName);
     }
 }
