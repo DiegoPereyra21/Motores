@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab281e00936df7841bb54dfff01004e2, type: 3}
+  m_Name: AntisepticBandage
+  m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipe
+  name: Venda Desinfectante
+  result: {fileID: 11400000, guid: 681ad0ba5eb911945956c02ca15c380b, type: 2}
+  resultAmount: 1
+  ingredients:
+  - item: {fileID: 11400000, guid: f9c4170090c9dc34287e943ce1a0811a, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: 0d657cedf0e903a4bb4caa9017f5a069, type: 2}
+    amount: 2
+  description: +10 recuperacion de vida

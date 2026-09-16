@@ -41,9 +41,11 @@ public class Lootable : MonoBehaviour, IInteractable
         //si hay tabla de loot, se sortean los items
         if (lootTable != null)
         {
-            var drops = lootTable.RollLoot();
+            // check para el calculo de loot
+            var drops = requireZombieDeath
+                ? lootTable.RollRandomLoot()
+                : lootTable.RollGuaranteedLoot();
 
-            //agrego cada stack al inventario
             foreach (var stack in drops)
             {
                 inventory.AddItem(stack.item, stack.amount);

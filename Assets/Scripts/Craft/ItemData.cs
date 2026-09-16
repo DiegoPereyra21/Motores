@@ -6,4 +6,11 @@ public class ItemData : ScriptableObject
     public string itemId;
     public string itemName;
     public Sprite icon;
+
+    public ItemType type;
+}
+public enum ItemType
+{
+    Raw,
+    Crafted
 }
