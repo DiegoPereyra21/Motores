@@ -73,7 +73,7 @@ public class ZombieAttack : MonoBehaviour
         if (damageable != null)
         {
             damageable.TakeDamage(damage);
-            Debug.Log($"{name} conecto un golpe al jugador por {damage} de daño");
+            Debug.Log($"ZOMBIE HIZO {damage} DE DAÑO");
         }
     }
 }

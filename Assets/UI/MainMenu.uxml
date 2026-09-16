@@ -1,0 +1,7 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1; position: absolute; bottom: 0; right: 0; top: 0; left: 0; background-color: rgb(53, 46, 35);">
+        <ui:Label text="Zombie Cabin" name="Label" style="justify-content: center; align-items: stretch; color: rgb(229, 225, 225); font-size: 84px; -unity-font-style: bold; -unity-text-align: middle-center; top: 160px;"/>
+        <ui:Button text="Play" name="ButtonPlay" style="bottom: 441px; position: absolute; right: 800px; left: 800px; width: 300px; height: 83px; top: auto; -unity-text-align: middle-center; font-size: 66px; -unity-font-style: bold; justify-content: flex-start;"/>
+        <ui:Button text="Quit" name="ButtonQuit" style="bottom: 235px; position: absolute; right: 800px; left: 800px; width: 300px; height: 56px; top: auto; -unity-text-align: middle-center; font-size: 47px; -unity-font-style: bold;"/>
+    </ui:VisualElement>
+</ui:UXML>
