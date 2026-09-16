@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Player, Interact
 - Active game object:
-  - Name: Zombie1 (2)
-  - Tag: Enemy
-  - Layer: Interact
+  - Name: Player
+  - Tag: Player
+  - Layer: Player
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

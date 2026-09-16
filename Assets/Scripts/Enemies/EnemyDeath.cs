@@ -12,6 +12,7 @@ public class EnemyDeath : MonoBehaviour
     private Collider enemyCollider;
     private NavMeshAgent agent;//para frenarlo al morir luego de cachear su info
     private ZombieControllerNavMesh zombieController;//ia del zombie, se apaga al morir
+    private ZombieAttack zombieAttack;//ataque del zombie, se apaga al morir para q no siga pegando
 
     private void Awake()
     {
@@ -19,6 +20,7 @@ public class EnemyDeath : MonoBehaviour
         enemyCollider = GetComponent<Collider>();//ya tener referencia desde el comienzo
         agent = GetComponent<NavMeshAgent>();//cache del navmesh
         zombieController = GetComponent<ZombieControllerNavMesh>();//cache de la ia
+        zombieAttack = GetComponent<ZombieAttack>();//cache del ataque
 
     }
     private void OnEnable()
@@ -38,6 +40,12 @@ public class EnemyDeath : MonoBehaviour
         if (zombieController != null)
         {
             zombieController.enabled = false;
+        }
+
+        //apaga el ataque para q no siga pegando aunque el update quede corriendo un frame de mas
+        if (zombieAttack != null)
+        {
+            zombieAttack.enabled = false;
         }
 
         //apaga el agente al morir, sino bugs 
