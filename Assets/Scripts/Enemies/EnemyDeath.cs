@@ -31,6 +31,9 @@ public class EnemyDeath : MonoBehaviour
     }
     private void HandleDeath()//se llenara de ifs
     {
+        //saca el tag Enemy: ZombieSpawner cuenta zombies vivos con FindGameObjectsWithTag("Enemy"), y el cuerpo se queda en la escena para poder saquearlo. Sin esto el cadaver seguia contando como zombie vivo y trababa el spawn del resto.
+        gameObject.tag = "Untagged";
+
         //apaga la ia para q no siga persiguiendo/atacando
         if (zombieController != null)
         {
