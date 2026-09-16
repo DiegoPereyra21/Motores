@@ -2,13 +2,13 @@
 - Project name: Motores
 - Unity version: Unity 6000.3.5f2
 - Active scene:
-  - Name: MainMenu
+  - Name: SampleScene
   - Tags:
-    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, CinemachineTarget, Enemy
+    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, CinemachineTarget
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Player
 - Active game object:
-  - Name: UIDocument
-  - Tag: Untagged
-  - Layer: UI
+  - Name: Player
+  - Tag: Player
+  - Layer: Player
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
