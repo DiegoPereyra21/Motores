@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Representa un slot del inventario: un ítem y su cantidad.
-/// </summary>
+//literalmente un slotdel inventario, con su cantidad y item
 [Serializable]
 public class InventorySlot
 {
@@ -18,25 +16,19 @@ public class InventorySlot
     }
 }
 
-/// <summary>
-/// Inventario del Player. Maneja ítems y cantidades, sin interfaz gráfica.
-/// </summary>
+//x el momento sin interafz grafica
 public class Inventory : MonoBehaviour
 {
-    // Diccionario interno: item -> slot (para acceso rápido por ítem)
+    //diccionario interno item -> slot (para acceso rápido por ítem)
     private Dictionary<ItemData, InventorySlot> slots = new Dictionary<ItemData, InventorySlot>();
 
-    /// <summary>
-    /// Lista de solo lectura de los slots actuales, para que la UI pueda iterarlos.
-    /// </summary>
+    //solo lectura para q la ui pueda iterarlos luego
     public IReadOnlyCollection<InventorySlot> Slots => slots.Values;
 
-    // Evento que se dispara cada vez que el inventario cambia (para futura UI)
+    //cada q cambia el inventario llama al evento para q la ui cambie, cuando tengamos
     public event Action OnInventoryChanged;
 
-    /// <summary>
-    /// Agrega una cantidad de un ítem al inventario.
-    /// </summary>
+    //agrega un item al inventario(la mejor forma posible)
     public void AddItem(ItemData item, int amount)
     {
         if (item == null || amount <= 0)
@@ -55,9 +47,7 @@ public class Inventory : MonoBehaviour
         OnInventoryChanged?.Invoke();
     }
 
-    /// <summary>
-    /// Intenta quitar una cantidad de un ítem. Devuelve true si pudo quitarlo.
-    /// </summary>
+    //intentara quitar una cantida dd eitem, true o false si es q pudo
     public bool RemoveItem(ItemData item, int amount)
     {
         if (item == null || amount <= 0)
@@ -81,9 +71,7 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
-    /// <summary>
-    /// Devuelve la cantidad actual de un ítem en el inventario.
-    /// </summary>
+    //devuelve la cantidad actual de 1 item
     public int GetItemCount(ItemData item)
     {
         if (item == null)
@@ -92,9 +80,7 @@ public class Inventory : MonoBehaviour
         return slots.TryGetValue(item, out InventorySlot slot) ? slot.amount : 0;
     }
 
-    /// <summary>
-    /// Verifica si el inventario tiene al menos cierta cantidad de un ítem.
-    /// </summary>
+    //verifica si el inventario tiene cierta cantidad de algo
     public bool HasItem(ItemData item, int amount)
     {
         return GetItemCount(item) >= amount;
