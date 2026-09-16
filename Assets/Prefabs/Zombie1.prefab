@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 8733183106101591096}
   - component: {fileID: 4867865377819102709}
   - component: {fileID: 6749448733652791865}
+  - component: {fileID: 1613244549455465344}
   m_Layer: 0
   m_Name: Zombie1
   m_TagString: Enemy
@@ -151,7 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1e64c127d3bc4439dac247e5d68ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDeath
-  destroyDelay: 0
+  corpseCleanupDelay: 120
+  lootedDestroyDelay: 0.5
 --- !u!195 &834852195632275447
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -219,3 +221,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DamageFlash
   renderers:
   - {fileID: 202420375821585163}
+--- !u!114 &1613244549455465344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274235104033748673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74718df5518103e498ac00f929723698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Lootable
+  lootTable: {fileID: 0}
+  requireZombieDeath: 1
+  onLooted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4108038495229025409}
+        m_TargetAssemblyTypeName: EnemyDeath, Assembly-CSharp
+        m_MethodName: OnCorpseLooted
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
