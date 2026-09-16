@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: wood
   itemName: Madera
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 4225a0814c426be42863ead48779db64, type: 3}

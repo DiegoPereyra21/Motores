@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: wire
   itemName: Alambre
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: f86136c6868681f4ea5253a5e94c978e, type: 3}

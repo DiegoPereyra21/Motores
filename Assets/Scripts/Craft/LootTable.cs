@@ -36,7 +36,8 @@ public class LootTable : ScriptableObject
     [SerializeField] private List<LootEntry> lootEntries;
 
     //devuelve los items q salieron sorteados
-    public List<ItemStack> RollLoot()
+    // drop calculado para los zombies muertos
+    public List<ItemStack> RollRandomLoot()
     {
         List<ItemStack> result = new List<ItemStack>();
 
@@ -55,6 +56,27 @@ public class LootTable : ScriptableObject
                 {
                     result.Add(new ItemStack(entry.item, amount));
                 }
+            }
+        }
+
+        return result;
+    }
+
+    // roll entre items con una chance de 100% de que dropee algo
+    public List<ItemStack> RollGuaranteedLoot()
+    {
+        List<ItemStack> result = new List<ItemStack>();
+
+        foreach (LootEntry entry in lootEntries)
+        {
+            if (entry.item == null)
+                continue;
+
+            int amount = UnityEngine.Random.Range(entry.minAmount, entry.maxAmount + 1);
+
+            if (amount > 0)
+            {
+                result.Add(new ItemStack(entry.item, amount));
             }
         }
 
