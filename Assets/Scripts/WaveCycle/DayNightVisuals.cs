@@ -17,12 +17,26 @@ public class DayNightVisuals : MonoBehaviour
     [SerializeField] private Color nightColor = new Color(0.15f, 0.2f, 0.35f); //azulado tenue, luz de luna
     [SerializeField] private float nightIntensity = 0.05f; //intensidad muy baja, casi oscuridad total
 
+    [Header("Skybox")]
+    //El skybox seguia manteniendo brillo. Con esto se ajusta la exposicion y la noche tiene oscuridad mas creible.
+    [SerializeField] private float daySkyboxExposure = 1.3f; //valor por defecto del skybox, de dia se ve bien el cielo
+    [SerializeField] private float nightSkyboxExposure = 0.1f; //bien bajo, de noche casi no se ve el cielo
+
     //Angulo Y original de la luz como valor fijo
     private float sunYAngle;
+
+    //instancia propia del material del skybox
+    private Material skyboxMaterial;
 
     private void OnEnable()
     {
         sunYAngle = sunLight.transform.eulerAngles.y; //se guarda una unica vez, al activarse el script
+
+        if (RenderSettings.skybox != null)
+        {
+            skyboxMaterial = new Material(RenderSettings.skybox);
+            RenderSettings.skybox = skyboxMaterial;
+        }
 
         //suscriptor de los 3 eventos de DayNightCycle. LLama al OnEnable() antes del Start.
         dayNightCycle.onDayStart.AddListener(HandleDayStart);
@@ -43,6 +57,9 @@ public class DayNightVisuals : MonoBehaviour
     {
         sunLight.color = dayColor;
         sunLight.intensity = dayIntensity;
+
+        if (skyboxMaterial != null)
+            skyboxMaterial.SetFloat("_Exposure", daySkyboxExposure);
     }
 
     //arranque de la noche
@@ -50,6 +67,9 @@ public class DayNightVisuals : MonoBehaviour
     {
         sunLight.color = nightColor;
         sunLight.intensity = nightIntensity;
+
+        if (skyboxMaterial != null)
+            skyboxMaterial.SetFloat("_Exposure", nightSkyboxExposure);
     }
 
     //corre todos los frames y se importa de DayNightCycle, va de 0 a 1. Como esta normalizado, funciona para el dia y para la noche aunque duren tiempos diferentes.
