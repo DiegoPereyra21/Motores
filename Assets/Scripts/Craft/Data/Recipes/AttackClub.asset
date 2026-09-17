@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: AttackClub
   m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipe
   name: Palo de ataque
+  recipeImage: {fileID: 21300000, guid: 2ad6b1ab592d103438d88be11128392d, type: 3}
   result: {fileID: 11400000, guid: 5506deeef8967944e8e7050d0ed43c15, type: 2}
   resultAmount: 1
   ingredients:
