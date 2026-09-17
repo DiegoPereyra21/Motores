@@ -2,13 +2,13 @@
 - Project name: Motores
 - Unity version: Unity 6000.3.5f2
 - Active scene:
-  - Name: SampleScene
+  - Name: MAPA
   - Tags:
     - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, CinemachineTarget, Enemy
   - Layers:
-    - Default, TransparentFX, Ignore Raycast, Water, UI, Player, Interact
+    - Default, TransparentFX, Ignore Raycast, Water, UI, Player, Interact, Ground
 - Active game object:
-  - Name: CinemachineCamera
+  - Name: Canvas
   - Tag: Untagged
-  - Layer: Default
+  - Layer: UI
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
