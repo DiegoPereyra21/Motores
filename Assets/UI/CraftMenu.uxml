@@ -1,0 +1,46 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/CraftMenu.uss?fileID=7433441132597879392&amp;guid=b08a5a589c6bd8b46b1562d46c6a251b&amp;type=3#CraftMenu"/>
+    <ui:VisualElement name="CraftMenu" class="craft-menu" style="flex-grow: 1; width: 80%; height: 80%; border-top-width: 2px; border-left-width: 2px; border-right-width: 2px; border-bottom-width: 2px; display: none;">
+        <ui:Image name="Background" style="width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.72);"/>
+        <ui:Label text="MESA DE CONSTRUCCION" name="CraftingTitle" class="crafting-title" style="color: rgb(226, 206, 206); font-size: 30px;"/>
+        <ui:Button text="X" name="CloseButton" class="close-button" style="position: absolute; top: 3px; left: 1496px; -unity-font-style: bold; -unity-background-scale-mode: stretch-to-fill; border-left-width: 0; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; transform-origin: center; font-size: 18px; padding-top: 5px; padding-bottom: 5px; padding-left: 8px; padding-right: 8px;"/>
+        <ui:VisualElement name="RecipeListPanel" class="recipe-list-panel" style="flex-grow: 1;">
+            <ui:VisualElement name="RecipeList" class="recipe-list" style="flex-grow: 1; position: relative; flex-wrap: nowrap; flex-direction: column; align-content: center;">
+                <ui:Button text="Button" name="RecipeSlot_01" class="recipe-slot" style="width: 200px; min-height: 180px;">
+                    <ui:Image name="RecipeImage" class="recipe-image" style="min-width: 80%; min-height: 80%;"/>
+                </ui:Button>
+                <ui:Button text="Button" name="RecipeSlot_02" class="recipe-slot" style="width: 200px; min-height: 180px;">
+                    <ui:Image name="RecipeImage" class="recipe-image" style="width: 80%; height: 80%;"/>
+                </ui:Button>
+                <ui:Button text="Button" name="RecipeSlot_03" class="recipe-slot" style="width: 200px; min-height: 180px;">
+                    <ui:Image name="RecipeImage" class="recipe-image" style="width: 80%; height: 80%;"/>
+                </ui:Button>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="CraftingContent" class="crafting-content" style="flex-grow: 1;">
+            <ui:Label text="Label" name="CraftDescription" class="craft-description" style="color: rgb(227, 206, 206); font-size: 20px;"/>
+            <ui:VisualElement name="IngredientGrid" class="ingredient-grid" style="flex-grow: 1;">
+                <ui:VisualElement name="IngredientSlot_01" class="ingredient-slot" style="flex-grow: 1; max-width: 250px;">
+                    <ui:Image name="IngredientImage" class="ingredient-image" style="width: 80%; height: 80%;"/>
+                    <ui:Label text="Label" name="IngredientCount" class="ingredient-count"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="IngredientSlot_02" class="ingredient-slot" style="flex-grow: 1; max-width: 250px;">
+                    <ui:Image name="IngredientImage" class="ingredient-image" style="width: 80%; height: 80%;"/>
+                    <ui:Label text="Label" name="IngredientCount" class="ingredient-count"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="IngredientSlot_03" class="ingredient-slot" style="flex-grow: 1; max-width: 250px;">
+                    <ui:Image name="IngredientImage" class="ingredient-image" style="width: 80%; height: 80%;"/>
+                    <ui:Label text="Label" name="IngredientCount" class="ingredient-count"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="IngredientSlot_04" class="ingredient-slot" style="flex-grow: 1; max-width: 250px;">
+                    <ui:Image name="IngredientImage" class="ingredient-image" style="width: 80%; height: 80%;"/>
+                    <ui:Label text="Label" name="IngredientCount" class="ingredient-count"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="CraftButton" style="flex-grow: 1;">
+                <ui:Button text="Crear" name="CraftButton" class="craft-button" style="color: rgb(227, 206, 206);"/>
+            </ui:VisualElement>
+            <ui:Label text="Te faltan ingredientes para esta receta" name="AdviceLabel" class="ingredient-count advice-label" style="align-self: auto; align-items: stretch; align-content: center; bottom: 180px; right: 435px; font-size: 18px; -unity-font-style: bold-and-italic; color: rgba(227, 206, 206, 0.67); display: flex;"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

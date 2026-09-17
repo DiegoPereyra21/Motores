@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: cloth
   itemName: Tela
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: b1010868282774a48892962adfe92610, type: 3}

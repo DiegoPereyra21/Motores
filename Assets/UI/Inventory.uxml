@@ -1,0 +1,53 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Inventory.uss?fileID=7433441132597879392&amp;guid=8baf990a9e7d9cf419f787218f4bde47&amp;type=3#Inventory"/>
+    <ui:VisualElement name="InventoryPanel" class="inventory-panel" style="flex-grow: 1; opacity: 0.9; display: none;">
+        <ui:Label text="Inventario" name="InventoryTitle" class="inventory-title" style="align-self: center;"/>
+        <ui:VisualElement name="InventoryGrid" class="inventory-grid" style="flex-grow: 1;">
+            <ui:VisualElement name="Slot_01" class="inventory-slot" style="flex-grow: 1;">
+                <ui:Label text="name" name="SlotTitle" class="slot-title" style="align-self: center;"/>
+                <ui:Image name="SlotImage" class="slot-image"/>
+                <ui:Label text="Label" name="SlotCount" class="slot-count" style="align-self: flex-end; align-content: center; justify-content: flex-end; flex-wrap: nowrap; flex-direction: column;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="Slot_02" class="inventory-slot" style="flex-grow: 1;">
+                <ui:Label text="name" name="SlotTitle" class="slot-title" style="align-self: center;"/>
+                <ui:Image name="SlotImage" class="slot-image"/>
+                <ui:Label text="Label" name="SlotCount" class="slot-count" style="align-self: flex-end; align-content: center; justify-content: flex-end; flex-wrap: nowrap; flex-direction: column;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="Slot_03" class="inventory-slot" style="flex-grow: 1;">
+                <ui:Label text="name" name="SlotTitle" class="slot-title" style="align-self: center;"/>
+                <ui:Image name="SlotImage" class="slot-image"/>
+                <ui:Label text="Label" name="SlotCount" class="slot-count" style="align-self: flex-end; align-content: center; justify-content: flex-end; flex-wrap: nowrap; flex-direction: column;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="Slot_04" class="inventory-slot" style="flex-grow: 1;">
+                <ui:Label text="name" name="SlotTitle" class="slot-title" style="align-self: center;"/>
+                <ui:Image name="SlotImage" class="slot-image"/>
+                <ui:Label text="Label" name="SlotCount" class="slot-count" style="align-self: flex-end; align-content: center; justify-content: flex-end; flex-wrap: nowrap; flex-direction: column;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="Slot_05" class="inventory-slot" style="flex-grow: 1;">
+                <ui:Label text="name" name="SlotTitle" class="slot-title" style="align-self: center;"/>
+                <ui:Image name="SlotImage" class="slot-image"/>
+                <ui:Label text="Label" name="SlotCount" class="slot-count" style="align-self: flex-end; align-content: center; justify-content: flex-end; flex-wrap: nowrap; flex-direction: column;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="Slot_06" class="inventory-slot" style="flex-grow: 1;">
+                <ui:Label text="name" name="SlotTitle" class="slot-title" style="align-self: center;"/>
+                <ui:Image name="SlotImage" class="slot-image"/>
+                <ui:Label text="Label" name="SlotCount" class="slot-count" style="align-self: flex-end; align-content: center; justify-content: flex-end; flex-wrap: nowrap; flex-direction: column;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="Slot_07" class="inventory-slot" style="flex-grow: 1;">
+                <ui:Label text="name" name="SlotTitle" class="slot-title" style="align-self: center;"/>
+                <ui:Image name="SlotImage" class="slot-image"/>
+                <ui:Label text="Label" name="SlotCount" class="slot-count" style="align-self: flex-end; align-content: center; justify-content: flex-end; flex-wrap: nowrap; flex-direction: column;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="Slot_08" class="inventory-slot" style="flex-grow: 1;">
+                <ui:Label text="name" name="SlotTitle" class="slot-title" style="align-self: center;"/>
+                <ui:Image name="SlotImage" class="slot-image"/>
+                <ui:Label text="Label" name="SlotCount" class="slot-count" style="align-self: flex-end; align-content: center; justify-content: flex-end; flex-wrap: nowrap; flex-direction: column;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="Slot_09" class="inventory-slot" style="flex-grow: 1;">
+                <ui:Label text="name" name="SlotTitle" class="slot-title" style="align-self: center;"/>
+                <ui:Image name="SlotImage" class="slot-image"/>
+                <ui:Label text="Label" name="SlotCount" class="slot-count" style="align-self: flex-end; align-content: center; justify-content: flex-end; flex-wrap: nowrap; flex-direction: column;"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
