@@ -4,4 +4,5 @@
         <ui:Button text="Play" name="ButtonPlay" style="bottom: 441px; position: absolute; right: 800px; left: 800px; width: 300px; height: 83px; top: auto; -unity-text-align: middle-center; font-size: 66px; -unity-font-style: bold; justify-content: flex-start;"/>
         <ui:Button text="Quit" name="ButtonQuit" style="bottom: 235px; position: absolute; right: 800px; left: 800px; width: 300px; height: 56px; top: auto; -unity-text-align: middle-center; font-size: 47px; -unity-font-style: bold;"/>
     </ui:VisualElement>
+    <ui:Label text="Controls:&#10;&#10;WASD: Movement&#10;Mouse: Move Camera&#10;Left-Click: Attack&#10;E: Loot Corpse&#10;I: Open Inventory" name="ControlsLabel" style="color: rgb(255, 255, 255); position: absolute; top: 10px; left: 50px; font-size: 32px; -unity-text-align: upper-left;"/>
 </ui:UXML>
