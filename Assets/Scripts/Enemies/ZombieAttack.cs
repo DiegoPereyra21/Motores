@@ -10,6 +10,7 @@ public class ZombieAttack : MonoBehaviour
 
     //privadas
     private ZombieControllerNavMesh zombieController;
+    private Health myHealth; //salud propia, para chequear si ya murio
     private float nextAttackTime; //momento en que puede iniciar un nuevo golpe
     private bool isWindingUp; //true mientras esta "preparando" el golpe
     private float windupEndTime; //momento (Time.time) en que el golpe conecta
@@ -19,10 +20,14 @@ public class ZombieAttack : MonoBehaviour
     private void Awake()
     {
             zombieController = GetComponent<ZombieControllerNavMesh>();
+            myHealth = GetComponent<Health>();
     }
 
     private void Update()
     {
+        //si el script esta desactivado o ya esta muerto, no hace nada (evita el bug de attack congelado in range)
+        if (!enabled || (myHealth != null && myHealth.IsDead)) return;
+
         //si no hay player o ya murio, no ataca ni loguea nada mas
         if (zombieController.Player == null || zombieController.IsPlayerDead) return;
 
@@ -73,7 +78,7 @@ public class ZombieAttack : MonoBehaviour
         if (damageable != null)
         {
             damageable.TakeDamage(damage);
-            Debug.Log($"{name} conecto un golpe al jugador por {damage} de daño");
+            Debug.Log($"ZOMBIE HIZO {damage} DE DAÑO");
         }
     }
 }

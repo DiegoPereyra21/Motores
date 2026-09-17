@@ -6,9 +6,9 @@
   - Tags:
     - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, CinemachineTarget, Enemy
   - Layers:
-    - Default, TransparentFX, Ignore Raycast, Water, UI, Player
+    - Default, TransparentFX, Ignore Raycast, Water, UI, Player, Interact
 - Active game object:
-  - Name: Player
-  - Tag: Player
-  - Layer: Player
+  - Name: CinemachineCamera
+  - Tag: Untagged
+  - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

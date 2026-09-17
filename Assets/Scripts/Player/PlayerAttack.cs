@@ -3,60 +3,83 @@ using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
 {
-    //input
+    //input(ver si seguir usando el mismo o crear uno de 0)
     [SerializeField] private InputActionReference attackAction;
-
+    //referencias
+    [SerializeField] private Animator animator;
+    [SerializeField] private PlayerController playerController;
+    [SerializeField] private Transform cameraPivot;
+    [SerializeField] private Health health;
     //config del golpe
-    [SerializeField] private Transform attackPoint; //si se deja vacio, usa la posicion del player + su forward
-    [SerializeField] private float attackRange = 1.2f; //radio del golpe
-    [SerializeField] private float attackDamage = 25f; //daño por golpe
-    [SerializeField] private float attackCooldown = 0.6f; //segundos entre golpes
-
+    [SerializeField] private Transform attackPoint;//en el centro del arma o en la punta, ya verse
+    [SerializeField] private float attackRange = 1.2f;
+    [SerializeField] private float attackDamage = 25f;
+    [SerializeField] private bool faceCameraOnAttack = true;//hace demasiado cambio, preguntar a furia luego
     //privadas
-    private float nextAttackTime; //momento (Time.time) en que puede volver a golpear
+    private static readonly int AttackHash = Animator.StringToHash("Attack");
+    private readonly System.Collections.Generic.HashSet<IDamageable> alreadyHit = new();
+    //publicas
+    public bool IsAttacking { get; private set; }
 
-    private void OnEnable()
+    private void Awake()
     {
-        attackAction.action.Enable();
+        //x si no se
+        if (!animator) animator = GetComponent<Animator>();
+        if (!playerController) playerController = GetComponent<PlayerController>();
+        if (!health) health = GetComponent<Health>();
     }
+    private void OnEnable() => attackAction.action.Enable();
 
     private void OnDisable()
     {
         attackAction.action.Disable();
+        if (playerController) playerController.MovementLocked = false;
     }
 
     private void Update()
     {
-        //WasPressedThisFrame evita que mantener apretado siga golpeando cada frame (full auto de golpes)
-        if (attackAction.action.WasPressedThisFrame() && Time.time >= nextAttackTime)
-        {
-            PerformAttack();
-            nextAttackTime = Time.time + attackCooldown;
-        }
+        if (health && health.IsDead) return;//si esta muerto ni intenta revisar si ataco on no
+
+        if (attackAction.action.WasPressedThisFrame() && !IsAttacking)
+            StartAttack();
     }
-
-    private void PerformAttack()
+    private void StartAttack()
     {
-        //punto desde donde se centra el golpe: attackPoint si se asigno, sino un poco adelante del player (esto va a modificarse despues con las animaciones y armas)
-        Vector3 origin = attackPoint != null ? attackPoint.position : transform.position + transform.forward;
+        IsAttacking = true;
 
-        //detecta todos los colliders dentro del radio de golpe
-        Collider[] hits = Physics.OverlapSphere(origin, attackRange);
+        if (faceCameraOnAttack && cameraPivot)//quitar facecameraonattack si es q queremos q ataque hacia donde este el cuerpo
+            transform.rotation = Quaternion.Euler(0f, cameraPivot.eulerAngles.y, 0f);
+
+        if (playerController)
+            playerController.MovementLocked = true;//para q no se deslice mientras ataca, osea se quede quieto mientras ataca
+
+        animator.SetTrigger(AttackHash);
+    }
+    //en el frame donde golpea en la animacion, hace esto. si es clip de mixamo hay q hacerlo desde el fbx
+    public void AttackHit()
+    {
+        Vector3 origin = attackPoint != null ? attackPoint.position : transform.position + transform.forward;
+        Collider[] hits = Physics.OverlapSphere(origin, attackRange, ~0, QueryTriggerInteraction.Ignore);
+        alreadyHit.Clear();
 
         foreach (Collider hit in hits)
         {
-            if (!hit.CompareTag("Enemy")) continue; //solo golpea lo que tenga tag Enemy
+            if (!hit.CompareTag("Enemy")) continue;
 
-            IDamageable damageable = hit.GetComponent<IDamageable>();
-            if (damageable != null)
-            {
-                damageable.TakeDamage(attackDamage);
-                Debug.Log($"El player golpeo a {hit.name} por {attackDamage} de daño");
-            }
+            IDamageable damageable = hit.GetComponentInParent<IDamageable>();//clasica verificacion si es q tiene la interfaz de idamageable
+            if (damageable == null || !alreadyHit.Add(damageable)) continue;
+
+            damageable.TakeDamage(attackDamage);
+            Debug.Log($"HICISTE {attackDamage} DE DAÑO");
         }
     }
-
-    //dibuja el radio de golpe en la escena (solo visible en el editor, para ajustarlo a ojo)
+    //para q no tenga q hacerlo a ojo
+    public void AttackEnd()
+    {
+        IsAttacking = false;
+        if (playerController) playerController.MovementLocked = false;
+    }
+    //luego se puede borrar, es para ubicar bien
     private void OnDrawGizmosSelected()
     {
         Vector3 origin = attackPoint != null ? attackPoint.position : transform.position + transform.forward;
