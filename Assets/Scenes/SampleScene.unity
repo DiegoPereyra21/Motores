@@ -1319,25 +1319,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1237024221088081722, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      propertyPath: AvoidObstacles.CameraRadius
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1237024221088081722, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      propertyPath: AvoidObstacles.CollisionFilter.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
     - target: {fileID: 2153651938353057487, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
       propertyPath: gameOverUI
       value: 
       objectReference: {fileID: 1876152613}
-    - target: {fileID: 2153651938353057487, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
-      propertyPath: secondsBeforeMainMenu
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 5953249167122860971, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8343001647361465839, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
-      propertyPath: attackRange
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8343001647361465839, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
-      propertyPath: attackDamage
-      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8946478680384145332, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1382,49 +1378,14 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5953249167122860971, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 855873790}
-    - targetCorrespondingSourceObject: {fileID: 5953249167122860971, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 855873789}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
---- !u!4 &855873787 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2313193344059259194, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+--- !u!114 &855873790 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6829460794486340077, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
   m_PrefabInstance: {fileID: 855873786}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &855873788 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5953249167122860971, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
-  m_PrefabInstance: {fileID: 855873786}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &855873789
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 855873788}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc6145a706a1835409b8f822d6706a13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
-  interactAction: {fileID: 1882285110174411008, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  cameraPivot: {fileID: 855873787}
-  interactRange: 5.23
-  interactLayer:
-    serializedVersion: 2
-    m_Bits: 256
---- !u!114 &855873790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 855873788}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36359d1745c70e0478ffe306a523eb0e, type: 3}
@@ -1435,7 +1396,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8131467032854619556, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
   m_PrefabInstance: {fileID: 855873786}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 855873788}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92c69a27930e2c444bfe24aa15d975b5, type: 3}
