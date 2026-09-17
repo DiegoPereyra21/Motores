@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1528e661bbf8cc498fae13d76e72ec2, type: 3}
-  m_Name: Silla
+  m_Name: Chair
   m_EditorClassIdentifier: Assembly-CSharp::LootTable
   lootEntries:
   - item: {fileID: 11400000, guid: 070ecd4fc48a8ac42b80e89ca5935b5c, type: 2}
