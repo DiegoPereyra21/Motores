@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1041f8c7f4901b14ca86de07144cbd29, type: 3}
   m_Name: testItem
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemId: test-item
+  itemId: test_item
   itemName: Tabla de test
   icon: {fileID: 21300000, guid: cd8ba97835feddd43bdb34d277f8774d, type: 3}
   maxStackSize: 1
-  origin: 1
-  category: 1
+  origin: 0
+  category: 0
   specializedData:
     rid: -2
   references:

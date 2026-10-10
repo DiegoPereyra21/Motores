@@ -15,4 +15,13 @@ MonoBehaviour:
   itemId: reinforcement-plank
   itemName: Tabla de refuerzo
   icon: {fileID: 21300000, guid: cd8ba97835feddd43bdb34d277f8774d, type: 3}
-  type: 1
+  maxStackSize: 1
+  origin: 1
+  category: 0
+  specializedData:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

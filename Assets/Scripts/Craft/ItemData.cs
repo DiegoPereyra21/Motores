@@ -3,20 +3,20 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewItemData", menuName = "Zombie Cabin/Item Data")]
 public class ItemData : ScriptableObject
 {
-    [Header("Informacion general")]
+    //Informacion general
     public string itemId;
     public string itemName;
     public Sprite icon;
 
-    [Header("Stack para el inventario")]
+    //Stack para el inventario
     [Min(1)]
     public int maxStackSize = 1;
 
-    [Header("Clasificacion")]
+    //Clasificacion
     public ItemOrigin origin;
     public ItemCategory category;
 
-    [Header("Datos especializados")]
+    //Datos especializados
     [SerializeReference]
     public ItemSpecializedData specializedData;
 
