@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 890c607d16036e949b8b4f77c8a38d8c, type: 3}
+  m_Name: MainCraftingProgression
+  m_EditorClassIdentifier: Assembly-CSharp::CraftingProgression
+  day1Recipes:
+  - {fileID: 11400000, guid: 34ef4345d70066f469a7c75ab3f07214, type: 2}
+  - {fileID: 11400000, guid: 8724dd5397834854eae7bd6d2c450fc2, type: 2}
+  - {fileID: 11400000, guid: 9e53cb3781b2c3e4a9b81d54bbaa88fa, type: 2}
+  day2Recipes:
+  - {fileID: 11400000, guid: e2eaa67ba390cff42a96d08948347f0f, type: 2}
+  - {fileID: 11400000, guid: 605e644b13059f4489bc548fcbcc4f10, type: 2}
+  day3Recipes: []

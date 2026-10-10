@@ -15,3 +15,13 @@ MonoBehaviour:
   itemId: cloth
   itemName: Tela
   icon: {fileID: 21300000, guid: b1010868282774a48892962adfe92610, type: 3}
+  maxStackSize: 20
+  origin: 0
+  category: 0
+  specializedData:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

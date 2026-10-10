@@ -10,18 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1041f8c7f4901b14ca86de07144cbd29, type: 3}
-  m_Name: reinforcement-plank
+  m_Name: wood_club
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemId: reinforcement-plank
-  itemName: Tabla de refuerzo
-  icon: {fileID: 21300000, guid: cd8ba97835feddd43bdb34d277f8774d, type: 3}
+  itemId: wood_club
+  itemName: Palo de ataque
+  icon: {fileID: 21300000, guid: 2ad6b1ab592d103438d88be11128392d, type: 3}
   maxStackSize: 1
   origin: 1
-  category: 0
+  category: 1
   specializedData:
-    rid: -2
+    rid: 8075318310605684822
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 8075318310605684822
+      type: {class: WeaponData, ns: , asm: Assembly-CSharp}
+      data:
+        damage: 10
+        maxDurability: 100
+        prefab: {fileID: 1509638308810923556, guid: 48863dae32e2fd048b369f6030b0fff1, type: 3}

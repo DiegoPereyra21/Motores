@@ -10,18 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1041f8c7f4901b14ca86de07144cbd29, type: 3}
-  m_Name: attack-club
+  m_Name: simple_molotov
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemId: attack-club
-  itemName: Palo de ataque
-  icon: {fileID: 21300000, guid: 2ad6b1ab592d103438d88be11128392d, type: 3}
+  itemId: simple_molotov
+  itemName: Molotov casera
+  icon: {fileID: 21300000, guid: 051835c3f9bac70418a2417abb496320, type: 3}
   maxStackSize: 1
-  origin: 0
-  category: 0
+  origin: 1
+  category: 4
   specializedData:
-    rid: -2
+    rid: 8075318310605684824
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 8075318310605684824
+      type: {class: TrapData, ns: , asm: Assembly-CSharp}
+      data:
+        deploymentType: 1
+        prefab: {fileID: 8332443577365766655, guid: b6dfdfa492ea4f1448ff4368fff40469, type: 3}

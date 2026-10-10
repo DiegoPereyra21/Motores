@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab281e00936df7841bb54dfff01004e2, type: 3}
+  m_Name: SimpleMolotov
+  m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipe
+  recipeName: 
+  recipeImage: {fileID: 21300000, guid: cd8ba97835feddd43bdb34d277f8774d, type: 3}
+  result: {fileID: 11400000, guid: 8a45111ad21a8534487c6ddba25e72af, type: 2}
+  resultAmount: 1
+  description: "Granada sencilla para prender fuego a los enemigos. Tiene un rango
+    corto pero es efectiva.\n\n+ 20 de ataque inicial\n+ 2 de ataque por segundo\n+
+    5 s de da\xF1o sostenido luego del impacto"
+  ingredients:
+  - item: {fileID: 11400000, guid: 070ecd4fc48a8ac42b80e89ca5935b5c, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: 3a0f611f3435e0942bcc62a37285721a, type: 2}
+    amount: 2

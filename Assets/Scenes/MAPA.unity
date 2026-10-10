@@ -897461,6 +897461,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1613494252014594668, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1613494252014594668, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1613494252014594668, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1613494252014594668, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2153651938353057487, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
       propertyPath: gameOverUI
       value: 
@@ -1237824,6 +1237840,10 @@ PrefabInstance:
       propertyPath: playerController
       value: 
       objectReference: {fileID: 1167780185}
+    - target: {fileID: 8616079193096041375, guid: 4303936bf87ff0e4f9b3aa56c21122be, type: 3}
+      propertyPath: craftingProgression
+      value: 
+      objectReference: {fileID: 11400000, guid: 294eecea16003ad4eb2e274e044ddabe, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
