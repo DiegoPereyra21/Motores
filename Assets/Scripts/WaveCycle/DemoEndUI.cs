@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 //Condicion de victoria si el player sobrevive toda la demo
 public class DemoEndUI : MonoBehaviour
 {
-    [SerializeField] private DayNightCycle dayNightCycle; //el "reloj" del que escucha el evento de fin de demo
+    [SerializeField] private DayNightLighting dayNightCycle; //el "reloj" del que escucha el evento de fin de demo
     [SerializeField] private GameObject demoEndUI; //texto/panel de "Fin de la demo", desactivado por defecto en la escena
     //para volver al menu luego de ganar (luego ver si poner boton)
     private string mainMenuSceneName = "MainMenu"; //nombre de la escena del menu principal
@@ -12,12 +12,12 @@ public class DemoEndUI : MonoBehaviour
 
     private void OnEnable()
     {
-        dayNightCycle.onDemoEnd.AddListener(HandleDemoEnd);
+        //dayNightCycle.onDemoEnd.AddListener(HandleDemoEnd);
     }
 
     private void OnDisable()
     {
-        dayNightCycle.onDemoEnd.RemoveListener(HandleDemoEnd);
+        //dayNightCycle.onDemoEnd.RemoveListener(HandleDemoEnd);
     }
 
     //se ejecuta una sola vez, cuando DayNightCycle.cs dispara onDemoEnd (justo al terminar la noche 3).
@@ -42,6 +42,6 @@ public class DemoEndUI : MonoBehaviour
 
         //reactivo el timeScale antes de cargar, sino el menu tambien queda congelado
         Time.timeScale = 1f;
-        SceneManager.LoadScene(mainMenuSceneName);
+        //SceneManager.LoadScene(mainMenuSceneName);
     }
 }

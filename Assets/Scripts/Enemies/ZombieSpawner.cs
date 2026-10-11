@@ -14,7 +14,7 @@ public class ZombieSpawner : MonoBehaviour
 
     [Header("Ciclo dia/noche")]
 
-    [SerializeField] private DayNightCycle dayNightCycle; //reloj que determina spawn/stop
+    [SerializeField] private DayNightLighting dayNightCycle; //reloj que determina spawn/stop
     private float nextSpawnTime; //momento (Time.time) del proximo spawn permitido
 
     private bool nightActive; //se explica solo: true = noche, false = dia o demo terminada.
@@ -23,16 +23,16 @@ public class ZombieSpawner : MonoBehaviour
 
     private void OnEnable()
     {
-        dayNightCycle.onNightStart.AddListener(HandleNightStart);
-        dayNightCycle.onDayStart.AddListener(HandleDayStart);
-        dayNightCycle.onDemoEnd.AddListener(HandleDemoEnd); //la ultima noche puede terminar la demo en vez de pasar a un Dia
+        //dayNightCycle.onNightStart.AddListener(HandleNightStart);
+        //dayNightCycle.onDayStart.AddListener(HandleDayStart);
+        //dayNightCycle.onDemoEnd.AddListener(HandleDemoEnd); //la ultima noche puede terminar la demo en vez de pasar a un Dia
     }
 
     private void OnDisable()
     {
-        dayNightCycle.onNightStart.RemoveListener(HandleNightStart);
-        dayNightCycle.onDayStart.RemoveListener(HandleDayStart);
-        dayNightCycle.onDemoEnd.RemoveListener(HandleDemoEnd);
+       //dayNightCycle.onNightStart.RemoveListener(HandleNightStart);
+        //dayNightCycle.onDayStart.RemoveListener(HandleDayStart);
+        //dayNightCycle.onDemoEnd.RemoveListener(HandleDemoEnd);
     }
 
     //se ejecuta al arrancar cada noche (noche 1, 2 o 3): habilita el spawn, pero el primer zombie recien aparece despues de initialSpawnDelay (ver comentario en la variable).
