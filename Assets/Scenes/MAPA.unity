@@ -853122,7 +853122,7 @@ Transform:
   m_GameObject: {fileID: 992474040}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7686381, z: 0, w: 0.63968396}
-  m_LocalPosition: {x: 415.79605, y: 11.700741, z: 160.70753}
+  m_LocalPosition: {x: 413.8293, y: 11.400741, z: 160.34431}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -897468,10 +897468,6 @@ PrefabInstance:
     - target: {fileID: 5953249167122860971, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8343001647361465839, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
-      propertyPath: attackDamage
-      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8946478680384145332, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
       propertyPath: m_LocalPosition.x

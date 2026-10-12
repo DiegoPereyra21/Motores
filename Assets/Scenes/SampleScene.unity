@@ -427,7 +427,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: -4}
+  m_LocalPosition: {x: 0, y: 1.6999999, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -988,18 +988,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1237024221088081722, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
-      propertyPath: AvoidObstacles.CameraRadius
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1237024221088081722, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
-      propertyPath: AvoidObstacles.CollisionFilter.m_Bits
-      value: 1024
-      objectReference: {fileID: 0}
-    - target: {fileID: 2153651938353057487, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
-      propertyPath: gameOverUI
-      value: 
-      objectReference: {fileID: 1876152613}
     - target: {fileID: 5953249167122860971, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
       propertyPath: m_Name
       value: Player
