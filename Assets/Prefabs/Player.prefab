@@ -241,6 +241,7 @@ GameObject:
   - component: {fileID: 641306032829803605}
   - component: {fileID: 6829460794486340077}
   - component: {fileID: 3172682545380626138}
+  - component: {fileID: 5701854420994613412}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -368,8 +369,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDeath
   playerController: {fileID: 8131467032854619556}
   cameraPivot: {fileID: 1459768277271011018}
-  playerVisual: {fileID: 0}
+  animator: {fileID: 0}
   gameOverUI: {fileID: 0}
+  secondsBeforeGameOverUI: 1.2
   secondsBeforeMainMenu: 3
 --- !u!114 &8343001647361465839
 MonoBehaviour:
@@ -404,7 +406,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 886bf9609d21f794085b2664fed9f226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageFlash
-  deadColor: {r: 0.35, g: 0.35, b: 0.35, a: 1}
   renderers: []
 --- !u!114 &6829460794486340077
 MonoBehaviour:
@@ -436,6 +437,19 @@ MonoBehaviour:
   interactLayer:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &5701854420994613412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5953249167122860971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2987ad09409ad6428406ec6896898a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHurt
+  animator: {fileID: 2164108943230245708}
 --- !u!1 &6270587477797477844
 GameObject:
   m_ObjectHideFlags: 0
