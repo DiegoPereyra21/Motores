@@ -676,6 +676,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 23315489656821596, guid: 9c29b28ded892e7468ca600c9020c219, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9a9a079f61f8d664f9a475653ad2b7ef, type: 2}
     - target: {fileID: 919132149155446097, guid: 9c29b28ded892e7468ca600c9020c219, type: 3}
       propertyPath: m_Name
       value: action heroine
