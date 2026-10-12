@@ -111006,7 +111006,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: cc24aefe1f735cb4f9273c580fd93bc7, type: 2}
   m_BuildHeightMesh: 0
 --- !u!154 &363902446
 TerrainCollider:
@@ -920756,7 +920756,7 @@ Transform:
   m_GameObject: {fileID: 1045353760}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7686381, z: -0, w: 0.63968396}
-  m_LocalPosition: {x: -5.933258, y: -1.432929, z: 43.89302}
+  m_LocalPosition: {x: -5.933258, y: -1.38, z: 43.89302}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -930859,7 +930859,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1087471056
 Transform:
   m_ObjectHideFlags: 0
@@ -997498,7 +997498,7 @@ Transform:
   m_GameObject: {fileID: 1360203021}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 379.93326, y: 11.13367, z: 158.30698}
+  m_LocalPosition: {x: 379.93326, y: 13.94, z: 158.30698}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1388622,7 +1388622,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1757929008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1388641,9 +1388641,9 @@ MonoBehaviour:
   - {fileID: 269056878}
   - {fileID: 170476327}
   - {fileID: 1045353761}
-  timeBetweenSpawns: 3
-  maxZombiesAlive: 6
-  initialSpawnDelay: 15
+  timeBetweenSpawns: 4
+  maxZombiesAlive: 10
+  initialSpawnDelay: 10
   gameProgressController: {fileID: 54095506}
 --- !u!4 &1757929009
 Transform:
