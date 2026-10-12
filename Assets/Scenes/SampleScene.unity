@@ -247,105 +247,7 @@ MonoBehaviour:
   timeBetweenSpawns: 4
   maxZombiesAlive: 4
   initialSpawnDelay: 15
-  dayNightCycle: {fileID: 236213067}
---- !u!1 &236213064
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 236213065}
-  - component: {fileID: 236213067}
-  - component: {fileID: 236213066}
-  - component: {fileID: 236213068}
-  m_Layer: 0
-  m_Name: DayNightManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &236213065
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 236213064}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.18024, y: 0, z: -0.72046}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &236213066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 236213064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ced7a7cc8cc804e4fbd13198e9b1a342, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DayNightVisuals
-  dayNightCycle: {fileID: 236213067}
-  sunLight: {fileID: 410087040}
-  dayColor: {r: 1, g: 1, b: 1, a: 1}
-  dayIntensity: 1.2
-  daySunriseAngle: 10
-  daySunsetAngle: 170
-  nightColor: {r: 0.15, g: 0.2, b: 0.35, a: 1}
-  nightIntensity: 0.05
-  daySkyboxExposure: 1.3
-  nightSkyboxExposure: 0.1
---- !u!114 &236213067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 236213064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3bf0916eb1bc3f42998e300001972a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DayNightCycle
-  dayDuration: 50
-  nightDuration: 100
-  totalNights: 3
-  onDayStart:
-    m_PersistentCalls:
-      m_Calls: []
-  onNightStart:
-    m_PersistentCalls:
-      m_Calls: []
-  onPhaseProgressChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  onDemoEnd:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &236213068
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 236213064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35a0d346971a1054e97f291506a26870, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DemoEndUI
-  dayNightCycle: {fileID: 236213067}
-  demoEndUI: {fileID: 34335804}
-  secondsBeforeMainMenu: 3
+  gameProgressController: {fileID: 1002950845}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -1408,6 +1310,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 937451442}
   m_CullTransparentMesh: 1
+--- !u!1 &1002950843
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1002950844}
+  - component: {fileID: 1002950845}
+  m_Layer: 0
+  m_Name: GamepProgressManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1002950844
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002950843}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 272.95444, y: 0, z: 252.43356}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1002950845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002950843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72ea67613ca6204fb675c760000f671, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameProgressController
+  dayDuration: 90
+  nightDuration: 90
+  startingDay: 1
 --- !u!1 &1042814329
 GameObject:
   m_ObjectHideFlags: 0
@@ -2907,7 +2856,6 @@ SceneRoots:
   - {fileID: 864802216}
   - {fileID: 1334881367}
   - {fileID: 545438544}
-  - {fileID: 236213065}
   - {fileID: 1224110605}
   - {fileID: 1954834711}
   - {fileID: 210954831}
@@ -2921,3 +2869,4 @@ SceneRoots:
   - {fileID: 889428736061426850}
   - {fileID: 9104641016674888451}
   - {fileID: 7580907027423301516}
+  - {fileID: 1002950844}

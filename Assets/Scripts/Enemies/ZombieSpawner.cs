@@ -1,6 +1,6 @@
 using UnityEngine;
 
-//Spawner de zombies para la noche. Escucha eventos de DayNightCycle.cs.
+//Spawner de zombies para la noche. Escucha eventos de GameProgressController.cs.
 //IMPORTANTE QUE LOS ZOMBIES TENGAN EL TAG DE ENEMY!!!
 
 public class ZombieSpawner : MonoBehaviour
@@ -13,60 +13,88 @@ public class ZombieSpawner : MonoBehaviour
     [SerializeField] private float initialSpawnDelay = 15f; //segundos de espera antes del primer spawn de cada noche. Al arrancar la Noche todavia se ve como atardecer (la rotacion del sol arranca donde termino el Dia anterior), asi que no tiene sentido que aparezcan zombies de una.
 
     [Header("Ciclo dia/noche")]
-
-    [SerializeField] private DayNightLighting dayNightCycle; //reloj que determina spawn/stop
+    [SerializeField] private GameProgressController gameProgressController; //controla el progreso general y el tiempo
     private float nextSpawnTime; //momento (Time.time) del proximo spawn permitido
 
     private bool nightActive; //se explica solo: true = noche, false = dia o demo terminada.
 
-    //metodos para listeners:
+    //condiciones de no spawn: no es de noche, no hay prefab o spawn points, o ya hay demasiados zombies vivos.
+    private void Update()
+    {
+        if (!nightActive) return;
+
+        if (zombiePrefab == null || spawnPoints == null || spawnPoints.Length == 0)
+            return;
+
+        if (Time.time < nextSpawnTime)
+            return;
+
+        int currentZombies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+
+        if (currentZombies >= maxZombiesAlive)
+        {
+            nextSpawnTime = Time.time + timeBetweenSpawns;
+            return;
+        }
+
+        SpawnZombie();
+        nextSpawnTime = Time.time + timeBetweenSpawns;
+    }
 
     private void OnEnable()
     {
-        //dayNightCycle.onNightStart.AddListener(HandleNightStart);
-        //dayNightCycle.onDayStart.AddListener(HandleDayStart);
-        //dayNightCycle.onDemoEnd.AddListener(HandleDemoEnd); //la ultima noche puede terminar la demo en vez de pasar a un Dia
+        if (gameProgressController == null)
+        {
+            Debug.LogError("[ZombieSpawner] No se asigno GameProgressController.", this);
+            return;
+        }
+
+        gameProgressController.OnPhaseChanged += HandlePhaseChanged;
+        gameProgressController.OnRunFinished += StopEnemiesSpawn;
+
+        // Comprobar el estado actual por si el spawner se activa durante la noche.
+        HandlePhaseChanged(gameProgressController.CurrentPhase);
+
+        // Comprobar si la partida ya terminó.
+        if (gameProgressController.IsRunFinished)
+        {
+            StopEnemiesSpawn();
+        }
     }
 
     private void OnDisable()
     {
-       //dayNightCycle.onNightStart.RemoveListener(HandleNightStart);
-        //dayNightCycle.onDayStart.RemoveListener(HandleDayStart);
-        //dayNightCycle.onDemoEnd.RemoveListener(HandleDemoEnd);
+        if (gameProgressController == null)
+            return;
+
+        gameProgressController.OnPhaseChanged -= HandlePhaseChanged;
+        gameProgressController.OnRunFinished -= StopEnemiesSpawn; // detiene el spawn de enemigos al terminar la partida
+    }
+
+    // revisa la fase en la que nos encontramos
+    private void HandlePhaseChanged(DayNightPhase phase)
+    {
+        if (phase == DayNightPhase.Night)
+        {
+            StartEnemiesSpawn();
+        }
+        else
+        {
+            StopEnemiesSpawn();
+        }
     }
 
     //se ejecuta al arrancar cada noche (noche 1, 2 o 3): habilita el spawn, pero el primer zombie recien aparece despues de initialSpawnDelay (ver comentario en la variable).
-    private void HandleNightStart()
+    private void StartEnemiesSpawn()
     {
         nightActive = true;
         nextSpawnTime = Time.time + initialSpawnDelay;
     }
 
-    //apaga el spawn al llegar el dia.
-    private void HandleDayStart()
+    // desactiva los spawns
+    private void StopEnemiesSpawn()
     {
         nightActive = false;
-    }
-
-    //Spawn apagado
-    private void HandleDemoEnd()
-    {
-        nightActive = false;
-    }
-
-    private void Update()
-    //condiciones de no spawn: no es de noche, no hay prefab o spawn points, o ya hay demasiados zombies vivos.
-    {
-        if (!nightActive) return;
-        if (Time.time < nextSpawnTime) return; //con esto arregle que spawneara todos los zombies de golpe
-        if (zombiePrefab == null || spawnPoints == null || spawnPoints.Length == 0) return; 
-
-        //cuenta cuantos zombies hay vivos usando el tag Enemy
-        int currentZombies = GameObject.FindGameObjectsWithTag("Enemy").Length;
-        if (currentZombies >= maxZombiesAlive) return; //maximo de zombies alcanzado (limite de spawns al mismo tiempo)
-
-        SpawnZombie();
-        nextSpawnTime = Time.time + timeBetweenSpawns;
     }
 
     private void SpawnZombie()
