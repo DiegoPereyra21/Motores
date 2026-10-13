@@ -239,7 +239,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a5fc31e4c0d43840b14d9d808d3114d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZombieSpawner
-  zombiePrefab: {fileID: 274235104033748673, guid: 3c05c192ed4b7ca439d4e168a1075d5f, type: 3}
+  zombiePrefabs:
+  - {fileID: 274235104033748673, guid: 3c05c192ed4b7ca439d4e168a1075d5f, type: 3}
+  - {fileID: 7712702196502708705, guid: 4973ae224cd24cb479388f4b2893d221, type: 3}
+  - {fileID: 6574002037813287365, guid: 050f29bf32b35e9489f5a93a35750142, type: 3}
+  - {fileID: 6755983651060764279, guid: f96f11a082116654fbf7ad17e022e4c5, type: 3}
+  - {fileID: 3937809744094526762, guid: 4aca75abb51be5b46b339a4ee261bb8d, type: 3}
+  - {fileID: 2603641947717816421, guid: d07e0f686af62364a8e36afb9c32f5b6, type: 3}
   spawnPoints:
   - {fileID: 1744900781}
   - {fileID: 366423201}

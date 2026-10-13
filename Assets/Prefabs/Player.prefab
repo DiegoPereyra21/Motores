@@ -369,7 +369,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDeath
   playerController: {fileID: 8131467032854619556}
   cameraPivot: {fileID: 1459768277271011018}
-  animator: {fileID: 0}
+  animator: {fileID: 2164108943230245708}
   gameOverUI: {fileID: 0}
   secondsBeforeGameOverUI: 1.2
   secondsBeforeMainMenu: 3
