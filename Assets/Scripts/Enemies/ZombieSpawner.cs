@@ -6,7 +6,7 @@ using UnityEngine;
 public class ZombieSpawner : MonoBehaviour
 {
     [Header("Config de spawn")]
-    [SerializeField] private GameObject zombiePrefab; //prefab a instanciar
+    [SerializeField] private GameObject[] zombiePrefabs;  //posibles zombies, ahor q agregue mas tipos
     [SerializeField] private Transform[] spawnPoints; //puntos posibles de aparicion
     [SerializeField] private float timeBetweenSpawns = 4f; //segundos entre spawns
     [SerializeField] private int maxZombiesAlive = 10; //limite de zombies vivos a la vez (podemos ampliarlo para que varie segun la oleada)
@@ -59,7 +59,7 @@ public class ZombieSpawner : MonoBehaviour
     {
         if (!nightActive) return;
         if (Time.time < nextSpawnTime) return; //con esto arregle que spawneara todos los zombies de golpe
-        if (zombiePrefab == null || spawnPoints == null || spawnPoints.Length == 0) return; 
+        if (zombiePrefabs == null || zombiePrefabs.Length == 0 || spawnPoints == null || spawnPoints.Length == 0) return;
 
         //cuenta cuantos zombies hay vivos usando el tag Enemy
         int currentZombies = GameObject.FindGameObjectsWithTag("Enemy").Length;
@@ -74,6 +74,7 @@ public class ZombieSpawner : MonoBehaviour
         //elige un spawn point al azar e instancia el prefab ahi
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
         Debug.Log(Time.time);
-        Instantiate(zombiePrefab, spawnPoint.position, spawnPoint.rotation);
+        GameObject prefab = zombiePrefabs[Random.Range(0, zombiePrefabs.Length)];
+        Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
     }
 }

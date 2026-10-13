@@ -55,7 +55,9 @@ public class EnemyDeath : MonoBehaviour
             agent.enabled = false;
         }
 
-        //dejo el collider prendido a proposito, asi el raycast de interaccion puede pegarle al cuerpo
+        //el collider queda prendido para el raycast de interaccion pal loot, pero como trigge el player ya no choca con el cuerpo
+        if (enemyCollider != null)
+            enemyCollider.isTrigger = true;
 
         //timer de respaldo por si el player nunca lo saquea
         Invoke(nameof(DestroyCorpse), corpseCleanupDelay);
