@@ -31,6 +31,8 @@ public class ZombieAttack : MonoBehaviour
         //si no hay player o ya murio, no ataca ni loguea nada mas
         if (zombieController.Player == null || zombieController.IsPlayerDead) return;
 
+        if (zombieController.IsStunned) return;
+
         //si el player se aleja durante el windup, se cancela el golpe (no deberia pegar "a traves" de una esquivada)
         if (isWindingUp && !zombieController.InAttackRange)
         {
@@ -61,7 +63,7 @@ public class ZombieAttack : MonoBehaviour
         //aca despues se puede disparar animator.SetTrigger("Attack") cuando tengan animaciones
     }
 
-    private void CancelWindup()
+    public void CancelWindup()
     {
         isWindingUp = false;
     }

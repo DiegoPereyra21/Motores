@@ -20,6 +20,11 @@ public class ZombieControllerNavMesh : MonoBehaviour
     public Transform Player => player;
     public bool InAttackRange => inAttackRange;
     public bool IsPlayerDead => playerHealth != null && playerHealth.IsDead; //verdadero si el player murio
+    //para las animaciones
+    private float stunEndTime;
+    public bool IsStunned => Time.time < stunEndTime;
+    public void Stun(float seconds) => stunEndTime = Time.time + seconds;
+
 
     private void Awake()
     {
@@ -52,6 +57,14 @@ public class ZombieControllerNavMesh : MonoBehaviour
 
         //sin player o ya muerto, se queda donde esta (lluego vemos si le ponemos alguna animacion comiendose al player o algoasi)
         if (player == null || IsPlayerDead)
+        {
+            agent.isStopped = true;
+            agent.velocity = Vector3.zero;
+            return;
+        }
+
+        //aturdido por un golpe: se queda quieto hasta que termine el stun
+        if (IsStunned)
         {
             agent.isStopped = true;
             agent.velocity = Vector3.zero;
