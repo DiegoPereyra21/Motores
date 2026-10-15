@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 05895fc22e1a9c846bc901ba1922e389, type: 2}
+  - {fileID: 2100000, guid: 8a3e24d6440e0d247a90f5876c2a58f8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -126,9 +126,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CraftTable
   craftingUI: {fileID: 0}
-  availableRecipes:
-  - {fileID: 11400000, guid: 9e53cb3781b2c3e4a9b81d54bbaa88fa, type: 2}
-  - {fileID: 11400000, guid: 34ef4345d70066f469a7c75ab3f07214, type: 2}
-  - {fileID: 11400000, guid: 8724dd5397834854eae7bd6d2c450fc2, type: 2}
+  craftingProgression: {fileID: 0}
   playerController: {fileID: 0}
   cameraBrain: {fileID: 0}

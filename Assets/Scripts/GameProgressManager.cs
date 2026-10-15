@@ -7,6 +7,14 @@ public enum DayNightPhase
     Night
 }
 
+public enum GameEnding
+{
+    None,
+    Victory,
+    Defeat,
+    Death
+}
+
 public class GameProgressController : MonoBehaviour
 {
     public static GameProgressController Instance { get; private set; }
@@ -22,7 +30,10 @@ public class GameProgressController : MonoBehaviour
     public DayNightPhase CurrentPhase { get; private set; }
     public float PhaseRemainingTime { get; private set; }
     public bool IsWorldPaused { get; private set; }
-    public bool IsRunFinished { get; private set; }
+    public bool IsGameEnded { get; private set; } // indica si la partida termino
+
+    public GameEnding CurrentEnding { get; private set; } = GameEnding.None;
+    public event Action<GameEnding> OnGameEnded; // evento que avisa del fin de la partida
 
     public event Action<DayNightPhase> OnPhaseChanged;
     public event Action<int> OnDayChanged;
@@ -57,7 +68,7 @@ public class GameProgressController : MonoBehaviour
 
     private void Update()
     {
-        if (!initialized || IsWorldPaused || IsRunFinished)
+        if (!initialized || IsWorldPaused || IsGameEnded)
             return;
 
         PhaseRemainingTime -= Time.deltaTime;
@@ -73,7 +84,7 @@ public class GameProgressController : MonoBehaviour
 
     public bool PauseWorld()
     {
-        if (IsWorldPaused || IsRunFinished)
+        if (IsWorldPaused || IsGameEnded)
             return false;
 
         IsWorldPaused = true;
@@ -85,7 +96,7 @@ public class GameProgressController : MonoBehaviour
 
     public bool ResumeWorld()
     {
-        if (!IsWorldPaused)
+        if (!IsWorldPaused || IsGameEnded)
             return false;
 
         IsWorldPaused = false;
@@ -96,7 +107,7 @@ public class GameProgressController : MonoBehaviour
 
     public void ConsumeTime(float seconds = 0f)
     {
-        if (!initialized || IsRunFinished || IsWorldPaused || seconds <= 0f)
+        if (!initialized || IsGameEnded || IsWorldPaused || seconds <= 0f)
             return;
 
         PhaseRemainingTime -= seconds;
@@ -127,7 +138,7 @@ public class GameProgressController : MonoBehaviour
 
         if (CurrentDay >= 4)
         {
-            FinishRun();
+            EndGame(GameEnding.Victory);
             return;
         }
 
@@ -145,16 +156,6 @@ public class GameProgressController : MonoBehaviour
         OnPhaseProgressChanged?.Invoke(Mathf.Clamp01(progress));
     }
 
-    private void FinishRun()
-    {
-        IsRunFinished = true;
-        PhaseRemainingTime = 0f;
-
-        Debug.Log("[GameProgressController] La partida llego al dia 4.");
-
-        OnRunFinished?.Invoke();
-    }
-
     private void OnDestroy()
     {
         if (Instance == this)
@@ -167,5 +168,43 @@ public class GameProgressController : MonoBehaviour
             Time.timeScale = previousTimeScale;
             IsWorldPaused = false;
         }
+    }
+
+    public void ResetGameProgress()
+    {
+        Time.timeScale = 1f;
+        IsWorldPaused = false;
+        previousTimeScale = 1f;
+
+        CurrentDay = Mathf.Max(1, startingDay);
+        CurrentPhase = DayNightPhase.Day;
+        PhaseRemainingTime = dayDuration;
+
+        IsGameEnded = false;
+        CurrentEnding = GameEnding.None;
+
+        OnDayChanged?.Invoke(CurrentDay);
+        OnPhaseChanged?.Invoke(CurrentPhase);
+        OnPhaseProgressChanged?.Invoke(0f);
+    }
+
+    public void EndGame(GameEnding ending)
+    {
+        if (!initialized || IsGameEnded || ending == GameEnding.None)
+            return;
+
+        IsGameEnded = true;
+        CurrentEnding = ending;
+        PhaseRemainingTime = 0f;
+
+        if (!IsWorldPaused)
+        {
+            previousTimeScale = Time.timeScale;
+            IsWorldPaused = true;
+        }
+
+        //Time.timeScale = 0.5f;
+
+        OnGameEnded?.Invoke(ending);
     }
 }

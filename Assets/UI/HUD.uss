@@ -1,0 +1,3 @@
+#HUDContainer {
+    pointer-events: none;
+}
