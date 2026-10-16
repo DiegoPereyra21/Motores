@@ -1,0 +1,98 @@
+/* Estilos de la radio. El panel arranca oculto (display none), RadioMessageUI lo muestra por codigo. */
+
+.radio-root {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+/* pantalla completa, es lo que "congela" la vista como los documentos de Resident Evil */
+.radio-panel {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    opacity: 0;
+    background-color: rgb(5, 5, 5);
+}
+
+/* la imagen de la radio (se asigna por codigo desde RadioMessageUI). Para el efecto difuminado usar una imagen ya blureada */
+.radio-background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    -unity-background-scale-mode: scale-and-crop;
+}
+
+/* oscurece un poco la imagen para que se lean bien los subtitulos */
+.radio-dim {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+}
+
+.radio-subtitle-box {
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    bottom: 8%;
+    padding: 24px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 6px;
+}
+
+.radio-subtitle {
+    font-size: 34px;
+    color: rgb(235, 230, 210);
+    white-space: normal;
+    -unity-text-align: middle-center;
+    -unity-font: url("/Assets/Font/Special_Elite/SpecialElite-Regular.ttf");
+}
+
+.radio-skip {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 12px;
+    align-self: flex-end;
+}
+
+/* mensaje de objetivo que queda arriba despues de escuchar */
+.radio-hint {
+    position: absolute;
+    top: 12%;
+    left: 10%;
+    right: 10%;
+    display: none;
+    opacity: 0;
+    font-size: 30px;
+    color: rgb(255, 225, 150);
+    white-space: normal;
+    -unity-text-align: upper-center;
+    -unity-font: url("/Assets/Font/Special_Elite/SpecialElite-Regular.ttf");
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(0, 0, 0);
+}
+
+/* cartelito de "hay un mensaje nuevo" */
+.radio-new-message {
+    position: absolute;
+    bottom: 18%;
+    left: 0;
+    right: 0;
+    display: none;
+    font-size: 26px;
+    color: rgb(255, 200, 80);
+    -unity-text-align: middle-center;
+    -unity-font: url("/Assets/Font/Special_Elite/SpecialElite-Regular.ttf");
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(0, 0, 0);
+}
