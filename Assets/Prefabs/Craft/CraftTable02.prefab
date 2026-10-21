@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2808438720335159558
+--- !u!1 &2214084033953325198
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4901216757130999452}
-  - component: {fileID: 6147111971831900667}
-  - component: {fileID: 7171532548442481889}
-  - component: {fileID: 2274887647278300411}
-  - component: {fileID: 8616079193096041375}
-  m_Layer: 8
-  m_Name: CraftTable
+  - component: {fileID: 4824309069187941396}
+  - component: {fileID: 963130692260239862}
+  - component: {fileID: 6468397609137993298}
+  - component: {fileID: 6793904781889979249}
+  m_Layer: 0
+  m_Name: CraftTable02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4901216757130999452
+--- !u!4 &4824309069187941396
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2808438720335159558}
+  m_GameObject: {fileID: 2214084033953325198}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.02, y: 0.55, z: 9.7}
-  m_LocalScale: {x: 1.9885, y: 1, z: 0.61171}
+  m_LocalRotation: {x: -5.1855814e-10, y: 0.6775953, z: 0.00000008145871, w: 0.735435}
+  m_LocalPosition: {x: 380.089, y: 10.01, z: 156.694}
+  m_LocalScale: {x: 37.83969, y: 37.839695, z: 37.83969}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &6147111971831900667
+  m_LocalEulerAnglesHint: {x: 0, y: 85.312, z: 0}
+--- !u!33 &963130692260239862
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2808438720335159558}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &7171532548442481889
+  m_GameObject: {fileID: 2214084033953325198}
+  m_Mesh: {fileID: 2526986102008625278, guid: b7c33bedc9fa203478185302e5f710e9, type: 3}
+--- !u!23 &6468397609137993298
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2808438720335159558}
+  m_GameObject: {fileID: 2214084033953325198}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -68,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8a3e24d6440e0d247a90f5876c2a58f8, type: 2}
+  - {fileID: 2100000, guid: f338fa3ac58806348a46804152f69bc3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -92,13 +91,13 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2274887647278300411
+--- !u!65 &6793904781889979249
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2808438720335159558}
+  m_GameObject: {fileID: 2214084033953325198}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -107,25 +106,9 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8616079193096041375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2808438720335159558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 976e2394d15cd8f448f352a606b091cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CraftTable
-  craftingUI: {fileID: 0}
-  craftingProgression: {fileID: 0}
-  playerController: {fileID: 0}
-  cameraBrain: {fileID: 0}
+  m_Size: {x: 0.057071447, y: 0.047496673, z: 0.028294502}
+  m_Center: {x: 0.002606151, y: 0.023723664, z: 0.00468339}
