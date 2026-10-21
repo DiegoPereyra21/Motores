@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/RadioMessage.uss" />
+    <ui:VisualElement name="RadioRoot" class="radio-root" picking-mode="Ignore">
+        <ui:Label name="ObjectiveHintLabel" class="radio-hint" text="" picking-mode="Ignore" />
+        <ui:Label name="NewMessageLabel" class="radio-new-message" text="Hay un mensaje nuevo en la radio" picking-mode="Ignore" />
+        <ui:VisualElement name="RadioPanel" class="radio-panel">
+            <ui:VisualElement name="RadioBackground" class="radio-background" picking-mode="Ignore" />
+            <ui:VisualElement name="RadioDim" class="radio-dim" picking-mode="Ignore" />
+            <ui:VisualElement name="SubtitleBox" class="radio-subtitle-box" picking-mode="Ignore">
+                <ui:Label name="SubtitleLabel" class="radio-subtitle" text="" />
+                <ui:Label name="SkipLabel" class="radio-skip" text="[E] Saltear" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
