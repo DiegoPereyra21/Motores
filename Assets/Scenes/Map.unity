@@ -140001,7 +140001,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4616896107899083203, guid: 82ab83ed495aaf84391ec12df2cafbbd, type: 3}
       propertyPath: m_Name
-      value: Log_1 (NO TOCAR) (1)
+      value: Mushroom (NO TOCAR)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -1422332,7 +1422332,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4616896107899083203, guid: 82ab83ed495aaf84391ec12df2cafbbd, type: 3}
       propertyPath: m_Name
-      value: Log_1 (NO TOCAR) (2)
+      value: Mushroom_2 (NO TOCAR)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -1465622,7 +1465622,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4616896107899083203, guid: 82ab83ed495aaf84391ec12df2cafbbd, type: 3}
       propertyPath: m_Name
-      value: Log_1 (NO TOCAR) (3)
+      value: StumpWithMushroom (NO TOCAR)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -1492095,7 +1492095,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 1293ebd4037ace844a653765c701052c, type: 2}
     - target: {fileID: 919132149155446097, guid: 48ec9e2b6cc7fa64690cbe2b55d20c55, type: 3}
       propertyPath: m_Name
-      value: Mushroom (1)
+      value: Mushroom_2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
