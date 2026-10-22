@@ -26,6 +26,15 @@ public class GameProgressController : MonoBehaviour
     [Header("Estado inicial")]
     [SerializeField, Min(1)] private int startingDay = 1;
 
+    [Header("Cantidad de dias antes del rescate")]
+    [SerializeField, Min(1)] private int rescueWaitDays = 1;
+
+    [Header("Item necesario para ganar")]
+    [SerializeField] private ItemData requiredEndingItem;
+
+    [Header("Inventario del jugador")]
+    [SerializeField] private Inventory playerInventory;
+
     public int CurrentDay { get; private set; }
     public DayNightPhase CurrentPhase { get; private set; }
     public float PhaseRemainingTime { get; private set; }
@@ -136,9 +145,11 @@ public class GameProgressController : MonoBehaviour
 
         CurrentDay++;
 
-        if (CurrentDay >= 4)
+        if (CurrentDay >= rescueWaitDays)
         {
-            EndGame(GameEnding.Victory);
+            bool hasRequiredItem = requiredEndingItem != null && playerInventory != null && playerInventory.GetItemCount(requiredEndingItem) > 0;
+
+            EndGame(hasRequiredItem ? GameEnding.Victory : GameEnding.Defeat);
             return;
         }
 
