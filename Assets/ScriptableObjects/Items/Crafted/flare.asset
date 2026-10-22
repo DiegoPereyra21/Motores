@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1041f8c7f4901b14ca86de07144cbd29, type: 3}
+  m_Name: flare
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemId: flare
+  itemName: Bengala de auxilio
+  icon: {fileID: 21300000, guid: 6c0aa3e24b975d242880242578918494, type: 3}
+  maxStackSize: 1
+  origin: 1
+  category: 3
+  specializedData:
+    rid: 8075318586725368547
+  references:
+    version: 2
+    RefIds:
+    - rid: 8075318586725368547
+      type: {class: PlaceableData, ns: , asm: Assembly-CSharp}
+      data:
+        prefab: {fileID: 368981180895095153, guid: 249a071c88e80c94492a6417e404ca6f, type: 3}

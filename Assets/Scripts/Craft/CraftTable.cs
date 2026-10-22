@@ -9,12 +9,18 @@ public class CraftTable : MonoBehaviour
 
     [Header("Jugador")]
     [SerializeField] private PlayerController playerController;
-    [SerializeField] private CinemachineBrain cameraBrain;
 
-    // temp
+    public CraftingProgression Progression => craftingProgression;
+
+    private Animator playerAnimator;
     private int currentDay = 1;
-
     private bool isCrafting;
+
+    private void Awake()
+    {
+        if (playerController != null)
+            playerAnimator = playerController.GetComponentInChildren<Animator>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -27,22 +33,24 @@ public class CraftTable : MonoBehaviour
             return;
         }
 
-        CraftingRecipe[] availableRecipes = craftingProgression.GetAvailableRecipes(currentDay);
+        if (playerController != null)
+        {
+            playerController.enabled = false;
 
-        craftingUI.Show(availableRecipes);
+            if (playerAnimator != null)
+                playerAnimator.speed = 0f;
+        }
+
+        currentDay = GameProgressController.Instance.CurrentDay;
+
+        CraftingRecipe[] allRecipes = craftingProgression.GetAllRecipes();
+
+        craftingUI.Show(allRecipes, currentDay);
 
         isCrafting = true;
 
-        Time.timeScale = 0f;
-
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-
-        if (playerController != null)
-            playerController.enabled = false;
-
-        if (cameraBrain != null)
-            cameraBrain.enabled = false;
     }
 
     public void CloseCrafting()
@@ -50,18 +58,18 @@ public class CraftTable : MonoBehaviour
         if (!isCrafting)
             return;
 
+        if (playerController != null)
+        {
+            playerController.enabled = true;
+
+            if (playerAnimator != null)
+                playerAnimator.speed = 1f;
+        }
+
         isCrafting = false;
 
         if (craftingUI != null)
             craftingUI.Hide();
-
-        if (playerController != null)
-            playerController.enabled = true;
-
-        if (cameraBrain != null)
-            cameraBrain.enabled = true;
-
-        Time.timeScale = 1f;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -78,12 +86,12 @@ public class CraftTable : MonoBehaviour
             craftingUI.Hide();
 
         if (playerController != null)
+        {
             playerController.enabled = true;
 
-        if (cameraBrain != null)
-            cameraBrain.enabled = true;
-
-        Time.timeScale = 1f;
+            if (playerAnimator != null)
+                playerAnimator.speed = 1f;
+        }
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

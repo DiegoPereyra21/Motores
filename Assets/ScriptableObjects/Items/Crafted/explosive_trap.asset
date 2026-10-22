@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1041f8c7f4901b14ca86de07144cbd29, type: 3}
+  m_Name: explosive_trap
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemId: explosive_trap
+  itemName: Trampa explosiva
+  icon: {fileID: 21300000, guid: dbf736a41dee39644afb16ea0c809b73, type: 3}
+  maxStackSize: 1
+  origin: 1
+  category: 4
+  specializedData:
+    rid: 8075318450504859936
+  references:
+    version: 2
+    RefIds:
+    - rid: 8075318450504859936
+      type: {class: TrapData, ns: , asm: Assembly-CSharp}
+      data:
+        deploymentType: 0
+        damage: 10
+        damageOverTime: 0
+        damageDuration: 0
+        prefab: {fileID: 9036127576188078789, guid: f6aa7a95b5107794cb0d876144253f53, type: 3}

@@ -12,18 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab281e00936df7841bb54dfff01004e2, type: 3}
   m_Name: AntisepticBandage
   m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipe
-  recipeName: 
-  recipeImage: {fileID: 21300000, guid: 95af902dde783e0459b8320db8cbd040, type: 3}
-  result: {fileID: 11400000, guid: 681ad0ba5eb911945956c02ca15c380b, type: 2}
+  result: {fileID: 11400000, guid: 1bf9447b7e6a3f849b8831662951c62e, type: 2}
   resultAmount: 1
-  description: 'Permite recuperar vida rapidamente.
+  description: 'Venda curativa mejorada, embebida en antiseptico, permite curar mas
+    cantidad de vida y prevenir heridas
 
 
     + 1 uso
 
-    +10 recuperacion
-    de vida por uso'
+    +30 recuperacion de vida
+    por uso'
   ingredients:
+  - item: {fileID: 11400000, guid: 681ad0ba5eb911945956c02ca15c380b, type: 2}
+    amount: 4
   - item: {fileID: 11400000, guid: f9c4170090c9dc34287e943ce1a0811a, type: 2}
     amount: 1
   - item: {fileID: 11400000, guid: 0d657cedf0e903a4bb4caa9017f5a069, type: 2}

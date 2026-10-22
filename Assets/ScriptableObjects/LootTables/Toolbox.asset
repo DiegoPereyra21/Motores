@@ -14,14 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LootTable
   lootEntries:
   - item: {fileID: 11400000, guid: 0d657cedf0e903a4bb4caa9017f5a069, type: 2}
-    dropChance: 30
+    dropChance: 20
     minAmount: 5
     maxAmount: 7
   - item: {fileID: 11400000, guid: 81e4c11636867f548a0c8cce9e1ec6ac, type: 2}
-    dropChance: 60
+    dropChance: 40
     minAmount: 5
     maxAmount: 10
   - item: {fileID: 11400000, guid: 33a5f359781a07a4d8153c1268584083, type: 2}
     dropChance: 10
     minAmount: 1
     maxAmount: 3
+  - item: {fileID: 11400000, guid: 3ee055871c170164cbe64c104785edde, type: 2}
+    dropChance: 10
+    minAmount: 1
+    maxAmount: 5
+  - item: {fileID: 11400000, guid: 08bf96f35d3888d439b147395b164aaa, type: 2}
+    dropChance: 10
+    minAmount: 1
+    maxAmount: 5

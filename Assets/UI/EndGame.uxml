@@ -1,16 +1,20 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/EndGame.uss?fileID=7433441132597879392&amp;guid=c252ac602ae5a1643ba30f919fb0b5a3&amp;type=3#EndGame"/>
-    <ui:VisualElement name="EndingRoot" class="ending-root" style="flex-grow: 1; background-color: rgba(8, 10, 12, 0);">
+    <ui:VisualElement name="EndingRoot" class="ending-root" style="flex-grow: 1; background-color: rgba(8, 10, 12, 0); display: flex;">
         <ui:VisualElement name="VictoryPanel" class="ending-panel" style="flex-grow: 1; display: none;">
-            <ui:Label text="¡SOBREVIVISTE!" name="VictoryTitle" class="ending-title"/>
-            <ui:Label text="Lograste aguantar hasta que el rescate llego!" name="VictoryDescription" class="ending-description"/>
-            <ui:Button text="MENU" name="VictoryMainMenuButton" class="ending-button"/>
+            <ui:Label text="¡SOBREVIVISTE!" name="VictoryTitle" class="ending-title" style="font-size: 70px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); color: rgb(207, 195, 162);"/>
+            <ui:Label text="Lograste construir la begala a tiempo para el rescate!" name="VictoryDescription" class="ending-description" style="font-size: 40px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); padding-top: 61px;"/>
+            <ui:VisualElement style="flex-grow: 1; align-content: flex-end; justify-content: flex-end;">
+                <ui:Button text="MENU" name="VictoryMainMenuButton" class="ending-button" style="font-size: 30px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); padding-top: 20px; padding-bottom: 20px;"/>
+            </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="DefeatPanel" class="ending-panel" style="flex-grow: 1; display: none;">
-            <ui:Label text="¡PERDISTE!" name="DefeatTitle" class="ending-title"/>
-            <ui:Label text="No lograste prepararte para el rescate, te quedaste atrapado en la cabaña!" name="DefeatDescription" class="ending-description"/>
-            <ui:Button text="REINTENTAR" name="DefeatRetryButton" class="ending-button"/>
-            <ui:Button text="MENU" name="DefeatMainMenuButton" class="ending-button"/>
+            <ui:Label text="¡PERDISTE!" name="DefeatTitle" class="ending-title" style="-unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); font-size: 70px; color: rgb(143, 69, 64);"/>
+            <ui:Label text="No lograste crear la bengala de auxilio a tiempo...&#10;&#10;&#10;Los equipos de rescate ni se enteraron que estabas cerca, te quedaste atrapado en la cabaña!" name="DefeatDescription" parse-escape-sequences="false" class="ending-description" style="font-size: 40px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); word-spacing: 15px; -unity-paragraph-spacing: 35px; padding-top: 113px;"/>
+            <ui:VisualElement style="flex-grow: 1; bottom: 0; justify-content: flex-end;">
+                <ui:Button text="REINTENTAR" name="DefeatRetryButton" class="ending-button" style="align-content: auto; font-size: 30px; padding-top: 20px; padding-bottom: 20px;"/>
+                <ui:Button text="MENU" name="DefeatMainMenuButton" class="ending-button" style="align-content: center; justify-content: flex-start; font-size: 30px; padding-top: 20px; padding-bottom: 20px;"/>
+            </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="DeathPanel" class="ending-panel" style="flex-grow: 1; display: none; text-shadow: 0 0 3px rgba(255, 255, 255, 0);">
             <ui:Image name="DeathVignette" class="death-overlay" style="background-image: resource(&quot;black_vignette&quot;); -unity-background-image-tint-color: rgb(0, 0, 0);"/>

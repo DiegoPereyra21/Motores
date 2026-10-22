@@ -27,4 +27,8 @@ MonoBehaviour:
       type: {class: ConsumableData, ns: , asm: Assembly-CSharp}
       data:
         maxUses: 1
-        prefab: {fileID: 368981180895095153, guid: 84664cef7cddd0d41a2fec1cdfd3ad67, type: 3}
+        effectType: 0
+        effectAmount: 30
+        effectOverTime: 0
+        effectDuration: 0
+        prefab: {fileID: 368981180895095153, guid: 0db69eaecbf6f074bb43357259ea3327, type: 3}
