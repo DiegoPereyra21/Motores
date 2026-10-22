@@ -19849,8 +19849,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72ea67613ca6204fb675c760000f671, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameProgressController
-  dayDuration: 30
-  nightDuration: 60
+  dayDuration: 90
+  nightDuration: 180
   startingDay: 1
   rescueWaitDays: 4
   requiredEndingItem: {fileID: 11400000, guid: 95ae904d696863742b63f136eb38a7f3, type: 2}
