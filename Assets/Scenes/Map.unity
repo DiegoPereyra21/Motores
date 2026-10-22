@@ -19816,7 +19816,7 @@ GameObject:
   - component: {fileID: 54095505}
   - component: {fileID: 54095506}
   m_Layer: 0
-  m_Name: GameProgressManager
+  m_Name: GameProgressController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50744,6 +50744,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1516088854901284069, guid: feb3c21b97068a344b57930a753c2b7a, type: 3}
   m_PrefabInstance: {fileID: 121258159}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &121293360 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7170428493495910945, guid: ea48199db39e81644b0b624238cbc526, type: 3}
+  m_PrefabInstance: {fileID: 5319428974435811905}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 976e2394d15cd8f448f352a606b091cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CraftTable
 --- !u!43 &121310296
 Mesh:
   m_ObjectHideFlags: 0
@@ -1524095,7 +1524106,7 @@ PrefabInstance:
     - target: {fileID: 5235717639177030393, guid: 6d5c04429c97d594289bd7d1e894f958, type: 3}
       propertyPath: craftTable
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 121293360}
     - target: {fileID: 6227327224204178483, guid: 6d5c04429c97d594289bd7d1e894f958, type: 3}
       propertyPath: m_LocalPosition.x
       value: 387.66
@@ -1524140,6 +1524151,10 @@ PrefabInstance:
       propertyPath: sourceAsset
       value: 
       objectReference: {fileID: 9197481963319205126, guid: b1072d513838167418fc377ee595b379, type: 3}
+    - target: {fileID: 7746132551328283471, guid: 6d5c04429c97d594289bd7d1e894f958, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

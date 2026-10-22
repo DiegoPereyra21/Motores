@@ -1,20 +1,20 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Crafting.uss?fileID=7433441132597879392&amp;guid=9cc867f73edd4fd4b97abdf647b8cec5&amp;type=3#Crafting"/>
-    <ui:VisualElement name="CraftMenu" class="craft-menu" style="flex-grow: 1; display: none;">
+    <ui:VisualElement name="CraftMenu" class="craft-menu" style="flex-grow: 1; display: none; top: 53px; bottom: 56px; right: 96px; left: 96px;">
         <ui:VisualElement name="CraftHeader" class="craft-header" style="flex-grow: 1; max-height: 120px;">
             <ui:VisualElement name="CraftHeaderDetail" class="craft-heading" style="flex-grow: 1;">
-                <ui:Label text="MESA DE FABRICACION" name="CraftTitle" class="craft-title" style="-unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); font-size: 45px; padding-top: 5px; margin-top: 4px; padding-bottom: 0; margin-bottom: 0;"/>
+                <ui:Label text="MESA DE FABRICACION" name="CraftTitle" class="craft-title" style="-unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); font-size: 50px; padding-top: 5px; margin-top: 4px; padding-bottom: 0; margin-bottom: 0;"/>
                 <ui:Label text="CREA LO QUE NECESITES PARA SOBREVIVIR" name="CraftSubtitle" class="craft-subtitle" style="-unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); font-size: 20px;"/>
             </ui:VisualElement>
-            <ui:Button text="X" name="CloseButton" class="close-button" style="-unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;);"/>
+            <ui:Button text="X" name="CloseButton" class="close-button" style="-unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); font-size: 30px; -unity-background-scale-mode: stretch-to-fill; text-shadow: 0 0 0 rgba(0, 0, 0, 0); text-overflow: clip; white-space: nowrap; -unity-text-align: middle-center; -unity-font-style: bold; align-self: center; justify-content: center; align-items: center; align-content: center; flex-direction: column; flex-wrap: nowrap;"/>
         </ui:VisualElement>
-        <ui:VisualElement name="CraftContent" class="craft-content" style="flex-grow: 1;">
-            <ui:VisualElement name="RecipePanel" class="recipe-panel" style="flex-grow: 1;">
+        <ui:VisualElement name="CraftContent" class="craft-content" style="flex-grow: 1; align-content: flex-start; justify-content: flex-start;">
+            <ui:VisualElement name="RecipePanel" class="recipe-panel" style="flex-grow: 1; min-width: 57%;">
                 <ui:VisualElement name="CategoryTabs" class="category-tabs" style="flex-grow: 1; flex-direction: row; flex-wrap: nowrap; flex-shrink: 0; flex-basis: auto; max-height: 60px; align-items: flex-start;">
-                    <ui:Button text="TODOS" name="AllButton" class="category-button selected" style="-unity-font-definition: url(&quot;project://database/Assets/Font/static/Oswald-Regular.ttf?fileID=12800000&amp;guid=80cfea8fbdccc014d9b200a632620baf&amp;type=3#Oswald-Regular&quot;); font-size: 18px;"/>
-                    <ui:Button text="CONSUMIBLES" name="ConsumablesButton" class="category-button" style="font-size: 16px; -unity-font-definition: url(&quot;project://database/Assets/Font/static/Oswald-Regular.ttf?fileID=12800000&amp;guid=80cfea8fbdccc014d9b200a632620baf&amp;type=3#Oswald-Regular&quot;);"/>
-                    <ui:Button text="EQUIPABLES" name="EquipableButton" class="category-button" style="-unity-font-definition: url(&quot;project://database/Assets/Font/static/Oswald-Regular.ttf?fileID=12800000&amp;guid=80cfea8fbdccc014d9b200a632620baf&amp;type=3#Oswald-Regular&quot;); font-size: 16px;"/>
-                    <ui:Button text="COLOCABLES" name="PlaceablesButton" class="category-button" style="-unity-font-definition: url(&quot;project://database/Assets/Font/static/Oswald-Regular.ttf?fileID=12800000&amp;guid=80cfea8fbdccc014d9b200a632620baf&amp;type=3#Oswald-Regular&quot;); font-size: 16px;"/>
+                    <ui:Button text="TODOS" name="AllButton" class="category-button selected" style="-unity-font-definition: url(&quot;project://database/Assets/Font/static/Oswald-Regular.ttf?fileID=12800000&amp;guid=80cfea8fbdccc014d9b200a632620baf&amp;type=3#Oswald-Regular&quot;); font-size: 20px;"/>
+                    <ui:Button text="CONSUMIBLES" name="ConsumablesButton" class="category-button" style="font-size: 20px; -unity-font-definition: url(&quot;project://database/Assets/Font/static/Oswald-Regular.ttf?fileID=12800000&amp;guid=80cfea8fbdccc014d9b200a632620baf&amp;type=3#Oswald-Regular&quot;);"/>
+                    <ui:Button text="EQUIPABLES" name="EquipableButton" class="category-button" style="-unity-font-definition: url(&quot;project://database/Assets/Font/static/Oswald-Regular.ttf?fileID=12800000&amp;guid=80cfea8fbdccc014d9b200a632620baf&amp;type=3#Oswald-Regular&quot;); font-size: 20px;"/>
+                    <ui:Button text="COLOCABLES" name="PlaceablesButton" class="category-button" style="-unity-font-definition: url(&quot;project://database/Assets/Font/static/Oswald-Regular.ttf?fileID=12800000&amp;guid=80cfea8fbdccc014d9b200a632620baf&amp;type=3#Oswald-Regular&quot;); font-size: 20px;"/>
                 </ui:VisualElement>
                 <ui:ScrollView name="RecipeScrollView" class="recipe-scroll-view">
                     <ui:VisualElement name="RecipeList" class="recipe-list" style="flex-grow: 1;">
@@ -23,8 +23,8 @@
                                 <ui:Image name="RecipeIcon" class="recipe-icon" style="width: 110px; height: 110px; align-self: flex-start;"/>
                             </ui:VisualElement>
                             <ui:VisualElement name="RecipeSlotInfo" class="recipe-slot-info" style="flex-grow: 1;">
-                                <ui:Label text="Label" name="RecipeName" class="recipe-name"/>
-                                <ui:Label text="Label" name="RecipeStatus" class="recipe-status"/>
+                                <ui:Label text="Label" name="RecipeName" class="recipe-name" style="font-size: 28px;"/>
+                                <ui:Label text="Label" name="RecipeStatus" class="recipe-status" style="font-size: 16px;"/>
                             </ui:VisualElement>
                             <ui:Label text="ø" name="RecipeStateIcon" class="recipe-state-icon" style="font-size: 24px;"/>
                         </ui:Button>
@@ -32,21 +32,21 @@
                 </ui:ScrollView>
             </ui:VisualElement>
             <ui:VisualElement name="RecipeDetails" class="recipe-details" style="flex-grow: 1;">
-                <ui:VisualElement name="RecipeOverview" class="recipe-overview" style="flex-grow: 1;">
-                    <ui:VisualElement name="RecipeImageFrame" class="recipe-image-frame" style="flex-grow: 1; justify-content: space-between; height: 318px; flex-direction: column; flex-wrap: nowrap; align-self: auto; align-content: center; -unity-text-align: middle-left; white-space: normal; -unity-background-scale-mode: scale-and-crop; background-position-y: center; padding-top: 35px; width: 89px;">
-                        <ui:Image name="RecipeImage" scale-mode="ScaleToFit" class="recipe-image" style="justify-content: flex-start; align-items: center; align-self: center; align-content: center; -unity-background-scale-mode: scale-to-fit; background-position-y: bottom 0; background-position-x: center; width: 250px; height: 250px;"/>
+                <ui:VisualElement name="RecipeOverview" class="recipe-overview" style="flex-grow: 1; min-height: 0; max-height: 300px;">
+                    <ui:VisualElement name="RecipeImageFrame" class="recipe-image-frame" style="flex-grow: 1; justify-content: space-between; height: 329px; flex-direction: column; flex-wrap: nowrap; align-self: auto; align-content: center; -unity-text-align: middle-left; white-space: normal; -unity-background-scale-mode: scale-and-crop; background-position-y: center; padding-top: 35px; width: 89px;">
+                        <ui:Image name="RecipeImage" scale-mode="ScaleToFit" class="recipe-image" style="justify-content: flex-start; align-items: center; align-self: center; align-content: center; -unity-background-scale-mode: scale-to-fit; background-position-y: bottom 0; background-position-x: center; width: 160px; height: 160px; min-height: 160px; bottom: 27px; background-image: none;"/>
                     </ui:VisualElement>
                     <ui:VisualElement name="RecipeTextInfo" class="recipe-text-info" style="flex-grow: 1;">
-                        <ui:Label text="Selecciona una receta" name="RecipeName" parse-escape-sequences="true" class="details-recipe-name" style="-unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;);"/>
-                        <ui:Label text="Descripcion de la receta" name="RecipeDescription" class="recipe-description" style="-unity-font-definition: url(&quot;project://database/Packages/com.unity.collab-proxy/Editor/Assets/Fonts/Cascadia.ttf?fileID=12800000&amp;guid=9229ae5dbc38f488d921156ff75869e9&amp;type=3#Cascadia&quot;);"/>
+                        <ui:Label text="Selecciona una receta" name="RecipeName" parse-escape-sequences="true" class="details-recipe-name" style="-unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); font-size: 28px;"/>
+                        <ui:Label text="Todavia no has seleccionado nada" name="RecipeDescription" class="recipe-description" style="-unity-font-definition: url(&quot;project://database/Packages/com.unity.collab-proxy/Editor/Assets/Fonts/Cascadia.ttf?fileID=12800000&amp;guid=9229ae5dbc38f488d921156ff75869e9&amp;type=3#Cascadia&quot;); font-size: 18px;"/>
                     </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:Label text="MATERIALES REQUERIDOS" name="IngredientsTitle" class="section-title"/>
-                <ui:ScrollView name="IngredientsScrollView" class="ingredients-scroll-view">
+                <ui:Label text="MATERIALES REQUERIDOS" name="IngredientsTitle" class="section-title" style="font-size: 18px;"/>
+                <ui:ScrollView name="IngredientsScrollView" class="ingredients-scroll-view" style="flex-direction: row;">
                     <ui:VisualElement name="IngredientsContainer" class="ingredients-container" style="flex-grow: 1;"/>
                 </ui:ScrollView>
-                <ui:Label text="Faltan materiales para fabricar" name="AdviceLabel" triple-click-selects-line="false" parse-escape-sequences="true" class="advice-label"/>
-                <ui:VisualElement name="CraftActions" class="craft-actions" style="flex-grow: 1;">
+                <ui:Label text="Faltan materiales para fabricar" name="AdviceLabel" triple-click-selects-line="false" parse-escape-sequences="true" class="advice-label" style="font-size: 20px; -unity-font-definition: url(&quot;project://database/Packages/com.unity.collab-proxy/Editor/Assets/Fonts/Cascadia.ttf?fileID=12800000&amp;guid=9229ae5dbc38f488d921156ff75869e9&amp;type=3#Cascadia&quot;); align-content: flex-end; justify-content: flex-end;"/>
+                <ui:VisualElement name="CraftActions" class="craft-actions" style="flex-grow: 1; align-content: flex-end; justify-content: flex-end; margin-top: 0; -unity-background-scale-mode: stretch-to-fill; max-height: 80px;">
                     <ui:Button text="FABRICAR" name="CraftButton" class="craft-button"/>
                 </ui:VisualElement>
             </ui:VisualElement>

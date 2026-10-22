@@ -11,9 +11,8 @@ public class CraftTable : MonoBehaviour
     [SerializeField] private PlayerController playerController;
     [SerializeField] private CinemachineBrain cameraBrain;
 
-    // temp
+    public CraftingProgression Progression => craftingProgression;
     private int currentDay = 1;
-
     private bool isCrafting;
 
     private void OnTriggerEnter(Collider other)
@@ -27,9 +26,11 @@ public class CraftTable : MonoBehaviour
             return;
         }
 
-        CraftingRecipe[] availableRecipes = craftingProgression.GetAvailableRecipes(currentDay);
+        currentDay = GameProgressController.Instance.CurrentDay;
 
-        craftingUI.Show(availableRecipes);
+        CraftingRecipe[] allRecipes = craftingProgression.GetAllRecipes();
+
+        craftingUI.Show(allRecipes, currentDay);
 
         isCrafting = true;
 
