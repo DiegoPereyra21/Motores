@@ -13,6 +13,7 @@
 .inventory-content {
     width: 70%;
     align-self: center;
+    align-items: stretch;
 
     background-color: rgba(11, 22, 20, 0.8);
 
@@ -77,6 +78,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    align-self: center;
     flex-shrink: 0;
     margin-top: 16px;
 }
@@ -84,13 +86,18 @@
 .inventory-grid {
     flex-direction: row;
     flex-wrap: wrap;
-    width: 700px;
+    width: 710px;
     flex-shrink: 0;
     padding: 8px;
     background-color: rgb(8, 16, 15);
     border-width: 1px;
     border-color: rgb(45, 54, 46);
     border-radius: 4px;
+
+    padding-top: 8px;
+    padding-right: 4px;
+    padding-bottom: 8px;
+    padding-left: 16px;
 }
 
 .inventory-slot {
@@ -103,6 +110,41 @@
     border-width: 2px;
     border-color: rgb(125, 119, 94);
     border-radius: 5px;
+}
+
+.slot-image {
+    width: 76px;
+    height: 76px;
+    align-self: center;
+    margin-top: 8px;
+    -unity-image-scale-mode: scale-to-fit;
+}
+
+.slot-title {
+    width: 100%;
+    margin-top: 4px;
+    padding-left: 2px;
+    padding-right: 2px;
+
+    color: rgb(35, 42, 35);
+    font-size: 15px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    white-space: normal;
+}
+
+.slot-count {
+    position: absolute;
+    left: 4px;
+    top: 4px;
+
+    color: rgb(48, 75, 43);
+    font-size: 18 px;
+    -unity-font-style: normal;
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    -unity-font-definition: url("project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf");
+
 }
 
 .quick-access-pocket {

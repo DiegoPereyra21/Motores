@@ -10,6 +10,9 @@ public class CraftingUI : MonoBehaviour
     [SerializeField] private CraftTable craftTable;
     [SerializeField] private Inventory inventory;
 
+    // check para la camara mientras crafteamos
+    public bool IsMenuOpen { get; private set; }
+
     private VisualElement root;
     private VisualElement craftMenu;
     private VisualElement recipeList;
@@ -179,13 +182,20 @@ public class CraftingUI : MonoBehaviour
         uiDocument.sortingOrder = 1;
 
         if (craftMenu != null)
+        {
+            IsMenuOpen = true;
+
             craftMenu.style.display = DisplayStyle.Flex;
+        }
+            
     }
 
     public void Hide()
     {
         if (craftMenu == null)
             return;
+
+        IsMenuOpen = false;
 
         craftMenu.style.display = DisplayStyle.None;
 

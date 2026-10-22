@@ -110434,6 +110434,10 @@ PrefabInstance:
       propertyPath: inventory
       value: 
       objectReference: {fileID: 1712976865}
+    - target: {fileID: 1392977919761247990, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
+      propertyPath: playerController
+      value: 
+      objectReference: {fileID: 1712976866}
     - target: {fileID: 3124581443071239553, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
       propertyPath: sourceAsset
       value: 
@@ -1015359,6 +1015363,17 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!114 &1369662536 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1392977919761247990, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
+  m_PrefabInstance: {fileID: 360846084}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2f7416ee33a3314d828ce9c967dcb75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryUI
 --- !u!43 &1372420852
 Mesh:
   m_ObjectHideFlags: 0
@@ -1384384,6 +1384399,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 1459768277271011018, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      propertyPath: craftingUI
+      value: 
+      objectReference: {fileID: 2116287810}
+    - target: {fileID: 1459768277271011018, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      propertyPath: inventoryUI
+      value: 
+      objectReference: {fileID: 1369662536}
     - target: {fileID: 1486131988213237260, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
       propertyPath: m_Layer
       value: 6

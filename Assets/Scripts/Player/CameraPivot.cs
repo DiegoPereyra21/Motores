@@ -12,6 +12,10 @@ public class CameraPivot : MonoBehaviour
     //inputs(luego testear con joystick)
     [SerializeField] private InputActionReference lookAction;
 
+    // para manejo de la camara con los menus de inventario y craft
+    [SerializeField] private InventoryUI inventoryUI;
+    [SerializeField] private CraftingUI craftingUI;
+
     //privadas
     private float yaw;
     private float pitch;
@@ -39,6 +43,12 @@ public class CameraPivot : MonoBehaviour
     }
     private void LateUpdate()//late para que se mueva luego del player
     {
+        if (inventoryUI != null && inventoryUI.IsInventoryOpen)
+            return;
+
+        if (craftingUI != null && craftingUI.IsMenuOpen)
+            return;
+
         Vector2 look = lookAction.action.ReadValue<Vector2>() * sensitivity;
         yaw += look.x;
         pitch = Mathf.Clamp(pitch - look.y, minPitch, maxPitch);

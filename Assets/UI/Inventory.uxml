@@ -13,38 +13,7 @@
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="InventoryBody" class="inventory-body" style="flex-grow: 1;">
-                <ui:VisualElement name="InventoryGrid" class="inventory-grid" style="left: 0; padding-left: 12px; padding-right: 9px; -unity-text-align: middle-left; align-self: center; justify-content: flex-start; align-items: center; align-content: auto; flex-direction: row; flex-wrap: wrap;">
-                    <ui:VisualElement name="Slot_01" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_02" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_03" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_04" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_05" class="inventory-slot" style="margin-right: 0;"/>
-                    <ui:VisualElement name="Slot_06" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_07" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_08" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_09" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_10" class="inventory-slot" style="margin-right: 0;"/>
-                    <ui:VisualElement name="Slot_11" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_12" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_13" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_14" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_15" class="inventory-slot" style="margin-right: 0;"/>
-                    <ui:VisualElement name="Slot_16" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_17" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_18" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_19" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_20" class="inventory-slot" style="margin-right: 0;"/>
-                    <ui:VisualElement name="Slot_21" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_22" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_23" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_24" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_25" class="inventory-slot" style="margin-right: 0;"/>
-                    <ui:VisualElement name="Slot_26" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_27" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_28" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_29" class="inventory-slot"/>
-                    <ui:VisualElement name="Slot_30" class="inventory-slot" style="margin-right: 0;"/>
-                </ui:VisualElement>
+                <ui:VisualElement name="InventoryGrid" class="inventory-grid" style="left: 0; padding-left: 16px; padding-right: 4px; -unity-text-align: middle-left; align-self: center; justify-content: flex-start; align-items: center; align-content: auto; flex-direction: row; flex-wrap: wrap;"/>
                 <ui:VisualElement name="QuickAccessPocket" class="quick-access-pocket" style="flex-direction: column; flex-wrap: nowrap;">
                     <ui:Label text="ACCESO RAPIDO" name="PocketTitle" class="pocket-title" style="-unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;);"/>
                     <ui:VisualElement name="PocketGrid" style="flex-grow: 1; flex-wrap: wrap; align-self: center; justify-content: center; flex-direction: row;">

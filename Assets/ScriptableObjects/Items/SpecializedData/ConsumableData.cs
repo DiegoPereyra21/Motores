@@ -1,14 +1,6 @@
 using UnityEngine;
 
 [System.Serializable]
-
-public enum ConsumableEffectType
-{
-    Heal,
-    RestoreStamina,
-    ReduceInfection
-}
-
 public class ConsumableData : ItemSpecializedData
 {
     [Header("Cantidad de usos")]
@@ -30,4 +22,11 @@ public class ConsumableData : ItemSpecializedData
 
     [Header("Prefab")]
     public GameObject prefab;
+}
+
+public enum ConsumableEffectType
+{
+    Heal,
+    RestoreStamina,
+    ReduceInfection
 }
