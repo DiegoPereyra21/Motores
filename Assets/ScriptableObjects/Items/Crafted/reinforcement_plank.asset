@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1041f8c7f4901b14ca86de07144cbd29, type: 3}
-  m_Name: reinforcement-plank
+  m_Name: reinforcement_plank
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: reinforced_wood_plank
   itemName: Tabla de refuerzo

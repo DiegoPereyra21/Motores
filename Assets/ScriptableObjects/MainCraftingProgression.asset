@@ -19,4 +19,7 @@ MonoBehaviour:
   day2Recipes:
   - {fileID: 11400000, guid: e2eaa67ba390cff42a96d08948347f0f, type: 2}
   - {fileID: 11400000, guid: 605e644b13059f4489bc548fcbcc4f10, type: 2}
-  day3Recipes: []
+  day3Recipes:
+  - {fileID: 11400000, guid: 6b50e2ef0dce69f4f976cfd99a4ba546, type: 2}
+  - {fileID: 11400000, guid: 227785da2a50d7d45814ac730b726cda, type: 2}
+  - {fileID: 11400000, guid: 227785da2a50d7d45814ac730b726cda, type: 2}

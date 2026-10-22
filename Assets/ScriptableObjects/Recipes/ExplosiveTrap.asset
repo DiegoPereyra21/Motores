@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab281e00936df7841bb54dfff01004e2, type: 3}
   m_Name: ExplosiveTrap
   m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipe
-  result: {fileID: 11400000, guid: 5506deeef8967944e8e7050d0ed43c15, type: 2}
+  result: {fileID: 11400000, guid: 4e41ce8d8b011174da662583481ae744, type: 2}
   resultAmount: 1
-  description: test
+  description: "Trampa explosiva basica, permite colocarla en el suelo y se activa
+    por contacto.\n\n+ 10 de da\xF1o\n+ puede da\xF1ar al propietario "
   ingredients:
   - item: {fileID: 11400000, guid: 08bf96f35d3888d439b147395b164aaa, type: 2}
     amount: 1
