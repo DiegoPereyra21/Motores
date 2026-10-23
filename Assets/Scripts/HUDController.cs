@@ -50,10 +50,6 @@ public class HUDController : MonoBehaviour
         {
             Debug.LogError("[HUDController] No se encontro Selector en el UXML.", this);
         }
-        else
-        {
-            selector.style.display = DisplayStyle.None;
-        }
 
         wheel = root.Q<VisualElement>("Wheel");
 
