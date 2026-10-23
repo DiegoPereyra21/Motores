@@ -19920,8 +19920,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameProgressController
   daySpeedWithZombiesAlive: 0.5
-  dayDuration: 15
-  nightDuration: 30
+  dayDuration: 60
+  nightDuration: 180
   startingDay: 1
   rescueWaitDays: 4
   requiredEndingItem: {fileID: 11400000, guid: 95ae904d696863742b63f136eb38a7f3, type: 2}
@@ -1404352,7 +1404352,7 @@ MonoBehaviour:
   - {fileID: 2603641947717816421, guid: d07e0f686af62364a8e36afb9c32f5b6, type: 3}
   spawnPointsParent: {fileID: 1360203022}
   timeBetweenSpawns: 4
-  maxZombiesPerNight: 2
+  maxZombiesPerNight: 30
   maxZombiesAlive: 10
   initialSpawnDelay: 5
   gameProgressController: {fileID: 54095506}
