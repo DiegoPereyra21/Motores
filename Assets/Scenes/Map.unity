@@ -19920,8 +19920,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameProgressController
   daySpeedWithZombiesAlive: 0.5
-  dayDuration: 60
-  nightDuration: 180
+  dayDuration: 10
+  nightDuration: 15
   startingDay: 1
   rescueWaitDays: 4
   requiredEndingItem: {fileID: 11400000, guid: 95ae904d696863742b63f136eb38a7f3, type: 2}
@@ -159394,6 +159394,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EndGameUI
   uiDocument: {fileID: 565782973}
+  hudController: {fileID: 583824012}
   deathCamera: {fileID: 7811018712736946741}
   deathPresentation: {fileID: 1500396594}
   deathFadeDuration: 2
@@ -722703,6 +722704,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &583824012 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1069845118292833332, guid: 3d92d9bc565ce7748ab43fe2ec871ca3, type: 3}
+  m_PrefabInstance: {fileID: 3546937348047843446}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ca22d14c4c11244e84c22d4ec9587e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HUDController
 --- !u!43 &584742034
 Mesh:
   m_ObjectHideFlags: 0

@@ -8,6 +8,9 @@ public class EndGameUI : MonoBehaviour
     [Header("UI")]
     [SerializeField] private UIDocument uiDocument;
 
+    [Header("HUD")]
+    [SerializeField] private HUDController hudController;
+
     [Header("Camara de muerte")]
     [SerializeField] private GameObject deathCamera;
 
@@ -120,6 +123,9 @@ public class EndGameUI : MonoBehaviour
                 break;
 
             case GameEnding.Death:
+                if (hudController != null)
+                    hudController.HideHUD();
+
                 if (deathPanel != null)
                 {
                     deathPanel.style.display = DisplayStyle.Flex;

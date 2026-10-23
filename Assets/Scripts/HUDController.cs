@@ -219,4 +219,16 @@ public class HUDController : MonoBehaviour
 
         slot.style.scale = new Scale(Vector2.one);
     }
+
+    public void HideHUD()
+    {
+        if (uiDocument != null)
+            uiDocument.rootVisualElement.style.display = DisplayStyle.None;
+    }
+
+    public void ShowHUD()
+    {
+        if (uiDocument != null)
+            uiDocument.rootVisualElement.style.display = DisplayStyle.Flex;
+    }
 }
