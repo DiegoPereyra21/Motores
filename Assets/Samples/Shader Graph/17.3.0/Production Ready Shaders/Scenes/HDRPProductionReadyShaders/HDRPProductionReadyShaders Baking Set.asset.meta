@@ -1,8 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Samples/Shader Graph/17.3.0/Production Ready Shaders/Scenes/HDRPProductionReadyShaders/HDRPProductionReadyShaders Baking Set.asset.meta
 guid: 07e96573f30ed5c4c9a2bb6fd77183f5
+========
+guid: 98eeccba5c103834fbb79e9d4432bd4a
+>>>>>>>> origin/mapa_nuevo:Assets/TextMesh Pro/Examples & Extras/Scenes/06 - Extra Rich Text ExamplesSettings.lighting.meta
 NativeFormatImporter:
   externalObjects: {}
-  mainObjectFileID: 11400000
+  mainObjectFileID: 4890085278179872738
   userData: 
   assetBundleName: 
   assetBundleVariant: 

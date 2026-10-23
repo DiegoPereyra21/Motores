@@ -19920,11 +19920,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameProgressController
   dayDuration: 90
+<<<<<<< HEAD
   nightDuration: 180
   startingDay: 1
   rescueWaitDays: 4
   requiredEndingItem: {fileID: 11400000, guid: 95ae904d696863742b63f136eb38a7f3, type: 2}
   playerInventory: {fileID: 1712976865}
+=======
+  nightDuration: 90
+  startingDay: 1
+>>>>>>> origin/mapa_nuevo
 --- !u!43 &55114070
 Mesh:
   m_ObjectHideFlags: 0
