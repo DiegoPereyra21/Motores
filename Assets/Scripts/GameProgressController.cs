@@ -47,7 +47,7 @@ public class GameProgressController : MonoBehaviour
     public event Action<DayNightPhase> OnPhaseChanged;
     public event Action<int> OnDayChanged;
     public event Action<float> OnPhaseProgressChanged;
-    public event Action OnRunFinished;
+    //public event Action OnRunFinished;
 
     public float CurrentPhaseDuration => CurrentPhase == DayNightPhase.Day ? dayDuration : nightDuration;
 

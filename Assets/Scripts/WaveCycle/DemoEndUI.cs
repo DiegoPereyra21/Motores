@@ -7,7 +7,7 @@ public class DemoEndUI : MonoBehaviour
     [SerializeField] private DayNightLighting dayNightCycle; //el "reloj" del que escucha el evento de fin de demo
     [SerializeField] private GameObject demoEndUI; //texto/panel de "Fin de la demo", desactivado por defecto en la escena
     //para volver al menu luego de ganar (luego ver si poner boton)
-    private string mainMenuSceneName = "MainMenu"; //nombre de la escena del menu principal
+    //private string mainMenuSceneName = "MainMenu"; //nombre de la escena del menu principal
     [SerializeField] private float secondsBeforeMainMenu = 3f; //cuanto se queda el panel antes de volver
 
     private void OnEnable()
