@@ -246,10 +246,7 @@ MonoBehaviour:
   - {fileID: 6755983651060764279, guid: f96f11a082116654fbf7ad17e022e4c5, type: 3}
   - {fileID: 3937809744094526762, guid: 4aca75abb51be5b46b339a4ee261bb8d, type: 3}
   - {fileID: 2603641947717816421, guid: d07e0f686af62364a8e36afb9c32f5b6, type: 3}
-  spawnPoints:
-  - {fileID: 1744900781}
-  - {fileID: 366423201}
-  - {fileID: 1042814330}
+  spawnPointsParent: {fileID: 0}
   timeBetweenSpawns: 4
   maxZombiesAlive: 4
   initialSpawnDelay: 15
