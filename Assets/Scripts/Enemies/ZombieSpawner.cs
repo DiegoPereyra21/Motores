@@ -11,14 +11,21 @@ public class ZombieSpawner : MonoBehaviour
     [Header("Spawns")]
     [SerializeField] private Transform spawnPointsParent;
     [SerializeField] private float timeBetweenSpawns = 4f;
-    [SerializeField] private int maxZombiesAlive = 10;
+    [SerializeField, Min(1)] private int maxZombiesPerNight = 30; // cantidad maxima de enemigos por noche
+    [SerializeField, Min(1)] private int maxZombiesAlive = 10; // cantidad maxima de enemigos activos a la vez
     [SerializeField] private float initialSpawnDelay = 15f;
 
     [Header("Game Progress Manager")]
     [SerializeField] private GameProgressController gameProgressController;
 
+    private int zombiesSpawnedThisNight;
+    private bool canSpawnZombies;
     private float nextSpawnTime; //momento (Time.time) del proximo spawn permitido
     private bool nightActive; //se explica solo: true = noche, false = dia o demo terminada.
+
+    private bool hordeCleared;
+    private bool hasSpawnedZombie;
+
     private Transform[] spawnPoints;
 
     private void Awake()
@@ -29,19 +36,29 @@ public class ZombieSpawner : MonoBehaviour
     //condiciones de no spawn: no es de noche, no hay prefab o spawn points, o ya hay demasiados zombies vivos.
     private void Update()
     {
-        if (!nightActive) return;
-
         if (gameProgressController == null)
         {
             StopEnemiesSpawn();
             return;
         }
 
+        CheckIfHordeIsCleared();
+
+        if (!nightActive) return;
+
         if (zombiePrefabs == null || zombiePrefabs.Length == 0 || spawnPoints == null || spawnPoints.Length == 0)
             return;
 
-        if (Time.time < nextSpawnTime)
+        // ya se genero el maximo de zombies de la noche
+        if (zombiesSpawnedThisNight >= maxZombiesPerNight)
+        {
+            canSpawnZombies = false;
             return;
+        }
+
+        if (!canSpawnZombies) return;
+
+        if (Time.time < nextSpawnTime) return;
 
         int currentZombies = GameObject.FindGameObjectsWithTag("Enemy").Length;
 
@@ -130,6 +147,12 @@ public class ZombieSpawner : MonoBehaviour
     private void StartEnemiesSpawn()
     {
         nightActive = true;
+        canSpawnZombies = true;
+        zombiesSpawnedThisNight = 0;
+
+        hordeCleared = false;
+        hasSpawnedZombie = false;
+
         nextSpawnTime = Time.time + initialSpawnDelay;
     }
 
@@ -137,6 +160,7 @@ public class ZombieSpawner : MonoBehaviour
     private void StopEnemiesSpawn()
     {
         nightActive = false;
+        canSpawnZombies = false;
     }
 
     private void SpawnZombie()
@@ -144,9 +168,26 @@ public class ZombieSpawner : MonoBehaviour
         //elige un spawn point al azar e instancia el prefab ahi
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
-        Debug.Log(Time.time);
-
         GameObject prefab = zombiePrefabs[Random.Range(0, zombiePrefabs.Length)];
         Instantiate(prefab, spawnPoint.position, spawnPoint.rotation);
+
+        zombiesSpawnedThisNight++;
+        hasSpawnedZombie = true;
+    }
+
+    private void CheckIfHordeIsCleared()
+    {
+        if (hordeCleared || !hasSpawnedZombie)
+            return;
+
+        int currentZombies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+
+        if (currentZombies > 0)
+            return;
+
+        hordeCleared = true;
+        canSpawnZombies = false;
+
+        Debug.Log("[ZombieSpawner] Horda eliminada.");
     }
 }

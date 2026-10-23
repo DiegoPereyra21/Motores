@@ -1,16 +1,48 @@
-<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement name="HUDContainer" picking-mode="Ignore" style="flex-grow: 1; flex-direction: row-reverse;">
-        <ui:VisualElement name="DayIndicator" picking-mode="Ignore" style="flex-grow: 1; flex-direction: row-reverse; align-self: auto; align-items: flex-start;">
-            <ui:Image name="Background" style="-unity-background-image-tint-color: rgb(255, 255, 255); -unity-background-scale-mode: scale-to-fit; background-position-x: center; position: absolute; height: 62px; width: 239px; background-color: rgba(0, 0, 0, 0.62); left: 1681px; color: rgba(27, 27, 27, 0.7); -unity-text-outline-color: rgb(0, 0, 0); text-shadow: 0 0 0 rgb(0, 0, 0);"/>
-            <ui:VisualElement name="TextContainer" picking-mode="Ignore" style="flex-grow: 1; flex-direction: row; position: absolute; background-image: resource(&quot;Bloody Screen Effects/Effect_3&quot;); width: 241px; left: 1679px; height: 62px; align-self: center; align-content: flex-start; top: 0; align-items: center; justify-content: space-evenly;">
-                <ui:Label text="Label" name="DayLabel" style="font-size: 35px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); color: rgb(255, 255, 255);"/>
-                <ui:Label text="-" name="SeparatorLabel" style="font-size: 30px; -unity-font-definition: url(&quot;project://database/Assets/TextMesh%20Pro/Examples%20&amp;%20Extras/Fonts/Bangers.ttf?fileID=12800000&amp;guid=5dd49b3eacc540408c98eee0de38e0f1&amp;type=3#Bangers&quot;); color: rgb(255, 255, 255);"/>
-                <ui:Label text="Label" name="PhaseLabel" style="font-size: 35px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); color: rgb(255, 255, 255); -unity-text-outline-width: 0; text-shadow: 0 0 0 rgb(255, 0, 0);"/>
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/HUD.uss?fileID=7433441132597879392&amp;guid=0c40e13878fb2c3449ec84ae715ab497&amp;type=3#HUD"/>
+    <ui:VisualElement name="HUD" class="hud">
+        <ui:VisualElement name="Day" class="day" style="height: 89px; width: 156px;">
+            <ui:Label name="DayLabel" text="DAY 1" style="height: 59px; width: 113px; -unity-text-align: middle-center; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;);"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="Equipment" class="equipment">
+            <ui:VisualElement name="Radio" class="indicator" style="width: 200px; height: 200px; top: -37px;">
+                <ui:VisualElement name="RadioIcon" class="radio-icon" style="background-image: resource(&quot;radio/radio_off&quot;); -unity-background-scale-mode: scale-to-fit; width: 200px; height: 200px; right: -32px; top: 26px;"/>
+                <ui:Label name="RadioAlert" text="Sin mensaje" class="radio-alert"/>
             </ui:VisualElement>
-            <ui:VisualElement name="DummyContainer" style="flex-grow: 1; position: absolute; top: 926px; right: 20px;">
-                <ui:Image style="background-image: resource(&quot;bag&quot;); height: 147px; width: 121px;"/>
-                <ui:Label text="I" style="font-size: 35px; bottom: 146px; right: 14px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); -unity-font-style: bold;"/>
+            <ui:VisualElement name="Backpack" class="indicator" style="width: 170px; height: 170px; -unity-background-scale-mode: stretch-to-fill; top: 366px; right: -68px;">
+                <ui:VisualElement name="BackpackIcon" class="backpack-icon" style="background-image: resource(&quot;bag&quot;); width: 100px; height: 110px; display: flex; -unity-background-scale-mode: stretch-to-fill;"/>
+                <ui:Label name="KeyLabel" text="I" class="key-label" style="left: 9px; bottom: 25px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); -unity-font-style: bold;"/>
             </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Health" class="health">
+            <ui:Label name="HealthLabel" text="Salud" enable-rich-text="true" style="font-size: 25px; right: 7px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;);"/>
+            <ui:VisualElement name="HealthBar" class="health-bar">
+                <ui:VisualElement name="HealthBackground" class="health-background">
+                    <ui:VisualElement name="HealthFill" class="health-fill"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="Selector" class="selector" style="right: 20px;">
+            <ui:VisualElement name="Wheel" class="wheel">
+                <ui:VisualElement name="Slot1" class="slot slot-1">
+                    <ui:VisualElement name="Icon1" class="slot-icon"/>
+                    <ui:VisualElement name="Durability1" class="durability" style="bottom: -12px; right: -8px;">
+                        <ui:VisualElement name="DurabilityFill1" class="durability-fill"/>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot2" class="slot slot-2">
+                    <ui:VisualElement name="Icon2" class="slot-icon"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot3" class="slot slot-3">
+                    <ui:VisualElement name="Icon3" class="slot-icon"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot4" class="slot slot-4">
+                    <ui:VisualElement name="Icon4" class="slot-icon"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="VerticalLine" class="vertical-line"/>
+                <ui:VisualElement name="HorizontalLine" class="horizontal-line"/>
+            </ui:VisualElement>
+            <ui:Label name="KeyLabel" text="Q" class="key-label" style="font-size: 30px; left: -34px; bottom: -11px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); -unity-font-style: bold;"/>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

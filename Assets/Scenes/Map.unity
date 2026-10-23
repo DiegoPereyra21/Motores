@@ -19919,8 +19919,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e72ea67613ca6204fb675c760000f671, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameProgressController
-  dayDuration: 90
-  nightDuration: 180
+  daySpeedWithZombiesAlive: 0.5
+  dayDuration: 15
+  nightDuration: 30
   startingDay: 1
   rescueWaitDays: 4
   requiredEndingItem: {fileID: 11400000, guid: 95ae904d696863742b63f136eb38a7f3, type: 2}
@@ -1404346,6 +1404347,7 @@ MonoBehaviour:
   - {fileID: 2603641947717816421, guid: d07e0f686af62364a8e36afb9c32f5b6, type: 3}
   spawnPointsParent: {fileID: 1360203022}
   timeBetweenSpawns: 4
+  maxZombiesPerNight: 2
   maxZombiesAlive: 10
   initialSpawnDelay: 5
   gameProgressController: {fileID: 54095506}
@@ -1536861,6 +1536863,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1069845118292833332, guid: 3d92d9bc565ce7748ab43fe2ec871ca3, type: 3}
+      propertyPath: cameraPivot
+      value: 
+      objectReference: {fileID: 1712976868}
+    - target: {fileID: 1069845118292833332, guid: 3d92d9bc565ce7748ab43fe2ec871ca3, type: 3}
+      propertyPath: quickActionReference
+      value: 
+      objectReference: {fileID: 5298509335155144908, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     - target: {fileID: 4451086918383607478, guid: 3d92d9bc565ce7748ab43fe2ec871ca3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 381.78564
@@ -1536901,6 +1536911,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5205813910807305262, guid: 3d92d9bc565ce7748ab43fe2ec871ca3, type: 3}
+      propertyPath: sourceAsset
+      value: 
+      objectReference: {fileID: 9197481963319205126, guid: 750303cd4908b6745a1941b24d0be70b, type: 3}
     - target: {fileID: 6397178476599890713, guid: 3d92d9bc565ce7748ab43fe2ec871ca3, type: 3}
       propertyPath: m_Name
       value: UIHUD

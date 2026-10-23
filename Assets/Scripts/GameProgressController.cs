@@ -19,6 +19,10 @@ public class GameProgressController : MonoBehaviour
 {
     public static GameProgressController Instance { get; private set; }
 
+    [Header("Velocidad del tiempo")]
+    [SerializeField, Range(0.1f, 1f)]
+    private float daySpeedWithZombiesAlive = 0.5f;
+
     [Header("Duracion de fases (segundos)")]
     [SerializeField, Min(1f)] private float dayDuration = 90f;
     [SerializeField, Min(1f)] private float nightDuration = 90f;
@@ -51,6 +55,9 @@ public class GameProgressController : MonoBehaviour
 
     public float CurrentPhaseDuration => CurrentPhase == DayNightPhase.Day ? dayDuration : nightDuration;
 
+    public float DaySpeedWithZombiesAlive => daySpeedWithZombiesAlive;
+
+    private float daySpeedMultiplier = 1f;
     private bool initialized;
     private float previousTimeScale = 1f;
 
@@ -80,15 +87,21 @@ public class GameProgressController : MonoBehaviour
         if (!initialized || IsWorldPaused || IsGameEnded)
             return;
 
-        PhaseRemainingTime -= Time.deltaTime;
+        DecreasePhaseTime(Time.deltaTime);
+    }
 
-        if (PhaseRemainingTime <= 0f)
+    private void OnDestroy()
+    {
+        if (Instance == this)
         {
-            PhaseRemainingTime = 0f;
-            AdvancePhase();
+            Instance = null;
         }
 
-        NotifyPhaseProgress();
+        if (IsWorldPaused)
+        {
+            Time.timeScale = previousTimeScale;
+            IsWorldPaused = false;
+        }
     }
 
     public bool PauseWorld()
@@ -114,20 +127,17 @@ public class GameProgressController : MonoBehaviour
         return true;
     }
 
+    public void SetDaySpeedMultiplier(float multiplier)
+    {
+        daySpeedMultiplier = Mathf.Max(0f, multiplier);
+    }
+
     public void ConsumeTime(float seconds = 0f)
     {
         if (!initialized || IsGameEnded || IsWorldPaused || seconds <= 0f)
             return;
 
-        PhaseRemainingTime -= seconds;
-
-        if (PhaseRemainingTime <= 0f)
-        {
-            PhaseRemainingTime = 0f;
-            AdvancePhase();
-        }
-
-        NotifyPhaseProgress();
+        DecreasePhaseTime(seconds);
     }
 
     private void AdvancePhase()
@@ -167,25 +177,13 @@ public class GameProgressController : MonoBehaviour
         OnPhaseProgressChanged?.Invoke(Mathf.Clamp01(progress));
     }
 
-    private void OnDestroy()
-    {
-        if (Instance == this)
-        {
-            Instance = null;
-        }
-
-        if (IsWorldPaused)
-        {
-            Time.timeScale = previousTimeScale;
-            IsWorldPaused = false;
-        }
-    }
-
     public void ResetGameProgress()
     {
         Time.timeScale = 1f;
         IsWorldPaused = false;
         previousTimeScale = 1f;
+
+        daySpeedMultiplier = 1f;
 
         CurrentDay = Mathf.Max(1, startingDay);
         CurrentPhase = DayNightPhase.Day;
@@ -217,5 +215,20 @@ public class GameProgressController : MonoBehaviour
         //Time.timeScale = 0.5f;
 
         OnGameEnded?.Invoke(ending);
+    }
+
+    private void DecreasePhaseTime(float seconds)
+    {
+        PhaseRemainingTime -= seconds * daySpeedMultiplier;
+
+        if (PhaseRemainingTime <= 0f)
+        {
+            PhaseRemainingTime = 0f; // para evitar tiempo con valores negativos
+            AdvancePhase();
+
+            return;
+        }
+
+        NotifyPhaseProgress();
     }
 }

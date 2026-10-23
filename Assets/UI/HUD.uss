@@ -1,3 +1,218 @@
-#HUDContainer {
-    pointer-events: none;
+
+.hud {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 28px;
+    color: rgb(220, 213, 190);
+}
+
+.day {
+    position: absolute;
+    top: 28px;
+    left: 32px;
+    padding: 10px 16px;
+    background-color: rgba(20, 19, 16, 0.8);
+    border-left-width: 4px;
+    border-left-color: rgb(155, 143, 111);
+}
+
+#DayLabel {
+    color: rgb(220, 213, 190);
+    font-size: 30px;
+    -unity-font-style: bold;
+    letter-spacing: 3px;
+}
+
+.equipment {
+    position: absolute;
+    top: 28px;
+    right: 32px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.indicator {
+    position: relative;
+    width: 72px;
+    height: 72px;
+    align-items: center;
+    justify-content: center;
+    border-width: 2px;
+}
+
+#Radio {
+    margin-bottom: 36px;
+}
+
+.radio-icon,
+.backpack-icon {
+    width: 58px;
+    height: 58px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.radio-alert {
+    display: none;
+}
+
+.key-label {
+    position: absolute;
+    left: -24px;
+    bottom: 4px;
+    margin-top: 0;
+    font-size: 30px;
+}
+
+.health {
+    position: absolute;
+    left: 32px;
+    bottom: 32px;
+    width: 64px;
+    align-items: center;
+}
+
+#HealthLabel {
+    margin-bottom: 10px;
+    color: rgb(220, 213, 190);
+    font-size: 18px;
+    -unity-font-style: bold;
+    letter-spacing: 1px;
+}
+
+.health-bar {
+    width: 60px;
+    height: 400px;
+    padding: 5px;
+    background-color: rgba(20, 19, 16, 0.85);
+    border-width: 2px;
+    border-color: rgb(180, 171, 143);
+}
+
+.health-background {
+    flex-grow: 1;
+    justify-content: flex-end;
+    background-color: rgba(65, 61, 51, 0.9);
+}
+
+.health-fill {
+    height: 100%;
+    background-color: rgb(126, 111, 77);
+}
+
+.selector {
+    position: absolute;
+    right: 32px;
+    bottom: 32px;
+    align-items: center;
+}
+
+.wheel {
+    position: relative;
+    width: 230px;
+    height: 230px;
+    background-color: rgba(30, 28, 23, 0.92);
+    border-radius: 115px;
+    border-width: 3px;
+    border-color: rgb(155, 146, 120);
+    overflow: hidden;
+}
+
+.slot {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(49, 46, 38, 0.88);
+    border-width: 0;
+    transition-property: background-color, scale;
+    transition-duration: 120ms;
+}
+
+.slot:hover {
+    background-color: rgba(125, 108, 70, 0.95);
+}
+
+.slot.selected {
+    background-color: rgba(100, 89, 62, 0.95);
+    border-width: 2px;
+    border-color: rgb(207, 192, 151);
+}
+
+.slot.selected:hover {
+    background-color: rgba(145, 125, 80, 0.98);
+    border-color: rgb(225, 211, 171);
+}
+
+.slot-icon {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.slot-1 {
+    top: 0;
+    left: 0;
+    padding: 12px 12px 8px 8px;
+}
+
+.slot-2 {
+    top: 0;
+    right: 0;
+    padding: 12px 8px 8px 12px;
+}
+
+.slot-3 {
+    bottom: 0;
+    left: 0;
+    padding: 8px 12px 12px 8px;
+}
+
+.slot-4 {
+    bottom: 0;
+    right: 0;
+    padding: 8px 8px 12px 12px;
+}
+
+.vertical-line {
+    position: absolute;
+    left: 50%;
+    top: 12px;
+    bottom: 12px;
+    width: 2px;
+    background-color: rgba(180, 171, 143, 0.65);
+}
+
+.horizontal-line {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    right: 12px;
+    height: 2px;
+    background-color: rgba(180, 171, 143, 0.65);
+}
+
+.durability {
+    width: 100%;
+    height: 5px;
+    margin-top: 5px;
+    background-color: rgb(45, 42, 35);
+}
+
+.durability-fill {
+    width: 75%;
+    height: 100%;
+    background-color: rgb(166, 151, 108);
+}
+
+#Selector > #KeyLabel {
+    position: absolute;
+    left: -24px;
+    bottom: 4px;
+    margin-top: 0;
+    font-size: 18px;
 }

@@ -1,0 +1,16 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="HUDContainer" picking-mode="Ignore" style="flex-grow: 1; flex-direction: row-reverse;">
+        <ui:VisualElement name="DayIndicator" picking-mode="Ignore" style="flex-grow: 1; flex-direction: row-reverse; align-self: auto; align-items: flex-start;">
+            <ui:Image name="Background" style="-unity-background-image-tint-color: rgb(255, 255, 255); -unity-background-scale-mode: scale-to-fit; background-position-x: center; position: absolute; height: 62px; width: 239px; background-color: rgba(0, 0, 0, 0.62); left: 1681px; color: rgba(27, 27, 27, 0.7); -unity-text-outline-color: rgb(0, 0, 0); text-shadow: 0 0 0 rgb(0, 0, 0);"/>
+            <ui:VisualElement name="TextContainer" picking-mode="Ignore" style="flex-grow: 1; flex-direction: row; position: absolute; background-image: resource(&quot;Bloody Screen Effects/Effect_3&quot;); width: 241px; left: 1679px; height: 62px; align-self: center; align-content: flex-start; top: 0; align-items: center; justify-content: space-evenly;">
+                <ui:Label text="Label" name="DayLabel" style="font-size: 35px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); color: rgb(255, 255, 255);"/>
+                <ui:Label text="-" name="SeparatorLabel" style="font-size: 30px; -unity-font-definition: url(&quot;project://database/Assets/TextMesh%20Pro/Examples%20&amp;%20Extras/Fonts/Bangers.ttf?fileID=12800000&amp;guid=5dd49b3eacc540408c98eee0de38e0f1&amp;type=3#Bangers&quot;); color: rgb(255, 255, 255);"/>
+                <ui:Label text="Label" name="PhaseLabel" style="font-size: 35px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); color: rgb(255, 255, 255); -unity-text-outline-width: 0; text-shadow: 0 0 0 rgb(255, 0, 0);"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="DummyContainer" style="flex-grow: 1; position: absolute; top: 926px; right: 20px;">
+                <ui:Image style="background-image: resource(&quot;bag&quot;); height: 147px; width: 121px;"/>
+                <ui:Label text="I" style="font-size: 35px; bottom: 146px; right: 14px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); -unity-font-style: bold;"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
