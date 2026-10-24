@@ -14,6 +14,7 @@ public class ZombieAttack : MonoBehaviour
     private float nextAttackTime; //momento en que puede iniciar un nuevo golpe
     private bool isWindingUp; //true mientras esta "preparando" el golpe
     private float windupEndTime; //momento (Time.time) en que el golpe conecta
+    private PlayerController grabbedPlayer;
 
     public bool IsWindingUp => isWindingUp; //para la futura animacion
 
@@ -67,7 +68,8 @@ public class ZombieAttack : MonoBehaviour
         if (target != null)
         {
             PlayerController playerController = target.GetComponent<PlayerController>();
-            if (playerController != null) playerController.Stun(attackWindup + biteParalyzeTime);
+            grabbedPlayer = playerController;
+            if (playerController != null) playerController.Stun(attackWindup + biteParalyzeTime, this);
         }
 
         //aca despues se puede disparar animator.SetTrigger("Attack") cuando tengan animaciones
@@ -76,6 +78,18 @@ public class ZombieAttack : MonoBehaviour
     public void CancelWindup()
     {
         isWindingUp = false;
+        ReleasePlayer();
+    }
+
+    //si el zombie pierde el agarre (lo golpean, muere o se aleja), el player se libera
+    private void ReleasePlayer()
+    {
+        if (grabbedPlayer != null) grabbedPlayer.ReleaseStun(this);
+    }
+
+    private void OnDisable()
+    {
+        ReleasePlayer();
     }
 
     private void LandHit()

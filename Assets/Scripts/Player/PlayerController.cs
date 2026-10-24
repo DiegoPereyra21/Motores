@@ -30,13 +30,26 @@ public class PlayerController : MonoBehaviour
     private float stunEndTime;
     private float stunImmuneUntil;
     public bool IsStunned => Time.time < stunEndTime; //paralizado por una mordida (lo setea ZombieAttack)
-    public void Stun(float seconds)
+    private object stunOwner; //quien puso la parálisis, para que solo ese zombie pueda liberarlo
+
+    public void Stun(float seconds, object owner = null)
     {
         //mientras esta paralizado o en la ventana de inmunidad, otros zombies no lo agarran
         if (Time.time < stunImmuneUntil) return;
 
         stunEndTime = Time.time + seconds;
         stunImmuneUntil = stunEndTime + stunImmunityTime;
+        stunOwner = owner;
+    }
+
+    //libera al player antes de tiempo, solo si el agarre lo puso ese mismo owner
+    public void ReleaseStun(object owner)
+    {
+        if (owner == null || stunOwner != owner || !IsStunned) return;
+
+        stunEndTime = Time.time;
+        stunImmuneUntil = Time.time + stunImmunityTime; //queda la ventana de inmunidad para poder alejarse
+        stunOwner = null;
     }
 
 

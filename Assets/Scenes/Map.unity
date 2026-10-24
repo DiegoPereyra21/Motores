@@ -1352535,7 +1352535,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8131467032854619556, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
       propertyPath: runSpeed
-      value: 7.5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8131467032854619556, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
       propertyPath: walkSpeed
@@ -1352543,7 +1352543,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8131467032854619556, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
       propertyPath: acceleration
-      value: 8
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8343001647361465839, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      propertyPath: attackDamage
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 8946478680384145332, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
       propertyPath: m_LocalPosition.x
