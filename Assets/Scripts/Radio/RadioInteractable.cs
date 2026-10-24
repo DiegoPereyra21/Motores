@@ -39,6 +39,9 @@ public class RadioInteractable : MonoBehaviour, IInteractable
     private int currentMessageDay;
     private float lastCloseTime = -10f; // Time.unscaledTime de la ultima vez que se cerro un mensaje
 
+    private readonly System.Collections.Generic.HashSet<int> heardDays = new();
+
+
     // Start y no Awake: asi GameProgressController.Instance ya existe seguro
     private void Start()
     {
@@ -102,9 +105,17 @@ public class RadioInteractable : MonoBehaviour, IInteractable
         if (message == null)
             return;
 
-        // PauseWorld devuelve false si ya estaba pausado o la partida termino, en ese caso no hacemos nada
-        if (!gameProgress.PauseWorld())
-            return;
+        // logica para no pausar el mundo despues de la primera vez que se escucha un mensaje por dia
+        bool isFirstListen = !heardDays.Contains(day);
+
+        if (isFirstListen)
+        {
+            // PauseWorld devuelve false si ya estaba pausado o la partida termino, en ese caso no hacemos nada
+            if (!gameProgress.PauseWorld())
+                return;
+
+            gameProgress.PauseDayTimerForRadio();
+        }
 
         IsListening = true;
         currentMessageDay = day;
@@ -124,8 +135,11 @@ public class RadioInteractable : MonoBehaviour, IInteractable
 
         SetPlayerControl(true);
         gameProgress.ResumeWorld();
+        gameProgress.ResumeDayTimer();
 
         HighestHeardDay = Mathf.Max(HighestHeardDay, currentMessageDay);
+
+        heardDays.Add(currentMessageDay);
 
         // el aviso del objetivo queda un rato en pantalla ("Usa la mesa de trabajo...", etc.)
         messageUI.ShowObjectiveHint(GetMessageForDay(currentMessageDay).objectiveHint);

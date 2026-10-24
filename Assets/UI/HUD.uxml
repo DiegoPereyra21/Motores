@@ -1,8 +1,10 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/HUD.uss?fileID=7433441132597879392&amp;guid=0c40e13878fb2c3449ec84ae715ab497&amp;type=3#HUD"/>
-    <ui:VisualElement name="HUD" class="hud">
-        <ui:VisualElement name="Day" class="day" style="height: 89px; width: 156px;">
-            <ui:Label name="DayLabel" text="DAY 1" style="height: 59px; width: 113px; -unity-text-align: middle-center; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;);"/>
+    <ui:VisualElement name="HUD" class="hud" style="top: 0; bottom: 3px; right: 0; left: 1px;">
+        <ui:VisualElement name="Day" class="day" style="height: 89px; width: 293px; flex-direction: row;">
+            <ui:Label name="DayLabel" text="DIA 1" style="height: 59px; width: 113px; -unity-text-align: middle-center; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;);"/>
+            <ui:Label text="-" name="SeparatorLabel" style="font-size: 30px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); -unity-text-align: middle-center; left: 16px;"/>
+            <ui:Label text="Label" name="TimeLabel" class="time-label" style="font-size: 30px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); -unity-text-align: middle-center; left: 21px;"/>
         </ui:VisualElement>
         <ui:VisualElement name="Equipment" class="equipment">
             <ui:VisualElement name="Radio" class="indicator" style="width: 200px; height: 200px; top: -37px;">
@@ -18,26 +20,35 @@
             <ui:Label name="HealthLabel" text="Salud" enable-rich-text="true" style="font-size: 25px; right: 7px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;);"/>
             <ui:VisualElement name="HealthBar" class="health-bar">
                 <ui:VisualElement name="HealthBackground" class="health-background">
-                    <ui:VisualElement name="HealthFill" class="health-fill"/>
+                    <ui:VisualElement name="HealthFill" class="health-fill" style="background-color: rgb(63, 17, 22);"/>
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="Selector" class="selector" style="right: 20px;">
             <ui:VisualElement name="Wheel" class="wheel">
                 <ui:VisualElement name="Slot1" class="slot slot-1">
-                    <ui:VisualElement name="Icon1" class="slot-icon"/>
-                    <ui:VisualElement name="Durability1" class="durability" style="bottom: -12px; right: -8px;">
-                        <ui:VisualElement name="DurabilityFill1" class="durability-fill"/>
+                    <ui:VisualElement name="Icon1" class="slot-icon" style="background-image: url(&quot;project://database/Assets/Art/Test/psx-horror-ui-free/addons/psx_horror_ui/icons/large/flashlight.png?fileID=2800000&amp;guid=3bd3820e42600594aaf200c9822ec0ef&amp;type=3#flashlight&quot;); right: -16px; width: 80px; height: 80px; top: 10px;"/>
+                    <ui:VisualElement name="Durability" class="durability" style="bottom: -13px; right: -14px; width: 70%; margin-top: 5px;">
+                        <ui:VisualElement name="DurabilityFill" class="durability-fill"/>
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="Slot2" class="slot slot-2">
-                    <ui:VisualElement name="Icon2" class="slot-icon"/>
+                    <ui:VisualElement name="Icon2" class="slot-icon" style="background-image: url(&quot;project://database/Assets/Art/Test/psx-horror-ui-free/addons/psx_horror_ui/icons/large/first_aid_kit.png?fileID=2800000&amp;guid=15e2a1bf021872742a5be5d7f8ea3f0c&amp;type=3#first_aid_kit&quot;); top: 10px; right: 16px; width: 80px; height: 80px;"/>
+                    <ui:VisualElement name="Durability" class="durability" style="bottom: -13px; right: 14px; width: 70%;">
+                        <ui:VisualElement name="DurabilityFill" class="durability-fill"/>
+                    </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="Slot3" class="slot slot-3">
-                    <ui:VisualElement name="Icon3" class="slot-icon"/>
+                    <ui:VisualElement name="Icon3" class="slot-icon" style="background-image: url(&quot;project://database/Assets/Art/Test/psx-horror-ui-free/addons/psx_horror_ui/icons/large/key_skeleton.png?fileID=2800000&amp;guid=7f02bf6e53288494ead3f703d28ee0a4&amp;type=3#key_skeleton&quot;); right: -15px; bottom: 9px; width: 80px; height: 80px;"/>
+                    <ui:VisualElement name="Durability" class="durability" style="bottom: 6px; right: -26px; width: 70%;">
+                        <ui:VisualElement name="DurabilityFill" class="durability-fill"/>
+                    </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="Slot4" class="slot slot-4">
-                    <ui:VisualElement name="Icon4" class="slot-icon"/>
+                    <ui:VisualElement name="Icon4" class="slot-icon" style="background-image: url(&quot;project://database/Assets/Art/Test/psx-horror-ui-free/addons/psx_horror_ui/icons/large/pistol.png?fileID=2800000&amp;guid=861ce09f485520547b5e6af70b56ab76&amp;type=3#pistol&quot;); right: 13px; width: 80px; height: 80px; bottom: 9px;"/>
+                    <ui:VisualElement name="Durability" class="durability" style="bottom: 6px; right: 26px; width: 70%;">
+                        <ui:VisualElement name="DurabilityFill" class="durability-fill" style="bottom: 0; right: 0;"/>
+                    </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="VerticalLine" class="vertical-line"/>
                 <ui:VisualElement name="HorizontalLine" class="horizontal-line"/>

@@ -31,7 +31,7 @@ public class GameProgressController : MonoBehaviour
     [SerializeField, Min(1)] private int startingDay = 1;
 
     [Header("Cantidad de dias antes del rescate")]
-    [SerializeField, Min(1)] private int rescueWaitDays = 1;
+    [SerializeField, Min(1)] private int rescueWaitDays = 4;
 
     [Header("Item necesario para ganar")]
     [SerializeField] private ItemData requiredEndingItem;
@@ -44,6 +44,7 @@ public class GameProgressController : MonoBehaviour
     public float PhaseRemainingTime { get; private set; }
     public bool IsWorldPaused { get; private set; }
     public bool IsGameEnded { get; private set; } // indica si la partida termino
+    public bool IsWaitingForRadio { get; private set; } // check para esperar la radio
 
     public GameEnding CurrentEnding { get; private set; } = GameEnding.None;
     public event Action<GameEnding> OnGameEnded; // evento que avisa del fin de la partida
@@ -51,6 +52,7 @@ public class GameProgressController : MonoBehaviour
     public event Action<DayNightPhase> OnPhaseChanged;
     public event Action<int> OnDayChanged;
     public event Action<float> OnPhaseProgressChanged;
+    public event Action OnRadioWaitStarted;
     //public event Action OnRunFinished;
 
     public float CurrentPhaseDuration => CurrentPhase == DayNightPhase.Day ? dayDuration : nightDuration;
@@ -84,7 +86,7 @@ public class GameProgressController : MonoBehaviour
 
     private void Update()
     {
-        if (!initialized || IsWorldPaused || IsGameEnded)
+        if (!initialized || IsWorldPaused || IsGameEnded || IsWaitingForRadio)
             return;
 
         DecreasePhaseTime(Time.deltaTime);
@@ -134,7 +136,7 @@ public class GameProgressController : MonoBehaviour
 
     public void ConsumeTime(float seconds = 0f)
     {
-        if (!initialized || IsGameEnded || IsWorldPaused || seconds <= 0f)
+        if (!initialized || IsGameEnded || IsWorldPaused || IsWaitingForRadio || seconds <= 0f)
             return;
 
         DecreasePhaseTime(seconds);
@@ -142,6 +144,7 @@ public class GameProgressController : MonoBehaviour
 
     private void AdvancePhase()
     {
+        // transicion de dia a noche
         if (CurrentPhase == DayNightPhase.Day)
         {
             CurrentPhase = DayNightPhase.Night;
@@ -153,8 +156,10 @@ public class GameProgressController : MonoBehaviour
             return;
         }
 
+        // se cambia de dia
         CurrentDay++;
 
+        // check para el final
         if (CurrentDay >= rescueWaitDays)
         {
             bool hasRequiredItem = requiredEndingItem != null && playerInventory != null && playerInventory.GetItemCount(requiredEndingItem) > 0;
@@ -163,12 +168,16 @@ public class GameProgressController : MonoBehaviour
             return;
         }
 
+        // transicion de noche a dia si la partida sigue
         CurrentPhase = DayNightPhase.Day;
         PhaseRemainingTime = dayDuration;
+        IsWaitingForRadio = true;
 
         OnDayChanged?.Invoke(CurrentDay);
         OnPhaseChanged?.Invoke(CurrentPhase);
         NotifyPhaseProgress();
+
+        OnRadioWaitStarted?.Invoke();
     }
 
     private void NotifyPhaseProgress()
@@ -192,6 +201,8 @@ public class GameProgressController : MonoBehaviour
         IsGameEnded = false;
         CurrentEnding = GameEnding.None;
 
+        IsWaitingForRadio = false;
+
         OnDayChanged?.Invoke(CurrentDay);
         OnPhaseChanged?.Invoke(CurrentPhase);
         OnPhaseProgressChanged?.Invoke(0f);
@@ -205,6 +216,7 @@ public class GameProgressController : MonoBehaviour
         IsGameEnded = true;
         CurrentEnding = ending;
         PhaseRemainingTime = 0f;
+        IsWaitingForRadio = false;
 
         if (!IsWorldPaused)
         {
@@ -230,5 +242,21 @@ public class GameProgressController : MonoBehaviour
         }
 
         NotifyPhaseProgress();
+    }
+
+    public void PauseDayTimerForRadio()
+    {
+        if (IsGameEnded)
+            return;
+
+        IsWaitingForRadio = true;
+    }
+
+    public void ResumeDayTimer()
+    {
+        if (!IsWaitingForRadio || IsGameEnded)
+            return;
+
+        IsWaitingForRadio = false;
     }
 }
