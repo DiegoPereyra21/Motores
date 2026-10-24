@@ -131,8 +131,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d719c79a2f52318489e89f6068d34402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZombieControllerNavMesh
-  moveSpeed: 2.5
-  rotationSpeed: 8
+  moveSpeed: 4
+  acceleration: 20
+  chaseSpeed: 6
+  chaseDistance: 6
+  rotationSpeed: 10
   player: {fileID: 0}
   attackRange: 0.5
   attackRangeBuffer: 0.2
@@ -150,7 +153,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ZombieAttack
   damage: 10
   attackCooldown: 1
-  attackWindup: 0.5
+  attackWindup: 0.15
+  biteParalyzeTime: 0.5
 --- !u!114 &6749448733652791865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,6 +212,7 @@ MonoBehaviour:
   animator: {fileID: 46468964148813553}
   hurtStunTime: 0.4
   hurtCooldown: 1.2
+  walkAnimSpeed: 2.5
 --- !u!1001 &5895074401047225184
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -40,6 +40,8 @@ public class PlayerAttack : MonoBehaviour
     {
         if (health && health.IsDead) return;//si esta muerto ni intenta revisar si ataco on no
 
+        if (playerController != null && playerController.IsStunned) return;//paralizado, no puede atacar obs
+
         if (attackAction.action.WasPressedThisFrame() && !IsAttacking)
             StartAttack();
     }

@@ -7,7 +7,7 @@ public class ZombieAttack : MonoBehaviour
     [SerializeField] private float damage = 10f; //daño por golpe
     [SerializeField] private float attackCooldown = 1.2f; //segundos entre golpes
     [SerializeField] private float attackWindup = 0.5f; //tiempo que "tarda" en golpear hasta que tengamos animaciones (para que el player pueda esquivar)
-
+    [SerializeField] private float biteParalyzeTime = 0.7f; //segundos que paraliza al player al morderlo, menor q attackooldown sino deja paralizado siempre
     //privadas
     private ZombieControllerNavMesh zombieController;
     private Health myHealth; //salud propia, para chequear si ya murio
@@ -60,6 +60,16 @@ public class ZombieAttack : MonoBehaviour
     {
         isWindingUp = true;
         windupEndTime = Time.time + attackWindup;
+
+
+        //paraliza al player desde que empieza el windup hasta un rato despues de la mordida
+        Transform target = zombieController.Player;
+        if (target != null)
+        {
+            PlayerController playerController = target.GetComponent<PlayerController>();
+            if (playerController != null) playerController.Stun(attackWindup + biteParalyzeTime);
+        }
+
         //aca despues se puede disparar animator.SetTrigger("Attack") cuando tengan animaciones
     }
 
