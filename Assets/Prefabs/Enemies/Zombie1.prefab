@@ -131,9 +131,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d719c79a2f52318489e89f6068d34402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZombieControllerNavMesh
-  moveSpeed: 4
+  moveSpeed: 3
   acceleration: 25
-  chaseSpeed: 6
+  chaseSpeed: 5
   chaseDistance: 5
   rotationSpeed: 10
   player: {fileID: 0}
