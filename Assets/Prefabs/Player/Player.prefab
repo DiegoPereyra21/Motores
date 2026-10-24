@@ -19957,6 +19957,7 @@ GameObject:
   - component: {fileID: 6829460794486340077}
   - component: {fileID: 3172682545380626138}
   - component: {fileID: 5701854420994613412}
+  - component: {fileID: 4408335001353736137}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -20045,8 +20046,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   walkSpeed: 3
-  runSpeed: 8
-  acceleration: 10
+  runSpeed: 7
+  acceleration: 12
   rotationSmoothTime: 0.12
   gravity: -15
   cameraPivot: {fileID: 2313193344059259194}
@@ -20054,6 +20055,7 @@ MonoBehaviour:
   animator: {fileID: 2164108943230245708}
   moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   sprintAction: {fileID: -7471211009204490832, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  stunImmunityTime: 1
 --- !u!114 &5343336580200845003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20107,7 +20109,7 @@ MonoBehaviour:
   health: {fileID: 5343336580200845003}
   attackPoint: {fileID: 673739324441805551}
   attackRange: 0.74
-  attackDamage: 100
+  attackDamage: 35
   faceCameraOnAttack: 1
 --- !u!114 &641306032829803605
 MonoBehaviour:
@@ -20165,6 +20167,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHurt
   animator: {fileID: 2164108943230245708}
+--- !u!114 &4408335001353736137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5953249167122860971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6a5f7f09e4d7443b1804aeb0e23bf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerLootAnimation
+  animator: {fileID: 2164108943230245708}
+  playerController: {fileID: 8131467032854619556}
+  objectTime: 1.5
+  corpseTime: 2
 --- !u!1 &6270587477797477844
 GameObject:
   m_ObjectHideFlags: 0

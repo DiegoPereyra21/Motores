@@ -32,6 +32,12 @@ public class PlayerController : MonoBehaviour
     public bool IsStunned => Time.time < stunEndTime; //paralizado por una mordida (lo setea ZombieAttack)
     private object stunOwner; //quien puso la parálisis, para que solo ese zombie pueda liberarlo
 
+    //para anim de loot
+    private float busyEndTime;
+    public bool IsBusy => Time.time < busyEndTime; //haciendo una accion de lootear no se mueve ni ataque
+    public void SetBusy(float seconds) => busyEndTime = Time.time + seconds;
+
+
     public void Stun(float seconds, object owner = null)
     {
         //mientras esta paralizado o en la ventana de inmunidad, otros zombies no lo agarran
@@ -71,7 +77,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
 
-        bool locked = MovementLocked || IsStunned;
+        bool locked = MovementLocked || IsStunned || IsBusy;
         Vector2 input = locked ? Vector2.zero : moveAction.action.ReadValue<Vector2>();
         bool isRunning = !locked && sprintAction.action.IsPressed();
 

@@ -18,6 +18,10 @@ public class Lootable : MonoBehaviour, IInteractable
             return;
         }
 
+        //si el player esta ocupado o lo tiene agarrado un zombie no puede lootear (obvio)
+        PlayerLootAnimation lootAnim = interactor.GetComponent<PlayerLootAnimation>();
+        if (lootAnim != null && !lootAnim.CanLoot) return;
+
         //busca el health en caso de necesitar saber si el zombie esta muerto
         if (requireZombieDeath)
         {
@@ -38,10 +42,10 @@ public class Lootable : MonoBehaviour, IInteractable
             return;
         }
 
-        //si hay tabla de loot, se sortean los items
+        //se sortean los items
         if (lootTable != null)
         {
-            // check para el calculo de loot
+            //check para el calculo de loot
             var drops = requireZombieDeath
                 ? lootTable.RollRandomLoot()
                 : lootTable.RollGuaranteedLoot();
@@ -52,9 +56,11 @@ public class Lootable : MonoBehaviour, IInteractable
             }
         }
 
-        //marco como saqueado para que no se pueda repetir
+        if (lootAnim != null) lootAnim.Play(requireZombieDeath ? LootAnimType.Corpse : LootAnimType.Object);
+
+        //marco como ya looteado para que no repita
         isLooted = true;
-        //EVENTO PARA SONIDO, ANIMACION
+        //EVENTO PARA SONIDO, ANIMACION (RECORDARLOO)
         onLooted.Invoke();
     }
 }
