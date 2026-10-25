@@ -9,7 +9,10 @@ public class Barricade : MonoBehaviour, IDamageable
     [SerializeField] private float plankSpacing = 1.15f; //separacion entre tablas, 1 = pegadas, mas = con huecos
     [SerializeField] private float plankOverhang = 1.08f; //las tablas sobresalen un poco del ancho de la abertura
 
+    [SerializeField] private float blockerThickness = 0.4f; //profundidad del collider que frena al player
+
     private readonly List<GameObject> planks = new();
+    private BoxCollider blocker; //frena al player (los zombies se mueven por NavMesh, no les afecta)
     private float maxDurability;
     private float currentDurability;
 
@@ -28,6 +31,7 @@ public class Barricade : MonoBehaviour, IDamageable
         currentDurability = maxDurability;
 
         gameObject.SetActive(true);
+        SetupBlocker(openingSize);
         BuildPlanks(plankPrefab, openingSize);
 
         OnDurabilityChanged?.Invoke(Normalized);
@@ -49,6 +53,18 @@ public class Barricade : MonoBehaviour, IDamageable
         }
 
         UpdateVisual();
+    }
+
+    //collider solido del tamaño de la abertura, para que el player no pueda pasar mientras la barricada exista
+    //(al romperse, el GameObject se apaga y el collider deja de frenar)
+    private void SetupBlocker(Vector2 openingSize)
+    {
+        if (blocker == null)
+            blocker = gameObject.AddComponent<BoxCollider>();
+
+        blocker.isTrigger = false;
+        blocker.center = Vector3.zero;
+        blocker.size = new Vector3(openingSize.x, openingSize.y, blockerThickness);
     }
 
     //a medida que pierde durabilidad se van sacando tablas
