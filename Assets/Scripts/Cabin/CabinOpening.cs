@@ -19,8 +19,8 @@ public enum OpeningState
 }
 
 // Como se bloquea el paso de los zombies cuando hay barricada.
-// El diagnostico del NavMesh (Zombie Cabin ▸ Barricadas ▸ Diagnosticar) mostro que las ventanas estan selladas en el bake (pasan solo por el link)
-// y que las puertas estan abiertas (el NavMesh las cruza solo), por eso en Auto las puertas usan un obstaculo y las ventanas el link.
+// En el bake actual del NavMesh las ventanas estan selladas (se pasa solo por el link) y las puertas estan abiertas (el NavMesh las cruza solo),
+// por eso en Auto las puertas usan un obstaculo y las ventanas el link.
 public enum NavBlockMode
 {
     Auto,     //puerta = Obstacle, ventana = Link
@@ -30,7 +30,8 @@ public enum NavBlockMode
 
 // Una puerta o ventana de la cabaña. Se pone en un objeto aparte (no en el panel de la puerta/ventana), en la capa "Interact".
 // Convencion: el transform mira (forward) hacia AFUERA de la cabaña, el right es el ancho y el up el alto.
-// Lo crea OpeningsSetup (menu Zombie Cabin ▸ Barricadas) a partir de los paneles que ya existen.
+// Cada abertura lleva: un BoxCollider trigger (zona de interaccion), un NavMeshLink (ventanas) y los puntos de ataque como hijos.
+// Si se re-bakea el NavMesh hay que revisar que sigan igual: ventanas selladas y puertas abiertas.
 public class CabinOpening : MonoBehaviour, IInteractable, IInteractionPrompt
 {
     //todas las aberturas de la escena, para que los zombies sepan cuales hay
