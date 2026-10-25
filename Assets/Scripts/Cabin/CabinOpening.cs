@@ -14,8 +14,18 @@ public enum OpeningType
 
 public enum OpeningState
 {
-    Open,       //sin barricada: los zombies pueden pasar (por el NavMeshLink)
-    Barricaded  //con barricada: el link esta apagado, los zombies tienen que romperla
+    Open,       //sin barricada: los zombies pueden pasar (por el NavMeshLink, o por el NavMesh directo si es una puerta)
+    Barricaded  //con barricada: el link apagado / el obstaculo activo, los zombies tienen que romperla
+}
+
+// Como se bloquea el paso de los zombies cuando hay barricada.
+// El diagnostico del NavMesh (Zombie Cabin ▸ Barricadas ▸ Diagnosticar) mostro que las ventanas estan selladas en el bake (pasan solo por el link)
+// y que las puertas estan abiertas (el NavMesh las cruza solo), por eso en Auto las puertas usan un obstaculo y las ventanas el link.
+public enum NavBlockMode
+{
+    Auto,     //puerta = Obstacle, ventana = Link
+    Link,     //el NavMeshLink se apaga con la barricada (para aberturas selladas en el NavMesh)
+    Obstacle  //un NavMeshObstacle con carve se prende con la barricada (para aberturas que el NavMesh ya cruza)
 }
 
 // Una puerta o ventana de la cabaña. Se pone en un objeto aparte (no en el panel de la puerta/ventana), en la capa "Interact".
@@ -33,6 +43,11 @@ public class CabinOpening : MonoBehaviour, IInteractable, IInteractionPrompt
     [SerializeField] private bool requireInside = true; //solo se puede barricadar desde adentro de la cabaña
     [SerializeField] private Transform[] attackPoints; //afuera de la abertura, donde se paran los zombies a romper la barricada
 
+    [Header("Bloqueo del NavMesh")]
+    [SerializeField] private NavBlockMode navBlockMode = NavBlockMode.Auto;
+    [SerializeField] private float obstacleThickness = 0.6f; //profundidad del obstaculo (solo si usa Obstacle)
+    [SerializeField] private float obstacleExtraWidth = 0.4f; //ancho extra para que el obstaculo llegue hasta el marco
+
     [Header("Barricada")]
     [SerializeField] private ItemData barricadeItem; //el item que se gasta (Tabla de refuerzo)
 
@@ -45,6 +60,7 @@ public class CabinOpening : MonoBehaviour, IInteractable, IInteractionPrompt
     private OpeningState state = OpeningState.Open;
     private Barricade barricade;
     private NavMeshLink link;
+    private NavMeshObstacle obstacle;
     private Coroutine placeRoutine;
 
     public OpeningType Type => type;
@@ -58,6 +74,10 @@ public class CabinOpening : MonoBehaviour, IInteractable, IInteractionPrompt
     {
         link = GetComponent<NavMeshLink>();
 
+        bool useObstacle = navBlockMode == NavBlockMode.Obstacle || (navBlockMode == NavBlockMode.Auto && type == OpeningType.Door);
+        if (useObstacle)
+            SetupObstacle();
+
         //la barricada vive en un hijo que arranca apagado
         barricade = GetComponentInChildren<Barricade>(true);
 
@@ -69,7 +89,7 @@ public class CabinOpening : MonoBehaviour, IInteractable, IInteractionPrompt
         }
 
         barricade.gameObject.SetActive(false);
-        SetLinkActive(true);
+        SetNavBlocked(false);
     }
 
     private void OnEnable()
@@ -168,7 +188,7 @@ public class CabinOpening : MonoBehaviour, IInteractable, IInteractionPrompt
     {
         state = OpeningState.Barricaded;
         barricade.Build(data.prefab, size, data.maxDurability);
-        SetLinkActive(false);
+        SetNavBlocked(true);
 
         onBarricaded.Invoke();
         OnOpeningStateChanged?.Invoke(this);
@@ -177,17 +197,42 @@ public class CabinOpening : MonoBehaviour, IInteractable, IInteractionPrompt
     private void HandleBarricadeBroken()
     {
         state = OpeningState.Open;
-        SetLinkActive(true);
+        SetNavBlocked(false);
 
         onBarricadeBroken.Invoke();
         OnOpeningStateChanged?.Invoke(this);
     }
 
-    //con la barricada el link se apaga y los zombies no tienen por donde pasar; sin ella, el link los deja cruzar
-    private void SetLinkActive(bool active)
+    //con la barricada nadie pasa: se apaga el link (ventanas) o se prende el obstaculo que corta el NavMesh (puertas). Sin barricada, al reves
+    private void SetNavBlocked(bool blocked)
     {
         if (link != null)
-            link.enabled = active;
+            link.enabled = !blocked;
+
+        if (obstacle != null)
+            obstacle.enabled = blocked;
+    }
+
+    //obstaculo con carve del tamaño de la abertura, arranca apagado. El link de esta abertura ya no hace falta (el NavMesh cruza solo)
+    private void SetupObstacle()
+    {
+        obstacle = GetComponent<NavMeshObstacle>();
+
+        if (obstacle == null)
+            obstacle = gameObject.AddComponent<NavMeshObstacle>();
+
+        obstacle.shape = NavMeshObstacleShape.Box;
+        obstacle.center = Vector3.zero;
+        obstacle.size = new Vector3(size.x + obstacleExtraWidth, size.y, obstacleThickness);
+        obstacle.carving = true;
+        obstacle.carveOnlyStationary = true;
+        obstacle.enabled = false;
+
+        if (link != null)
+        {
+            link.enabled = false;
+            link = null;
+        }
     }
 
     //true si el punto esta del lado de adentro de la cabaña (forward apunta para afuera)
