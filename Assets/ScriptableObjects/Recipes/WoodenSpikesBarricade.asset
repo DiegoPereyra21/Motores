@@ -15,7 +15,7 @@ MonoBehaviour:
   result: {fileID: 11400000, guid: 1f4af86f486ef9d41a2867d950befb87, type: 2}
   resultAmount: 1
   description: "Barricada de madera, excelente para bloquear caminos a la vez que
-    da\xF1as a enemigos. \n\n+ 100 durabilidad\n+ 5 de da\xF1o\n+ no recibe da\xF1o
+    da\xF1as a enemigos. \n\n+ 50 durabilidad\n+ 5 de da\xF1o\n+ puede recibir da\xF1o
     del jugador"
   ingredients:
   - item: {fileID: 11400000, guid: 070ecd4fc48a8ac42b80e89ca5935b5c, type: 2}
