@@ -29,7 +29,7 @@ public class ZombieBreachBehaviour : MonoBehaviour
     [SerializeField] private float blockedTime = 15f; //cuanto tiempo ignora una abertura despues de abandonarla
 
     [Header("Debug")]
-    [SerializeField] private bool debugLog = true; //avisa en la Consola cuando elige, llega, se traba, etc. (apagar cuando ya funcione)
+    [SerializeField] private bool debugLog = false; //avisa en la Consola cuando elige, llega, se traba, etc. (prenderlo para depurar)
 
     private enum Phase
     {
