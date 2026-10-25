@@ -22,6 +22,7 @@ public static class OpeningsSetup
     private class PanelInfo
     {
         public GameObject source;
+        public GameObject opening; //la abertura creada a partir de este panel
         public OpeningType type;
         public Vector3 center;
         public Vector3 normal; //horizontal, apunta hacia afuera de la cabaña
@@ -31,7 +32,7 @@ public static class OpeningsSetup
         public Vector3 inside; //punto del NavMesh adentro
         public bool outsideOnNavMesh;
         public bool insideOnNavMesh;
-        public bool connectedWithoutLink; //el NavMesh ya conecta afuera con adentro (filtracion)
+        public bool passableHere; //el NavMesh es continuo de un lado al otro de ESTA abertura (sin link ya se puede pasar)
     }
 
     [MenuItem("Zombie Cabin/Barricadas/Crear aberturas desde la seleccion")]
@@ -75,7 +76,8 @@ public static class OpeningsSetup
         foreach (PanelInfo panel in panels)
         {
             int index = panel.type == OpeningType.Door ? ++doorCount : ++windowCount;
-            created.Add(CreateOpening(panel, parent.transform, $"Opening_{panel.type}_{index}", interactLayer, barricadeItem));
+            panel.opening = CreateOpening(panel, parent.transform, $"Opening_{panel.type}_{index}", interactLayer, barricadeItem);
+            created.Add(panel.opening);
         }
 
         EditorSceneManager.MarkSceneDirty(parent.scene);
@@ -172,7 +174,7 @@ public static class OpeningsSetup
         }
     }
 
-    // busca los puntos del NavMesh a cada lado de la abertura y revisa si el NavMesh ya conecta afuera con adentro
+    // busca los puntos del NavMesh a cada lado de la abertura y revisa si el NavMesh es continuo por ESTA abertura
     private static void AnalyzeNavMesh(PanelInfo panel)
     {
         Vector3 groundBase = panel.center + Vector3.down * (panel.height * 0.5f);
@@ -181,11 +183,55 @@ public static class OpeningsSetup
         panel.inside = SampleNavMesh(groundBase - panel.normal * LinkOffset, out panel.insideOnNavMesh);
 
         if (panel.outsideOnNavMesh && panel.insideOnNavMesh)
+            panel.passableHere = IsPassable(panel.outside, panel.inside);
+    }
+
+    // NavMesh.Raycast devuelve true si hay un borde del NavMesh entre los dos puntos (o sea, hay una pared). Si no hay borde, se puede caminar de un punto al otro
+    private static bool IsPassable(Vector3 outside, Vector3 inside)
+    {
+        return !NavMesh.Raycast(outside, inside, out NavMeshHit _, NavMesh.AllAreas);
+    }
+
+    // Diagnostico de las aberturas que ya estan en la escena (usa los extremos del NavMeshLink de cada una), sin crear nada
+    [MenuItem("Zombie Cabin/Barricadas/Diagnosticar NavMesh de las aberturas")]
+    private static void DiagnoseExisting()
+    {
+        CabinOpening[] openings = Object.FindObjectsByType<CabinOpening>(FindObjectsSortMode.InstanceID);
+        if (openings.Length == 0)
         {
-            NavMeshPath path = new NavMeshPath();
-            NavMesh.CalculatePath(panel.outside, panel.inside, NavMesh.AllAreas, path);
-            panel.connectedWithoutLink = path.status == NavMeshPathStatus.PathComplete;
+            EditorUtility.DisplayDialog("Aberturas", "No hay aberturas en la escena.", "OK");
+            return;
         }
+
+        int passable = 0;
+
+        foreach (CabinOpening opening in openings)
+        {
+            NavMeshLink link = opening.GetComponent<NavMeshLink>();
+            if (link == null) continue;
+
+            Vector3 outside = opening.transform.TransformPoint(link.startPoint);
+            Vector3 inside = opening.transform.TransformPoint(link.endPoint);
+            string info;
+
+            if (!NavMesh.SamplePosition(outside, out _, 0.5f, NavMesh.AllAreas) || !NavMesh.SamplePosition(inside, out _, 0.5f, NavMesh.AllAreas))
+            {
+                info = "algun extremo del link NO esta sobre el NavMesh";
+            }
+            else if (IsPassable(outside, inside))
+            {
+                info = "ABIERTA en el NavMesh: los zombies ya pasan por aca sin link";
+                passable++;
+            }
+            else
+            {
+                info = "sellada en el NavMesh: solo pasan por el link";
+            }
+
+            Debug.Log($"[OpeningsSetup] {opening.name} ({opening.Type}, {opening.Size.x:0.0} x {opening.Size.y:0.0} m) -> {info}", opening);
+        }
+
+        Debug.Log($"[OpeningsSetup] {passable} de {openings.Length} aberturas dejan pasar al NavMesh sin link.");
     }
 
     private static Vector3 SampleNavMesh(Vector3 point, out bool found)
@@ -257,7 +303,7 @@ public static class OpeningsSetup
 
     private static void PrintReport(List<PanelInfo> panels)
     {
-        StringBuilder report = new StringBuilder($"[OpeningsSetup] Se crearon {panels.Count} aberturas. Revisa que la flecha verde de cada una apunte hacia AFUERA de la cabaña.\n");
+        //una linea de log por abertura: al hacer clic en la linea en la Consola se selecciona esa abertura en la Hierarchy
         int leaks = 0;
         int offNavMesh = 0;
 
@@ -270,20 +316,19 @@ public static class OpeningsSetup
                 navInfo = $"SIN NavMesh ({(panel.outsideOnNavMesh ? "" : "afuera ")}{(panel.insideOnNavMesh ? "" : "adentro")})";
                 offNavMesh++;
             }
-            else if (panel.connectedWithoutLink)
+            else if (panel.passableHere)
             {
-                navInfo = "FILTRACION: el NavMesh ya conecta afuera con adentro";
+                navInfo = "ABIERTA en el NavMesh: los zombies ya pasan por aca sin link";
                 leaks++;
             }
             else
             {
-                navInfo = "sellada (OK)";
+                navInfo = "sellada en el NavMesh: solo pasan por el link";
             }
 
-            report.AppendLine($"  {panel.source.name} -> {panel.type}, {panel.width:0.0} x {panel.height:0.0} m | {navInfo}");
+            Debug.Log($"[OpeningsSetup] {panel.opening.name} (panel \"{panel.source.name}\", Y {panel.center.y:0.0}) -> {panel.type}, {panel.width:0.0} x {panel.height:0.0} m | {navInfo}", panel.opening);
         }
 
-        report.AppendLine($"Resumen NavMesh: {offNavMesh} sin NavMesh a algun lado, {leaks} con filtracion.");
-        Debug.Log(report.ToString());
+        Debug.Log($"[OpeningsSetup] Se crearon {panels.Count} aberturas. NavMesh: {offNavMesh} sin NavMesh a algun lado, {leaks} abiertas en el NavMesh. Revisa que la flecha verde de cada abertura apunte hacia AFUERA de la cabaña.");
     }
 }
