@@ -15,6 +15,10 @@
                 <ui:VisualElement name="BackpackIcon" class="backpack-icon" style="background-image: resource(&quot;bag&quot;); width: 100px; height: 110px; display: flex; -unity-background-scale-mode: stretch-to-fill;"/>
                 <ui:Label name="KeyLabel" text="I" class="key-label" style="left: 9px; bottom: 25px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); -unity-font-style: bold;"/>
             </ui:VisualElement>
+            <ui:VisualElement name="Tutorial" class="indicator" style="width: 170px; height: 170px; -unity-background-scale-mode: stretch-to-fill; top: 37px; right: -68px;">
+                <ui:VisualElement name="TutorialIcon" class="backpack-icon" style="background-image: url(&quot;project://database/Assets/Art/Test/psx-horror-ui-free/addons/psx_horror_ui/icons/large/note.png?fileID=2800000&amp;guid=ebd911b8add056c4fa8aabbf4d98ac5d&amp;type=3#note&quot;); width: 100px; height: 110px; display: flex; -unity-background-scale-mode: stretch-to-fill;"/>
+                <ui:Label name="KeyLabel" text="T" class="key-label" style="left: 9px; bottom: 25px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); -unity-font-style: bold;"/>
+            </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="Health" class="health">
             <ui:Label name="HealthLabel" text="Salud" enable-rich-text="true" style="font-size: 25px; right: 7px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;);"/>
