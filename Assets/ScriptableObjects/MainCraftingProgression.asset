@@ -13,14 +13,20 @@ MonoBehaviour:
   m_Name: MainCraftingProgression
   m_EditorClassIdentifier: Assembly-CSharp::CraftingProgression
   day1Recipes:
+  - {fileID: 11400000, guid: 6b50e2ef0dce69f4f976cfd99a4ba546, type: 2}
   - {fileID: 11400000, guid: 34ef4345d70066f469a7c75ab3f07214, type: 2}
   - {fileID: 11400000, guid: 8724dd5397834854eae7bd6d2c450fc2, type: 2}
-  - {fileID: 11400000, guid: 9e53cb3781b2c3e4a9b81d54bbaa88fa, type: 2}
-  - {fileID: 11400000, guid: 0db0f706ba4af8c47a31b30f96cd580f, type: 2}
-  day2Recipes:
-  - {fileID: 11400000, guid: e2eaa67ba390cff42a96d08948347f0f, type: 2}
+  - {fileID: 11400000, guid: 156ffe6bea933a2419fb81ec41ef9b13, type: 2}
   - {fileID: 11400000, guid: 605e644b13059f4489bc548fcbcc4f10, type: 2}
+  - {fileID: 11400000, guid: e2eaa67ba390cff42a96d08948347f0f, type: 2}
+  day2Recipes:
+  - {fileID: 11400000, guid: 7c25744ae86d7824da0765a3cd128b6e, type: 2}
+  - {fileID: 11400000, guid: cb27ca7006f3e354b844568fa26132f7, type: 2}
+  - {fileID: 11400000, guid: 110d541b0025e53468ebdba00e4841c5, type: 2}
+  - {fileID: 11400000, guid: 149ec86b93a0f3f40be533948e02342a, type: 2}
+  - {fileID: 11400000, guid: 227785da2a50d7d45814ac730b726cda, type: 2}
+  - {fileID: 11400000, guid: 259bf746a638f0940a82be19ac2b8949, type: 2}
   day3Recipes:
-  - {fileID: 11400000, guid: 6b50e2ef0dce69f4f976cfd99a4ba546, type: 2}
-  - {fileID: 11400000, guid: 227785da2a50d7d45814ac730b726cda, type: 2}
-  - {fileID: 11400000, guid: 227785da2a50d7d45814ac730b726cda, type: 2}
+  - {fileID: 11400000, guid: 0db0f706ba4af8c47a31b30f96cd580f, type: 2}
+  - {fileID: 11400000, guid: 5d0a51276dde8a74ca038d545d04caea, type: 2}
+  - {fileID: 11400000, guid: feac922ff95ef8a439b03f6032692445, type: 2}

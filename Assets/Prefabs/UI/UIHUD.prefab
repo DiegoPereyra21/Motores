@@ -69,6 +69,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HUDController
   uiDocument: {fileID: 5205813910807305262}
-  quickActionReference: {fileID: 5298509335155144908, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  tutorialDocument: {fileID: 0}
+  playerHealth: {fileID: 0}
+  inputActions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   cameraPivot: {fileID: 0}
   slowMotionScale: 0.5

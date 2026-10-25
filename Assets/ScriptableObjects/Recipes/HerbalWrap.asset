@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab281e00936df7841bb54dfff01004e2, type: 3}
+  m_Name: HerbalWrap
+  m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipe
+  result: {fileID: 11400000, guid: 24aeb7902dca7e4418a10b88e384c06c, type: 2}
+  resultAmount: 1
+  description: 'Cataplasma herbal, por su metodo de preparacion permite sanar una
+    cantidad mayor que una venda simple.
+
+
+    + 1 uso
+
+    + 20 recuperacion de
+    vida por uso'
+  ingredients:
+  - item: {fileID: 11400000, guid: 6a154ba5355de1f4690202d262cab0b9, type: 2}
+    amount: 2
+  - item: {fileID: 11400000, guid: f9c4170090c9dc34287e943ce1a0811a, type: 2}
+    amount: 1

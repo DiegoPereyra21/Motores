@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6311890053759518583
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 307033015664521447}
+  - component: {fileID: 4339543035475614825}
+  m_Layer: 0
+  m_Name: ZombieSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &307033015664521447
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6311890053759518583}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -12.80935, y: 0, z: 10.7974}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4339543035475614825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6311890053759518583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a5fc31e4c0d43840b14d9d808d3114d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ZombieSpawner
+  zombiePrefabs:
+  - {fileID: 274235104033748673, guid: 3c05c192ed4b7ca439d4e168a1075d5f, type: 3}
+  - {fileID: 7712702196502708705, guid: 4973ae224cd24cb479388f4b2893d221, type: 3}
+  - {fileID: 6574002037813287365, guid: 050f29bf32b35e9489f5a93a35750142, type: 3}
+  - {fileID: 6755983651060764279, guid: f96f11a082116654fbf7ad17e022e4c5, type: 3}
+  - {fileID: 3937809744094526762, guid: 4aca75abb51be5b46b339a4ee261bb8d, type: 3}
+  - {fileID: 2603641947717816421, guid: d07e0f686af62364a8e36afb9c32f5b6, type: 3}
+  spawnPointsParent: {fileID: 0}
+  timeBetweenSpawns: 4
+  maxZombiesPerNight: 30
+  maxZombiesAlive: 10
+  initialSpawnDelay: 5
+  gameProgressController: {fileID: 0}

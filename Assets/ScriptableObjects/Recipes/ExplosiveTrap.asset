@@ -15,10 +15,10 @@ MonoBehaviour:
   result: {fileID: 11400000, guid: 4e41ce8d8b011174da662583481ae744, type: 2}
   resultAmount: 1
   description: "Trampa explosiva basica, permite colocarla en el suelo y se activa
-    por contacto.\n\n+ 10 de da\xF1o\n+ puede da\xF1ar al propietario "
+    por contacto.\n\n+ 30 de da\xF1o\n+ puede da\xF1ar incluso al jugador "
   ingredients:
   - item: {fileID: 11400000, guid: 08bf96f35d3888d439b147395b164aaa, type: 2}
-    amount: 1
+    amount: 2
   - item: {fileID: 11400000, guid: 81e4c11636867f548a0c8cce9e1ec6ac, type: 2}
     amount: 1
   - item: {fileID: 11400000, guid: 3a0f611f3435e0942bcc62a37285721a, type: 2}

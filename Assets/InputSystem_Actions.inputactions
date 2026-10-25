@@ -629,6 +629,16 @@
                     "interactions": "",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "Tutorial",
+                    "type": "Button",
+                    "id": "b833b60d-8cf6-4b82-9421-f7fb4dd246d8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -1069,6 +1079,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "QuickAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5c56180d-2a54-46d7-8b6a-9e2ec78accea",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Tutorial",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab281e00936df7841bb54dfff01004e2, type: 3}
+  m_Name: MetalSpikesBarricade
+  m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipe
+  result: {fileID: 11400000, guid: ddd37441fa801de47ad56c0e693a7a4b, type: 2}
+  resultAmount: 1
+  description: "Barricada metalida, excelente para frenar hordas de zombies, ultra
+    resistente. \n\n+ 100 durabilidad\n+ 10 de da\xF1o\n+ no recibe da\xF1o del jugador"
+  ingredients:
+  - item: {fileID: 11400000, guid: 1f4af86f486ef9d41a2867d950befb87, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: 81e4c11636867f548a0c8cce9e1ec6ac, type: 2}
+    amount: 5
+  - item: {fileID: 11400000, guid: 3a0f611f3435e0942bcc62a37285721a, type: 2}
+    amount: 5

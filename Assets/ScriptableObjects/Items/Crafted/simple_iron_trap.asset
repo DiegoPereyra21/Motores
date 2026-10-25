@@ -27,4 +27,7 @@ MonoBehaviour:
       type: {class: TrapData, ns: , asm: Assembly-CSharp}
       data:
         deploymentType: 0
+        damage: 15
+        damageOverTime: 0
+        damageDuration: 0
         prefab: {fileID: 9036127576188078789, guid: becfd01c2a3f50343850e7f77db56337, type: 3}

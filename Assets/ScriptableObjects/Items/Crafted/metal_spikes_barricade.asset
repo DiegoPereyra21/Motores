@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1041f8c7f4901b14ca86de07144cbd29, type: 3}
+  m_Name: metal_spikes_barricade
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemId: metal_spikes_barricade
+  itemName: Barricada metalica
+  icon: {fileID: 21300000, guid: 0dc22ed6b1906a848b13ca4bc3826137, type: 3}
+  maxStackSize: 1
+  origin: 1
+  category: 3
+  specializedData:
+    rid: 8075318567909982788
+  references:
+    version: 2
+    RefIds:
+    - rid: 8075318567909982788
+      type: {class: PlaceableData, ns: , asm: Assembly-CSharp}
+      data:
+        prefab: {fileID: 4021499143962925365, guid: 731deebe7060ab541b85cdcf0ad2a357, type: 3}
+        maxDurability: 100
+        buildTime: 2

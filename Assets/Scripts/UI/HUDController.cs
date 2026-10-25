@@ -9,11 +9,14 @@ public class HUDController : MonoBehaviour
     [Header("UI")]
     [SerializeField] private UIDocument uiDocument;
 
+    [Header("UI Tutorial")]
+    [SerializeField] private UIDocument tutorialDocument;
+
     [Header("Jugador")]
     [SerializeField] private Health playerHealth;
 
-    [Header("Quick Selector - Jugador")]
-    [SerializeField] private InputActionReference quickActionReference;
+    [Header("Input Actions")]
+    [SerializeField] private InputActionAsset inputActions;
 
     [Header("Quick Selector - Efectos")]
     [SerializeField] private CameraPivot cameraPivot;
@@ -24,14 +27,19 @@ public class HUDController : MonoBehaviour
     private Label timeLabel;
     private VisualElement healthFill;
     private VisualElement selector;
-    private InputAction quickSelectorAction;
     private VisualElement wheel;
     private VisualElement[] slots;
     private bool isQuickSelectorOpen;
     private float previousTimeScale = 1f;
 
+    private InputAction quickSelectorAction;
+    private InputAction tutorialAction;
+    private VisualElement tutorialOverlay;
+    private bool isTutorialOpen;
+
     private Action<int> dayChangedHandler;
     private Action<DayNightPhase> phaseChangedHandler;
+    private Action<InputAction.CallbackContext> tutorialHandler;
 
     private GameProgressController gameProgress;
 
@@ -44,6 +52,12 @@ public class HUDController : MonoBehaviour
         {
             Debug.LogError("[HUDController] No se encontro UIDocument.", this);
             return;
+        }
+
+        if (tutorialDocument != null)
+        {
+            tutorialOverlay = tutorialDocument.rootVisualElement.Q<VisualElement>("TutorialOverlay");
+            tutorialOverlay.style.display = DisplayStyle.None;
         }
 
         VisualElement root = uiDocument.rootVisualElement;
@@ -95,7 +109,7 @@ public class HUDController : MonoBehaviour
     private void OnEnable()
     {
         TryConnectToGameProgress();
-        ConnectQuickSelector();
+        ConnectInputActions();
         ConnectHealth();
     }
 
@@ -108,6 +122,15 @@ public class HUDController : MonoBehaviour
             quickSelectorAction = null;
         }
 
+        if (tutorialAction != null)
+        {
+            if (tutorialHandler != null)
+                tutorialAction.performed -= tutorialHandler;
+
+            tutorialAction = null;
+            tutorialHandler = null;
+        }
+
         if (gameProgress != null)
         {
             gameProgress.OnDayChanged -= dayChangedHandler;
@@ -118,13 +141,19 @@ public class HUDController : MonoBehaviour
         if (playerHealth != null)
             playerHealth.onHealthChanged.RemoveListener(UpdateHealthBar);
 
+        if (tutorialOverlay != null)
+        {
+            isTutorialOpen = false;
+            tutorialOverlay.style.display = DisplayStyle.None;
+        }
+
+        if (selector != null)
+            selector.style.display = DisplayStyle.None;
+
         dayChangedHandler = null;
         phaseChangedHandler = null;
         isSubscribed = false;
         gameProgress = null;
-
-        if (selector != null)
-            selector.style.display = DisplayStyle.None;
     }
 
     private void TryConnectToGameProgress()
@@ -150,27 +179,34 @@ public class HUDController : MonoBehaviour
         UpdateTimeLabel(0f);
     }
 
-    private void ConnectQuickSelector()
+    private void ConnectInputActions()
     {
-        if (quickSelectorAction != null)
-            return;
-
-        if (quickActionReference == null)
+        if (inputActions == null)
         {
-            Debug.LogError("[HUD] Asigna la referencia de QuickAction en el Inspector.", this);
+            Debug.LogError("[HUDController] Asigna InputSystem_Actions.", this);
             return;
         }
 
-        quickSelectorAction = quickActionReference.action;
+        quickSelectorAction = inputActions.FindAction("UI/QuickAction");
+        tutorialAction = inputActions.FindAction("UI/Tutorial");
 
         if (quickSelectorAction == null)
+            Debug.LogError("[HUDController] No se encontro UI/QuickAction.", this);
+        else
         {
-            Debug.LogError("[HUD] La referencia no contiene una accion.", this);
-            return;
+            quickSelectorAction.started += OnQuickSelectorStarted;
+            quickSelectorAction.canceled += OnQuickSelectorCanceled;
         }
 
-        quickSelectorAction.started += OnQuickSelectorStarted;
-        quickSelectorAction.canceled += OnQuickSelectorCanceled;
+        if (tutorialAction == null)
+        {
+            Debug.LogError("[HUDController] No se encontro UI/Tutorial.", this);
+        }
+        else
+        {
+            tutorialHandler = _ => ToggleTutorial();
+            tutorialAction.performed += tutorialHandler;
+        }
     }
 
     private void UpdateDayNightLabel()
@@ -296,5 +332,32 @@ public class HUDController : MonoBehaviour
 
         healthFill.style.height = Length.Percent(normalizedHealth * 100f);
         healthFill.style.width = Length.Percent(100f);
+    }
+
+    private void ToggleTutorial()
+    {
+        if (tutorialOverlay == null)
+            return;
+
+        isTutorialOpen = !isTutorialOpen;
+
+        tutorialOverlay.style.display = isTutorialOpen ? DisplayStyle.Flex : DisplayStyle.None;
+
+        if (isTutorialOpen)
+        {
+            UnityEngine.Cursor.visible = true;
+            UnityEngine.Cursor.lockState = CursorLockMode.None;
+
+            if (cameraPivot != null)
+                cameraPivot.enabled = false;
+        }
+        else
+        {
+            UnityEngine.Cursor.visible = false;
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+
+            if (cameraPivot != null)
+                cameraPivot.enabled = true;
+        }
     }
 }
