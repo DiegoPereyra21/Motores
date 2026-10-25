@@ -13,7 +13,8 @@ using UnityEngine.SceneManagement;
 // Es de un solo uso: cuando las aberturas esten armadas este archivo se puede borrar.
 public static class OpeningsSetup
 {
-    private const string BarricadeItemPath = "Assets/ScriptableObjects/Items/Crafted/reinforcement_plank.asset";
+    //el item "Tabla de refuerzo", buscado por GUID porque el archivo se renombro en main (reinforcement_plank -> reinforcement_wood_plank) pero el GUID es el mismo
+    private const string BarricadeItemGuid = "9a669aeb58e36ae49b5da0ee4c4c81e7";
     private const string ParentName = "Openings";
     private const float LinkOffset = 1f; //a que distancia de la abertura (a cada lado) van los extremos del NavMeshLink
     private const float AttackOffset = 1.2f; //a que distancia hacia afuera van los puntos de ataque de los zombies
@@ -51,9 +52,9 @@ public static class OpeningsSetup
             return;
         }
 
-        ItemData barricadeItem = AssetDatabase.LoadAssetAtPath<ItemData>(BarricadeItemPath);
+        ItemData barricadeItem = AssetDatabase.LoadAssetAtPath<ItemData>(AssetDatabase.GUIDToAssetPath(BarricadeItemGuid));
         if (barricadeItem == null)
-            Debug.LogWarning($"[OpeningsSetup] No se encontro el item en {BarricadeItemPath}. Hay que asignarlo a mano en cada abertura.");
+            Debug.LogWarning("[OpeningsSetup] No se encontro el item Tabla de refuerzo. Hay que asignarlo a mano en cada abertura.");
 
         List<PanelInfo> panels = ReadPanels(Selection.gameObjects);
         if (panels.Count == 0)
@@ -190,6 +191,94 @@ public static class OpeningsSetup
     private static bool IsPassable(Vector3 outside, Vector3 inside)
     {
         return !NavMesh.Raycast(outside, inside, out NavMeshHit _, NavMesh.AllAreas);
+    }
+
+    // Crea el volumen del interior de la cabaña (CabinInterior) a partir de donde estan las aberturas, sin escribir coordenadas a mano.
+    // Las aberturas estan sobre las paredes, asi que el interior es ese rectangulo un poco achicado. Despues se puede ajustar en el collider.
+    [MenuItem("Zombie Cabin/Barricadas/Crear volumen del interior desde las aberturas")]
+    private static void CreateInterior()
+    {
+        CabinOpening[] openings = Object.FindObjectsByType<CabinOpening>(FindObjectsSortMode.InstanceID);
+        if (openings.Length == 0)
+        {
+            EditorUtility.DisplayDialog("Interior", "No hay aberturas en la escena.", "OK");
+            return;
+        }
+
+        GameObject existing = GameObject.Find("CabinInterior");
+        if (existing != null)
+        {
+            if (!EditorUtility.DisplayDialog("Interior", "Ya existe un objeto \"CabinInterior\". Se va a reemplazar por uno nuevo.", "Reemplazar", "Cancelar"))
+                return;
+
+            Undo.DestroyObjectImmediate(existing);
+        }
+
+        const float wallInset = 0.4f; //las aberturas estan en las paredes: se achica para quedar del lado de adentro
+        const float floorMargin = 0.3f; //el volumen arranca un poco por debajo del piso
+        const float height = 11.5f; //piso a techo (incluye la planta alta)
+
+        //orientacion de la cabaña: las aberturas miran perpendicular a las paredes, asi que sus direcciones son multiplos de 90 grados
+        //respecto del giro de la cabaña. Se promedia con el truco del angulo x4 (los 4 lados cuentan igual)
+        float sin4 = 0f;
+        float cos4 = 0f;
+        foreach (CabinOpening opening in openings)
+        {
+            Vector3 f = opening.transform.forward;
+            float angle = Mathf.Atan2(f.x, f.z);
+            sin4 += Mathf.Sin(4f * angle);
+            cos4 += Mathf.Cos(4f * angle);
+        }
+
+        float yaw = Mathf.Atan2(sin4, cos4) / 4f * Mathf.Rad2Deg;
+        Quaternion rotation = Quaternion.Euler(0f, yaw, 0f);
+        Vector3 axisRight = rotation * Vector3.right;
+        Vector3 axisForward = rotation * Vector3.forward;
+
+        //extension de las aberturas en los ejes de la cabaña (no en los del mundo)
+        float minU = float.MaxValue, maxU = float.MinValue, minV = float.MaxValue, maxV = float.MinValue;
+        float floorY = float.MaxValue;
+
+        foreach (CabinOpening opening in openings)
+        {
+            Vector3 p = opening.transform.position;
+            float u = Vector3.Dot(p, axisRight);
+            float v = Vector3.Dot(p, axisForward);
+            minU = Mathf.Min(minU, u);
+            maxU = Mathf.Max(maxU, u);
+            minV = Mathf.Min(minV, v);
+            maxV = Mathf.Max(maxV, v);
+            floorY = Mathf.Min(floorY, p.y - opening.Size.y * 0.5f); //la base de la abertura mas baja (las puertas) es el piso
+        }
+
+        float bottom = floorY - floorMargin;
+        Vector3 centerXZ = axisRight * ((minU + maxU) * 0.5f) + axisForward * ((minV + maxV) * 0.5f);
+
+        GameObject go = new GameObject("CabinInterior");
+        Undo.RegisterCreatedObjectUndo(go, "Crear interior");
+        go.layer = LayerMask.NameToLayer("Ignore Raycast");
+        go.transform.SetPositionAndRotation(new Vector3(centerXZ.x, bottom + height * 0.5f, centerXZ.z), rotation);
+
+        //dentro del objeto Cabin para tenerlo ordenado en la Hierarchy (worldPositionStays: no se mueve)
+        GameObject cabin = GameObject.Find("Cabin");
+        if (cabin != null)
+            go.transform.SetParent(cabin.transform, true);
+        else
+            Debug.LogWarning("[OpeningsSetup] No se encontro un objeto \"Cabin\", CabinInterior queda en la raiz.");
+
+        BoxCollider box = go.AddComponent<BoxCollider>();
+        box.isTrigger = true;
+        box.center = Vector3.zero;
+        box.size = new Vector3(
+            Mathf.Max(maxU - minU - wallInset * 2f, 1f),
+            height,
+            Mathf.Max(maxV - minV - wallInset * 2f, 1f));
+
+        go.AddComponent<CabinInterior>();
+
+        EditorSceneManager.MarkSceneDirty(go.scene);
+        Selection.activeGameObject = go;
+        Debug.Log($"[OpeningsSetup] CabinInterior creado: giro {yaw:0.0} grados, tamaño {box.size}. Revisa en la Scene (vista desde arriba) que el rectangulo celeste cubra solo el interior.", go);
     }
 
     // Diagnostico de las aberturas que ya estan en la escena (usa los extremos del NavMeshLink de cada una), sin crear nada
