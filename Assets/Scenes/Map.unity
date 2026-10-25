@@ -1373359,9 +1373359,9 @@ MonoBehaviour:
   - {fileID: 2603641947717816421, guid: d07e0f686af62364a8e36afb9c32f5b6, type: 3}
   spawnPointsParent: {fileID: 1360203022}
   timeBetweenSpawns: 4
-  maxZombiesPerNight: 30
   maxZombiesAlive: 10
   initialSpawnDelay: 5
+  spawnTable: {fileID: 11400000, guid: 06f9150eea4767e4a85515b54b12162a, type: 2}
   gameProgressController: {fileID: 628578782}
 --- !u!4 &1757929009
 Transform:

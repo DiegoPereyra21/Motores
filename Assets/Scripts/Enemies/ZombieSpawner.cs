@@ -8,16 +8,19 @@ public class ZombieSpawner : MonoBehaviour
     [Header("Zombies")]
     [SerializeField] private GameObject[] zombiePrefabs;
 
-    [Header("Spawns")]
+    [Header("Spawn Table - Cantidad maxima de enemigos por noche")]
+    [SerializeField] private ZombieSpawnTable spawnTable;
+
+    [Header("Spawns Config")]
     [SerializeField] private Transform spawnPointsParent;
     [SerializeField] private float timeBetweenSpawns = 4f;
-    [SerializeField, Min(1)] private int maxZombiesPerNight = 30; // cantidad maxima de enemigos por noche
     [SerializeField, Min(1)] private int maxZombiesAlive = 10; // cantidad maxima de enemigos activos a la vez
     [SerializeField] private float initialSpawnDelay = 15f;
 
     [Header("Game Progress Manager")]
     [SerializeField] private GameProgressController gameProgressController;
 
+    private int maxZombiesPerNight = 30; // cantidad maxima de enemigos por noche
     private int zombiesSpawnedThisNight;
     private bool canSpawnZombies;
     private float nextSpawnTime; //momento (Time.time) del proximo spawn permitido
@@ -50,7 +53,7 @@ public class ZombieSpawner : MonoBehaviour
             return;
 
         // ya se genero el maximo de zombies de la noche
-        if (zombiesSpawnedThisNight >= maxZombiesPerNight)
+        if (zombiesSpawnedThisNight >= GetMaxZombiesForCurrentDay())
         {
             canSpawnZombies = false;
             return;
@@ -103,6 +106,14 @@ public class ZombieSpawner : MonoBehaviour
         gameProgressController.OnGameEnded -= HandleGameEnded; // detiene el spawn de enemigos al terminar la partida
     }
 
+    private int GetMaxZombiesForCurrentDay()
+    {
+        if (spawnTable == null)
+            return maxZombiesPerNight;
+
+        return spawnTable.GetMaxEnemies(gameProgressController.CurrentDay);
+    }
+
     private void LoadSpawnPoints()
     {
         if (spawnPointsParent == null)
@@ -147,11 +158,12 @@ public class ZombieSpawner : MonoBehaviour
     private void StartEnemiesSpawn()
     {
         nightActive = true;
-        canSpawnZombies = true;
         zombiesSpawnedThisNight = 0;
 
         hordeCleared = false;
         hasSpawnedZombie = false;
+
+        canSpawnZombies = GetMaxZombiesForCurrentDay() > 0;
 
         nextSpawnTime = Time.time + initialSpawnDelay;
     }
