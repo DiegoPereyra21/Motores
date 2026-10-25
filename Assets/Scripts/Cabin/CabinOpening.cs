@@ -64,6 +64,7 @@ public class CabinOpening : MonoBehaviour, IInteractable, IInteractionPrompt
     private NavMeshLink link;
     private NavMeshObstacle obstacle;
     private Coroutine placeRoutine;
+    private object[] attackPointOwners; //quien tiene reservado cada punto de ataque (null = libre)
 
     public OpeningType Type => type;
     public OpeningState State => state;
@@ -75,6 +76,7 @@ public class CabinOpening : MonoBehaviour, IInteractable, IInteractionPrompt
     private void Awake()
     {
         link = GetComponent<NavMeshLink>();
+        attackPointOwners = new object[attackPoints != null ? attackPoints.Length : 0];
 
         bool useObstacle = navBlockMode == NavBlockMode.Obstacle || (navBlockMode == NavBlockMode.Auto && type == OpeningType.Door);
         if (useObstacle)
@@ -106,6 +108,65 @@ public class CabinOpening : MonoBehaviour, IInteractable, IInteractionPrompt
 
         if (barricade != null)
             barricade.OnBroken -= HandleBarricadeBroken;
+    }
+
+    // Puntos de ataque: los zombies reservan uno para no amontonarse todos en el mismo lugar.
+    // El que ya tiene reservado el owner cuenta como libre para el.
+
+    //el punto libre mas cercano a "from", sin reservarlo (null si no hay ninguno)
+    public Transform PeekFreeAttackPoint(Vector3 from, object owner)
+    {
+        int index = FindAttackPoint(from, owner);
+        return index >= 0 ? attackPoints[index] : null;
+    }
+
+    //reserva el punto libre mas cercano a "from" para el owner
+    public bool TryReserveAttackPoint(object owner, Vector3 from, out Transform point)
+    {
+        point = null;
+        int index = FindAttackPoint(from, owner);
+        if (index < 0) return false;
+
+        attackPointOwners[index] = owner;
+        point = attackPoints[index];
+        return true;
+    }
+
+    public void ReleaseAttackPoint(object owner)
+    {
+        if (attackPointOwners == null) return;
+
+        for (int i = 0; i < attackPointOwners.Length; i++)
+        {
+            if (attackPointOwners[i] == owner)
+                attackPointOwners[i] = null;
+        }
+    }
+
+    private int FindAttackPoint(Vector3 from, object owner)
+    {
+        if (attackPoints == null || attackPointOwners == null) return -1;
+
+        int best = -1;
+        float bestDistance = float.MaxValue;
+
+        for (int i = 0; i < attackPoints.Length; i++)
+        {
+            if (attackPoints[i] == null) continue;
+
+            //si ya lo tiene reservado el owner, ese es el suyo
+            if (attackPointOwners[i] == owner) return i;
+            if (attackPointOwners[i] != null) continue;
+
+            float distance = (attackPoints[i].position - from).sqrMagnitude;
+            if (distance < bestDistance)
+            {
+                bestDistance = distance;
+                best = i;
+            }
+        }
+
+        return best;
     }
 
     // lo llama PlayerInteraction cuando el jugador apunta a la abertura y aprieta E
