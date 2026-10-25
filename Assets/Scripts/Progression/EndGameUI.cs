@@ -28,6 +28,7 @@ public class EndGameUI : MonoBehaviour
     [SerializeField] private float titleEndSize = 170f;
 
     private GameProgressController gameProgressController;
+    private bool isSubscribed;
     private Coroutine deathFadeCoroutine;
 
     private VisualElement endingRoot;
@@ -79,28 +80,42 @@ public class EndGameUI : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (!isSubscribed)
+            TryConnectToGameProgress();
+    }
+
     private void OnEnable()
     {
-        gameProgressController = GameProgressController.Instance;
-
-        if (gameProgressController == null)
-        {
-            Debug.LogError("[EndGameUI] No se encontró GameProgressController.", this);
-            return;
-        }
-
-        gameProgressController.OnGameEnded += HandleGameEnded;
+        TryConnectToGameProgress();
     }
 
     private void OnDisable()
     {
-        if (gameProgressController != null)
-        {
+        if (gameProgressController != null && isSubscribed)
             gameProgressController.OnGameEnded -= HandleGameEnded;
-        }
+
+        gameProgressController = null;
+        isSubscribed = false;
 
         RestoreDeathPresentation();
     }
+
+    private void TryConnectToGameProgress()
+    {
+        if (isSubscribed)
+            return;
+
+        gameProgressController = GameProgressController.Instance;
+
+        if (gameProgressController == null)
+            return;
+
+        gameProgressController.OnGameEnded += HandleGameEnded;
+        isSubscribed = true;
+    }
+
 
     private void HandleGameEnded(GameEnding ending)
     {
