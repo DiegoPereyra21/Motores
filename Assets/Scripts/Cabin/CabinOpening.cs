@@ -41,6 +41,8 @@ public class CabinOpening : MonoBehaviour, IInteractable, IInteractionPrompt
     [SerializeField] private OpeningType type = OpeningType.Window;
     [SerializeField] private Vector2 size = new Vector2(2f, 1.9f); //ancho x alto
     [SerializeField] private bool requireInside = true; //solo se puede barricadar desde adentro de la cabaña
+    [SerializeField] private float maxInteractDistance = 1.8f; //que tan cerca de la abertura tiene que estar el player (en metros, sin contar la altura)
+    [SerializeField, Range(10f, 180f)] private float facingAngle = 70f; //angulo maximo entre hacia donde mira el modelo del player y la abertura
     [SerializeField] private Transform[] attackPoints; //afuera de la abertura, donde se paran los zombies a romper la barricada
 
     [Header("Bloqueo del NavMesh")]
@@ -121,7 +123,7 @@ public class CabinOpening : MonoBehaviour, IInteractable, IInteractionPrompt
         text = null;
 
         if (state != OpeningState.Open || placeRoutine != null) return false;
-        if (requireInside && !IsInsideSide(interactor.transform.position)) return false;
+        if (!IsPlayerWellPlaced(interactor.transform)) return false;
 
         Inventory inventory = interactor.GetComponent<Inventory>();
         bool hasBarricade = inventory != null && barricadeItem != null && inventory.HasItem(barricadeItem, 1);
@@ -136,7 +138,7 @@ public class CabinOpening : MonoBehaviour, IInteractable, IInteractionPrompt
         data = null;
 
         if (state != OpeningState.Open || placeRoutine != null) return false;
-        if (requireInside && !IsInsideSide(interactor.transform.position)) return false;
+        if (!IsPlayerWellPlaced(interactor.transform)) return false;
 
         GameProgressController progress = GameProgressController.Instance;
         if (progress != null && (progress.IsGameEnded || progress.IsWorldPaused)) return false;
@@ -235,10 +237,31 @@ public class CabinOpening : MonoBehaviour, IInteractable, IInteractionPrompt
         }
     }
 
-    //true si el punto esta del lado de adentro de la cabaña (forward apunta para afuera)
-    private bool IsInsideSide(Vector3 point)
+    //el player puede poner la barricada si esta del lado de adentro (forward de la abertura apunta para afuera), bastante cerca,
+    //y su modelo mira hacia la abertura. Sirve tanto para mostrar el cartel como para aceptar la E
+    private bool IsPlayerWellPlaced(Transform player)
     {
-        return Vector3.Dot(point - transform.position, transform.forward) < 0f;
+        Vector3 local = transform.InverseTransformPoint(player.position);
+
+        if (requireInside && local.z >= 0f) return false;
+
+        //distancia horizontal hasta el rectangulo de la abertura (la altura no cuenta: el player esta en el piso y la abertura puede ser una ventana)
+        float halfWidth = size.x * 0.5f;
+        float dx = Mathf.Max(Mathf.Abs(local.x) - halfWidth, 0f);
+        float dz = Mathf.Abs(local.z);
+        if (dx * dx + dz * dz > maxInteractDistance * maxInteractDistance) return false;
+
+        //hacia donde mira el modelo del player vs. el punto de la abertura que tiene mas cerca
+        Vector3 closestPoint = transform.TransformPoint(new Vector3(Mathf.Clamp(local.x, -halfWidth, halfWidth), 0f, 0f));
+        Vector3 toOpening = closestPoint - player.position;
+        toOpening.y = 0f;
+
+        Vector3 forward = player.forward;
+        forward.y = 0f;
+
+        if (toOpening.sqrMagnitude < 0.0001f || forward.sqrMagnitude < 0.0001f) return true;
+
+        return Vector3.Angle(forward, toOpening) <= facingAngle;
     }
 
     private void OnDrawGizmos()
