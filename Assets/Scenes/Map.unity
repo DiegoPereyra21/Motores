@@ -153440,6 +153440,8 @@ MonoBehaviour:
   type: 1
   size: {x: 2.1963174, y: 1.9165645}
   requireInside: 1
+  maxInteractDistance: 1.8
+  facingAngle: 70
   attackPoints:
   - {fileID: 113748980}
   navBlockMode: 0
@@ -728529,6 +728531,8 @@ MonoBehaviour:
   type: 1
   size: {x: 3.2668567, y: 1.9165639}
   requireInside: 1
+  maxInteractDistance: 1.8
+  facingAngle: 70
   attackPoints:
   - {fileID: 1416167024}
   - {fileID: 1830658295}
@@ -762053,6 +762057,8 @@ MonoBehaviour:
   type: 1
   size: {x: 3.253466, y: 1.9165652}
   requireInside: 1
+  maxInteractDistance: 1.8
+  facingAngle: 70
   attackPoints:
   - {fileID: 971620125}
   - {fileID: 963879637}
@@ -803810,6 +803816,8 @@ MonoBehaviour:
   type: 1
   size: {x: 3.2534652, y: 1.9165642}
   requireInside: 1
+  maxInteractDistance: 1.8
+  facingAngle: 70
   attackPoints:
   - {fileID: 245996643}
   - {fileID: 1798420268}
@@ -901458,6 +901466,8 @@ MonoBehaviour:
   type: 0
   size: {x: 3.2277486, y: 2.996376}
   requireInside: 1
+  maxInteractDistance: 1.8
+  facingAngle: 70
   attackPoints:
   - {fileID: 1096900012}
   - {fileID: 684406270}
@@ -921422,6 +921432,72 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5659302699953735948, guid: 14851451949f5084796212d0ecdf495b, type: 3}
   m_PrefabInstance: {fileID: 1121078260}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1121470573
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1121470574}
+  - component: {fileID: 1121470576}
+  - component: {fileID: 1121470575}
+  m_Layer: 2
+  m_Name: CabinInterior
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1121470574
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121470573}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.058991842, z: 0, w: 0.99825853}
+  m_LocalPosition: {x: -8.118736, y: 2.3947372, z: -3.6458344}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1932596841}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1121470575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121470573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52624de3b4e7bde42a7dd57bf247a903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CabinInterior
+--- !u!65 &1121470576
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1121470573}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 16.107075, y: 11.5, z: 22.596485}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!43 &1121653854
 Mesh:
   m_ObjectHideFlags: 0
@@ -933204,6 +933280,8 @@ MonoBehaviour:
   type: 1
   size: {x: 3.29544, y: 1.9165652}
   requireInside: 1
+  maxInteractDistance: 1.8
+  facingAngle: 70
   attackPoints:
   - {fileID: 688616782}
   - {fileID: 879867814}
@@ -960405,6 +960483,8 @@ MonoBehaviour:
   type: 0
   size: {x: 2.4418511, y: 2.996376}
   requireInside: 1
+  maxInteractDistance: 1.8
+  facingAngle: 70
   attackPoints:
   - {fileID: 245255340}
   - {fileID: 1752180322}
@@ -1076598,6 +1076678,8 @@ MonoBehaviour:
   type: 1
   size: {x: 4.5458136, y: 1.9165639}
   requireInside: 1
+  maxInteractDistance: 1.8
+  facingAngle: 70
   attackPoints:
   - {fileID: 1941206237}
   - {fileID: 1629930145}
@@ -1428749,6 +1428831,8 @@ MonoBehaviour:
   type: 1
   size: {x: 3.253466, y: 1.9165652}
   requireInside: 1
+  maxInteractDistance: 1.8
+  facingAngle: 70
   attackPoints:
   - {fileID: 584709265}
   - {fileID: 1975323462}
@@ -1429686,6 +1429770,8 @@ MonoBehaviour:
   type: 1
   size: {x: 2.1963174, y: 1.9165645}
   requireInside: 1
+  maxInteractDistance: 1.8
+  facingAngle: 70
   attackPoints:
   - {fileID: 1457751791}
   navBlockMode: 0
@@ -1433242,6 +1433328,7 @@ Transform:
   - {fileID: 1706073197}
   - {fileID: 1027146746}
   - {fileID: 795560084}
+  - {fileID: 1121470574}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 15.984, z: 0}
 --- !u!43 &1934914800
@@ -1497555,6 +1497642,8 @@ MonoBehaviour:
   type: 0
   size: {x: 3.2277486, y: 2.996376}
   requireInside: 1
+  maxInteractDistance: 1.8
+  facingAngle: 70
   attackPoints:
   - {fileID: 876703156}
   - {fileID: 1163189306}
