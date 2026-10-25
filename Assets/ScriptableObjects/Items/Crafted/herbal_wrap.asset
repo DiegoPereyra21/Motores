@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1041f8c7f4901b14ca86de07144cbd29, type: 3}
+  m_Name: herbal_wrap
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemId: herbal_wrap
+  itemName: Cataplasma
+  icon: {fileID: 21300000, guid: 99de8be4e3a590645aa939d91869fd5e, type: 3}
+  maxStackSize: 1
+  origin: 1
+  category: 2
+  specializedData:
+    rid: 8075318640762159185
+  references:
+    version: 2
+    RefIds:
+    - rid: 8075318640762159185
+      type: {class: ConsumableData, ns: , asm: Assembly-CSharp}
+      data:
+        maxUses: 1
+        effectType: 0
+        effectAmount: 20
+        effectOverTime: 0
+        effectDuration: 0
+        prefab: {fileID: 368981180895095153, guid: 37f77241c165e4249babf910ac08c82f, type: 3}

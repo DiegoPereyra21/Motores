@@ -19,12 +19,15 @@ MonoBehaviour:
   origin: 1
   category: 4
   specializedData:
-    rid: 8075318310605684824
+    rid: 8075318640762159189
   references:
     version: 2
     RefIds:
-    - rid: 8075318310605684824
+    - rid: 8075318640762159189
       type: {class: TrapData, ns: , asm: Assembly-CSharp}
       data:
         deploymentType: 1
+        damage: 20
+        damageOverTime: 5
+        damageDuration: 10
         prefab: {fileID: 8332443577365766655, guid: b6dfdfa492ea4f1448ff4368fff40469, type: 3}

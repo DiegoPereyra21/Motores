@@ -17,13 +17,11 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 6c0aa3e24b975d242880242578918494, type: 3}
   maxStackSize: 1
   origin: 1
-  category: 3
+  category: 0
   specializedData:
-    rid: 8075318586725368547
+    rid: -2
   references:
     version: 2
     RefIds:
-    - rid: 8075318586725368547
-      type: {class: PlaceableData, ns: , asm: Assembly-CSharp}
-      data:
-        prefab: {fileID: 368981180895095153, guid: 249a071c88e80c94492a6417e404ca6f, type: 3}
+    - rid: -2
+      type: {class: , ns: , asm: }
