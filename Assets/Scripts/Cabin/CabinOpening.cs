@@ -114,6 +114,25 @@ public class CabinOpening : MonoBehaviour, IInteractable, IInteractionPrompt
     // Puntos de ataque: los zombies reservan uno para no amontonarse todos en el mismo lugar.
     // El que ya tiene reservado el owner cuenta como libre para el.
 
+    //cuantos zombies tienen reservado un punto de esta abertura (los que la estan atacando o van hacia ella)
+    public int ReservedPointCount
+    {
+        get
+        {
+            int count = 0;
+
+            if (attackPointOwners != null)
+            {
+                foreach (object owner in attackPointOwners)
+                {
+                    if (owner != null) count++;
+                }
+            }
+
+            return count;
+        }
+    }
+
     //el punto libre mas cercano a "from", sin reservarlo (null si no hay ninguno)
     public Transform PeekFreeAttackPoint(Vector3 from, object owner)
     {

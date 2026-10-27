@@ -8,12 +8,14 @@ using UnityEngine.AI;
 //  - si esta libre, llega hasta ahi y despues la cruza persiguiendo al player como siempre
 // Si el player esta afuera (aunque sea pegado a la cabaña) o el zombie ya entro, no hace nada y el zombie persigue normal.
 // Lo maneja ZombieControllerNavMesh (llama a Control() en su Update), por eso no tiene Update propio.
+// Cada zombie que ya va hacia una abertura la hace "mas lejana" (crowdPenalty) para los que eligen despues: asi se reparten.
 // Si algo sale mal (no llega a la abertura, se traba), la abandona un rato y vuelve a perseguir normal: nunca se queda quieto.
 [RequireComponent(typeof(NavMeshAgent))]
 public class ZombieBreachBehaviour : MonoBehaviour
 {
     [Header("Eleccion de abertura")]
     [SerializeField] private float barricadePenalty = 0f; //metros extra que "cuesta" una abertura con barricada. 0 = va a la mas cercana sin importar si tiene barricada
+    [SerializeField] private float crowdPenalty = 8f; //metros extra por cada zombie que ya va hacia esa abertura, para que se repartan en vez de ir todos a la misma. 0 = todos a la mas cercana
     [SerializeField] private float arriveDistance = 0.8f; //a esta distancia del punto de ataque se considera que llego
     [SerializeField] private float retargetInterval = 0.5f; //cada cuanto reintenta elegir abertura si no encontro ninguna
 
@@ -166,7 +168,7 @@ public class ZombieBreachBehaviour : MonoBehaviour
             if (point == null) { noFreePoint++; continue; }
             if (!TryGetPathLength(point.position, out float length)) { noPath++; continue; }
 
-            float score = length + (opening.IsBarricaded ? barricadePenalty : 0f);
+            float score = length + (opening.IsBarricaded ? barricadePenalty : 0f) + opening.ReservedPointCount * crowdPenalty;
 
             if (score < bestScore)
             {
