@@ -18,6 +18,7 @@ public class ZombieControllerNavMesh : MonoBehaviour
     //privadas
     private NavMeshAgent agent;
     private ZombieBreachBehaviour breach; //busca aberturas de la cabaña cuando el player esta adentro
+    private ZombieLinkTraversal traversal; //cruza las ventanas (NavMeshLink) trepando
     private Health playerHealth; //para saber si ya murio
     private bool inAttackRange; //estado, lo actualiza UpdateAttackRangeState() en vez de recalcularlo de una con un solo umbral
     //propiedades publicas para q zombie attack pueda leerlas y no duplicar cosas
@@ -41,6 +42,9 @@ public class ZombieControllerNavMesh : MonoBehaviour
         //se agrega solo si no esta en el prefab, asi no hay que tocar los prefabs de los zombies
         breach = GetComponent<ZombieBreachBehaviour>();
         if (breach == null) breach = gameObject.AddComponent<ZombieBreachBehaviour>();
+
+        traversal = GetComponent<ZombieLinkTraversal>();
+        if (traversal == null) traversal = gameObject.AddComponent<ZombieLinkTraversal>();
     }
     private void Start()
     {
@@ -60,8 +64,17 @@ public class ZombieControllerNavMesh : MonoBehaviour
     }
     private void Update()
     {
+        if (!agent.enabled) return;
+
+        //cruzando una ventana (NavMeshLink): ZombieLinkTraversal lo mueve y ni persigue ni ataca hasta que termina
+        if (traversal != null && traversal.Control())
+        {
+            inAttackRange = false;
+            return;
+        }
+
         //IMPORTAe, para prevenir q el agente no intente moverse ni nada si es q esta mal colocado o si esta desactivado
-        if (!agent.enabled || !agent.isOnNavMesh) return;
+        if (!agent.isOnNavMesh) return;
 
         //sin player o ya muerto, se queda donde esta (lluego vemos si le ponemos alguna animacion comiendose al player o algoasi)
         if (player == null || IsPlayerDead)

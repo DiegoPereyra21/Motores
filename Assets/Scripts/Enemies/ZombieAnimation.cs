@@ -20,6 +20,7 @@ public class ZombieAnimation : MonoBehaviour
     private NavMeshAgent agent;
     private ZombieControllerNavMesh zombieController;
     private ZombieAttack zombieAttack;
+    private ZombieLinkTraversal traversal; //cruzando una ventana el agente no se mueve solo, la velocidad la da este script
     private float lastNormalized = 1f;
     private float nextHurtTime;
     private bool wasWindingUp;
@@ -47,7 +48,11 @@ public class ZombieAnimation : MonoBehaviour
     {
         if (health.IsDead) return;
 
+        //lo agrega ZombieControllerNavMesh en su Awake, por eso se busca aca y no en el Awake de este script
+        if (traversal == null) traversal = GetComponent<ZombieLinkTraversal>();
+
         float speed = agent.enabled && agent.isOnNavMesh ? agent.velocity.magnitude : 0f;
+        if (traversal != null && traversal.IsTraversing) speed = traversal.Speed;
         animator.SetFloat(SpeedHash, speed, 0.1f, Time.deltaTime);
 
         //misma animacion de caminar, mas rapida cuando va mas rapido que walkAnimSped
