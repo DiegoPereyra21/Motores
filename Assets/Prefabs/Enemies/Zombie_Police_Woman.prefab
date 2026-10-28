@@ -16,6 +16,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Zombie_Police_Woman
       objectReference: {fileID: 0}
+    - target: {fileID: 4867865377819102709, guid: 3c05c192ed4b7ca439d4e168a1075d5f, type: 3}
+      propertyPath: damage
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4867865377819102709, guid: 3c05c192ed4b7ca439d4e168a1075d5f, type: 3}
+      propertyPath: attackCooldown
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 4907018130709396275, guid: 3c05c192ed4b7ca439d4e168a1075d5f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -59,6 +67,10 @@ PrefabInstance:
     - target: {fileID: 6705555550125825585, guid: 3c05c192ed4b7ca439d4e168a1075d5f, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8733183106101591096, guid: 3c05c192ed4b7ca439d4e168a1075d5f, type: 3}
+      propertyPath: moveSpeed
+      value: 3.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
