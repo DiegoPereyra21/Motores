@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab281e00936df7841bb54dfff01004e2, type: 3}
-  m_Name: WoodenSpikesBarricade
+  m_Name: WoodenSpikesPalisade
   m_EditorClassIdentifier: Assembly-CSharp::CraftingRecipe
   result: {fileID: 11400000, guid: 1f4af86f486ef9d41a2867d950befb87, type: 2}
   resultAmount: 1
-  description: "Barricada de madera, excelente para bloquear caminos a la vez que
+  description: "Empalizada de madera, excelente para bloquear caminos a la vez que
     da\xF1as a enemigos. \n\n+ 50 durabilidad\n+ 5 de da\xF1o\n+ puede recibir da\xF1o
     del jugador"
   ingredients:

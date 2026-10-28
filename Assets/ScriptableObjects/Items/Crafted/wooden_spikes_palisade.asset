@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1041f8c7f4901b14ca86de07144cbd29, type: 3}
-  m_Name: wooden_spikes_barricade
+  m_Name: wooden_spikes_palisade
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemId: wooden_spike_barricade
-  itemName: Barricada con estacas
+  itemId: wooden_spike_palisade
+  itemName: Empalizada con estacas
   icon: {fileID: 21300000, guid: 4225a0814c426be42863ead48779db64, type: 3}
   maxStackSize: 1
   origin: 1
