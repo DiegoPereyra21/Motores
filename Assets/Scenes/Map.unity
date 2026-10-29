@@ -178298,6 +178298,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1712976865}
     - target: {fileID: 1392977919761247990, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
+      propertyPath: eyeClosedIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 4e68e3e688f475647983cffd3cc95330, type: 3}
+    - target: {fileID: 1392977919761247990, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
+      propertyPath: eyeOpenedIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 15828a64f08786a43976ac9f08d9d2a2, type: 3}
+    - target: {fileID: 1392977919761247990, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
       propertyPath: playerController
       value: 
       objectReference: {fileID: 1712976866}

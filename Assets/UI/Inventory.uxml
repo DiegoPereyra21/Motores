@@ -14,7 +14,10 @@
             </ui:VisualElement>
             <ui:VisualElement name="InventoryBody" class="inventory-body" style="flex-grow: 1;">
                 <ui:VisualElement name="InventoryGrid" class="inventory-grid" style="left: 0; padding-left: 16px; padding-right: 4px; -unity-text-align: middle-left; align-self: center; justify-content: flex-start; align-items: center; align-content: auto; flex-direction: row; flex-wrap: wrap;"/>
-                <ui:VisualElement name="QuickAccessPocket" class="quick-access-pocket" style="flex-direction: column; flex-wrap: nowrap;">
+                <ui:Button text="" name="HoverToggleButton" class="hover-toggle-button" style="position: absolute; top: 25px; left: 882px; background-image: none; height: 42px; width: 46px; -unity-background-image-tint-color: rgb(255, 255, 255); -unity-background-scale-mode: stretch-to-fill; align-self: center; justify-content: space-between; align-items: center;">
+                    <ui:Image name="HoverIcon" style="background-image: none; width: 40px; height: 40px;"/>
+                </ui:Button>
+                <ui:VisualElement name="QuickAccessPocket" class="quick-access-pocket" style="flex-direction: column; flex-wrap: nowrap; justify-content: center; padding-top: 14px; bottom: -266px; left: 9px;">
                     <ui:Label text="ACCESO RAPIDO" name="PocketTitle" class="pocket-title" style="-unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;);"/>
                     <ui:VisualElement name="PocketGrid" style="flex-grow: 1; flex-wrap: wrap; align-self: center; justify-content: center; flex-direction: row;">
                         <ui:VisualElement name="QuickSlot_01" class="quick-slot"/>
@@ -23,13 +26,16 @@
                         <ui:VisualElement name="QuickSlot_04" class="quick-slot"/>
                     </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:VisualElement name="QuickAccessPocket" class="quick-access-pocket" style="flex-direction: column; flex-wrap: nowrap; position: absolute; top: 682px; left: 902px; width: 230px; min-width: 220px; height: 177px;">
-                    <ui:Label text="FURIA NEWS" name="PocketTitle" class="pocket-title" style="-unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;);"/>
-                    <ui:VisualElement name="PocketGrid" style="flex-grow: 1; flex-wrap: wrap; align-self: center; justify-content: center; flex-direction: row;">
-                        <ui:VisualElement name="QuickSlot_01" class="quick-slot" style="width: 170px; height: 102px; top: 0; margin-bottom: -11px;">
-                            <ui:Label text="Este menu esta en construccion...&#10;Puede agarrar cosas pero no tirarlas. Agradecemos su paciencia :)" style="color: rgb(218, 207, 177); white-space: normal; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); margin-top: 0; padding-top: 9px; padding-left: 8px;"/>
-                        </ui:VisualElement>
-                    </ui:VisualElement>
+                <ui:VisualElement name="SortButtonsContainer" class="sort-buttons-container" style="flex-direction: column; flex-wrap: nowrap; position: absolute; top: 682px; left: 902px; width: 230px; min-width: 220px; height: 177px; justify-content: space-between;">
+                    <ui:Label text="ORDENAR" name="SortTitle" class="sort-title" style="-unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); bottom: 4px;"/>
+                    <ui:Button text="Por nombre (A-Z)" name="SortName" class="sort-button"/>
+                    <ui:Button text="Por Cantidad" name="SortAmount" class="sort-button"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="ItemTooltip" style="flex-grow: 1; position: absolute;">
+                    <ui:Label text="Label" name="TooltipItemName"/>
+                    <ui:Label text="Label" name="TooltipCategory"/>
+                    <ui:Label text="Label" name="TooltipAmount"/>
+                    <ui:Label text="Label" name="TooltipDurability"/>
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>

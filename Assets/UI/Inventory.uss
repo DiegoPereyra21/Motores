@@ -14,9 +14,11 @@
     width: 70%;
     align-self: center;
     align-items: stretch;
+    flex-direction: column;
+    flex-grow: 1;
+    min-height: 0;
 
     background-color: rgba(11, 22, 20, 0.8);
-
     border-width: 1px;
     border-color: rgba(125, 96, 66, 0.75);
 }
@@ -30,6 +32,7 @@
     justify-content: space-between;
     padding: 10px 20px;
     margin-bottom: 14px;
+
     background-color: rgb(17, 31, 30);
     border-bottom-width: 3px;
     border-bottom-color: rgb(125, 53, 49);
@@ -80,24 +83,27 @@
     justify-content: center;
     align-self: center;
     flex-shrink: 0;
+    flex-grow: 1;
     margin-top: 16px;
+    width: 100%;
+    min-height: 0;
 }
 
 .inventory-grid {
     flex-direction: row;
     flex-wrap: wrap;
+    align-content: flex-start;
+    align-items: flex-start;
+    justify-content: flex-start;
+
     width: 710px;
     flex-shrink: 0;
-    padding: 8px;
+    padding: 8px 4px 8px 16px;
+
     background-color: rgb(8, 16, 15);
     border-width: 1px;
     border-color: rgb(45, 54, 46);
     border-radius: 4px;
-
-    padding-top: 8px;
-    padding-right: 4px;
-    padding-bottom: 8px;
-    padding-left: 16px;
 }
 
 .inventory-slot {
@@ -106,10 +112,25 @@
     flex-shrink: 0;
     margin-right: 6px;
     margin-bottom: 6px;
+
+    position: relative;
+    flex-direction: column;
+    align-items: stretch;
+
     background-color: rgb(207, 195, 162);
     border-width: 2px;
     border-color: rgb(125, 119, 94);
     border-radius: 5px;
+}
+
+.inventory-slot.slot-occupied {
+    background-color: rgb(207, 195, 162);
+}
+
+.inventory-slot.slot-selected {
+    border-width: 3px;
+    border-color: rgb(175, 73, 57);
+    background-color: rgb(224, 210, 174);
 }
 
 .slot-image {
@@ -139,12 +160,22 @@
     top: 4px;
 
     color: rgb(48, 75, 43);
-    font-size: 18 px;
-    -unity-font-style: normal;
+    font-size: 18px;
     -unity-text-align: middle-center;
     -unity-font-style: bold;
     -unity-font-definition: url("project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf");
+}
 
+.slot-durability {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 4px;
+
+    color: rgb(112, 49, 46);
+    font-size: 11px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
 }
 
 .quick-access-pocket {
@@ -155,11 +186,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    align-self: flex-start;
 
     padding: 14px 12px;
 
     background-color: rgba(18, 28, 27, 0.88);
-
     border-width: 1px;
     border-color: rgb(125, 112, 83);
     border-radius: 8px;
@@ -191,6 +222,7 @@
 }
 
 .quick-slot {
+    position: relative;
     width: 110px;
     height: 110px;
     flex-shrink: 0;
@@ -199,4 +231,201 @@
     background-color: rgba(35, 29, 25, 0.9);
     border-width: 1px;
     border-color: rgb(125, 96, 66);
+}
+
+.quick-slot.slot-selected {
+    border-width: 2px;
+    border-color: rgb(175, 73, 57);
+}
+
+.inventory-slot.slot-dragging .slot-image,
+.inventory-slot.slot-dragging .slot-title,
+.inventory-slot.slot-dragging .slot-count,
+.inventory-slot.slot-dragging .slot-durability {
+    visibility: hidden;
+}
+
+.sort-buttons-container {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    padding: 12px;
+    min-width: 150px;
+    background-color: rgba(13, 28, 24, 0.96);
+
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+
+    border-top-color: #665741;
+    border-bottom-color: #665741;
+    border-left-color: #665741;
+    border-right-color: #665741;
+
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.sort-title {
+    color: #d9cba5;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    font-size: 16px;
+    margin-bottom: 8px;
+    padding-bottom: 7px;
+
+    border-bottom-width: 1px;
+    border-bottom-color: #75453b;
+}
+
+.sort-button {
+    height: 34px;
+    min-height: 34px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    background-color: #263b32;
+    color: #d9cba5;
+
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+
+    border-top-color: #756448;
+    border-bottom-color: #756448;
+    border-left-color: #756448;
+    border-right-color: #756448;
+
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+
+    -unity-font-style: bold;
+    font-size: 12px;
+    white-space: normal;
+}
+
+.sort-button:hover {
+    background-color: #3b5042;
+    color: #f0dfb8;
+
+    border-top-color: #b18b60;
+    border-bottom-color: #b18b60;
+    border-left-color: #b18b60;
+    border-right-color: #b18b60;
+}
+
+.sort-button:active {
+    background-color: #75453b;
+    color: #f0dfb8;
+}
+
+.item-tooltip {
+    width: 100%;
+    min-height: 100px;
+    padding: 10px;
+    margin-top: 6px;
+
+    background-color: rgba(13, 28, 24, 0.97);
+
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+
+    border-top-color: #756448;
+    border-bottom-color: #756448;
+    border-left-color: #756448;
+    border-right-color: #756448;
+
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.item-tooltip-name {
+    color: #d9cba5;
+    font-size: 14px;
+    -unity-font-style: bold;
+    margin-bottom: 4px;
+}
+
+.item-tooltip-detail {
+    color: #b5b8a4;
+    font-size: 11px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.hover-toggle-button {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    min-height: 28px;
+    padding: 2px;
+
+    background-color: #263b32;
+    border-top-color: #756448;
+    border-bottom-color: #756448;
+    border-left-color: #756448;
+    border-right-color: #756448;
+}
+
+.hover-toggle-button {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    min-height: 34px;
+
+    padding: 5px;
+    margin: 0;
+
+    background-color: #10221d;
+
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+
+    border-top-color: #756448;
+    border-bottom-color: #756448;
+    border-left-color: #756448;
+    border-right-color: #756448;
+
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.hover-toggle-button Image {
+    width: 20px;
+    height: 20px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.hover-toggle-button:hover {
+    background-color: #263b32;
+
+    border-top-color: #b18b60;
+    border-bottom-color: #b18b60;
+    border-left-color: #b18b60;
+    border-right-color: #b18b60;
+}
+
+.hover-toggle-button:active {
+    background-color: #75453b;
+
+    border-top-color: #a96a50;
+    border-bottom-color: #a96a50;
+    border-left-color: #a96a50;
+    border-right-color: #a96a50;
 }

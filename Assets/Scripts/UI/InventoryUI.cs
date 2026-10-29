@@ -12,17 +12,43 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private Inventory inventory;
     [SerializeField] private InputActionReference inventoryAction;
     [SerializeField, Min(1)] private int slotCapacity = 30;
-    
+
     // para manejar el movimiento de la camara con el menu abierto
     public bool IsInventoryOpen { get; private set; }
+
+    [Header("Orden de renderizado")]
+    [SerializeField] private int inventoryOpenSortOrder = 50;
+
+    [Header("Iconos del hover")]
+    [SerializeField] private Sprite eyeOpenedIcon;
+    [SerializeField] private Sprite eyeClosedIcon;
+
+    private Animator playerAnimator;
+    private float originalSortOrder;
 
     private VisualElement root;
     private VisualElement inventoryPanel;
     private VisualElement inventoryGrid;
     private Label capacityCount;
-    private Animator playerAnimator;
-
+    private Button sortNameButton;
+    private Button sortAmountButton;
+    
     private readonly List<VisualElement> slots = new();
+    private int draggedSlotIndex = -1;
+
+    private VisualElement draggedItemVisual;
+    private Image draggedItemImage;
+    private Label draggedItemCount;
+
+    private Image hoverToggleImage;
+    private VisualElement itemTooltip;
+    private Label tooltipItemName;
+    private Label tooltipCategory;
+    private Label tooltipAmount;
+    private Label tooltipDurability;
+    private Button hoverToggleButton;
+    private bool hoverInfoEnabled = true;
+
 
     private void Awake()
     {
@@ -34,11 +60,21 @@ public class InventoryUI : MonoBehaviour
     {
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            if (inventoryPanel != null &&
-                inventoryPanel.resolvedStyle.display != DisplayStyle.None)
+            if (inventoryPanel != null && inventoryPanel.resolvedStyle.display != DisplayStyle.None)
             {
                 ToggleInventory();
             }
+        }
+
+        // mover el icono sostenido junto al cursor
+        if (draggedSlotIndex >= 0 && draggedItemVisual != null && draggedItemVisual.style.display == DisplayStyle.Flex && Mouse.current != null && root != null)
+        {
+            Vector2 mousePosition = Mouse.current.position.ReadValue();
+
+            Vector2 panelPosition = RuntimePanelUtils.ScreenToPanel(root.panel, mousePosition);
+
+            draggedItemVisual.style.left = panelPosition.x - 42;
+            draggedItemVisual.style.top = root.panel.visualTree.layout.height - panelPosition.y - 42;
         }
     }
 
@@ -50,10 +86,22 @@ public class InventoryUI : MonoBehaviour
             return;
         }
 
+        originalSortOrder = uiDocument.sortingOrder;
+
         root = uiDocument.rootVisualElement;
         inventoryPanel = root.Q<VisualElement>("InventoryPanel");
         inventoryGrid = root.Q<VisualElement>("InventoryGrid");
         capacityCount = root.Q<Label>("CapacityCount");
+
+        sortNameButton = root.Q<Button>("SortName");
+        sortAmountButton = root.Q<Button>("SortAmount");
+
+        itemTooltip = root.Q<VisualElement>("ItemTooltip");
+        tooltipItemName = root.Q<Label>("TooltipItemName");
+        tooltipCategory = root.Q<Label>("TooltipCategory");
+        tooltipAmount = root.Q<Label>("TooltipAmount");
+        tooltipDurability = root.Q<Label>("TooltipDurability");
+        hoverToggleButton = root.Q<Button>("HoverToggleButton");
 
         if (inventoryGrid == null)
         {
@@ -64,7 +112,10 @@ public class InventoryUI : MonoBehaviour
         if (inventoryPanel != null)
             inventoryPanel.style.display = DisplayStyle.None;
 
+        slotCapacity = Mathf.Max(1, slotCapacity);
+
         GenerateSlots();
+        CreateDraggedItemVisual();
 
         inventory.OnInventoryChanged += RefreshUI;
         RefreshUI();
@@ -74,6 +125,24 @@ public class InventoryUI : MonoBehaviour
             inventoryAction.action.performed += OnInventory;
             inventoryAction.action.Enable();
         }
+
+        if (sortNameButton != null)
+            sortNameButton.clicked += inventory.SortByName;
+
+        if (sortAmountButton != null)
+            sortAmountButton.clicked += inventory.SortByAmount;
+
+        if (itemTooltip != null)
+            itemTooltip.style.display = DisplayStyle.None;
+
+        if (hoverToggleButton != null)
+        {
+            hoverToggleImage = hoverToggleButton.Q<Image>();
+
+            hoverToggleButton.clicked += ToggleHoverInfo;
+        }
+
+        UpdateHoverToggleIcon();
     }
 
     private void OnDisable()
@@ -86,6 +155,35 @@ public class InventoryUI : MonoBehaviour
             inventoryAction.action.performed -= OnInventory;
             inventoryAction.action.Disable();
         }
+
+        if (draggedItemVisual != null)
+            draggedItemVisual.RemoveFromHierarchy();
+
+        draggedItemVisual = null;
+        draggedItemImage = null;
+        draggedItemCount = null;
+        draggedSlotIndex = -1;
+
+        if (IsInventoryOpen)
+        {
+            IsInventoryOpen = false;
+            UpdatePlayerState();
+
+            if (uiDocument != null)
+                uiDocument.sortingOrder = originalSortOrder;
+
+            UnityEngine.Cursor.visible = false;
+            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        if (sortNameButton != null)
+            sortNameButton.clicked -= inventory.SortByName;
+
+        if (sortAmountButton != null)
+            sortAmountButton.clicked -= inventory.SortByAmount;
+
+        if (hoverToggleButton != null)
+            hoverToggleButton.clicked -= ToggleHoverInfo;
     }
 
     private void GenerateSlots()
@@ -95,6 +193,8 @@ public class InventoryUI : MonoBehaviour
 
         for (int i = 0; i < slotCapacity; i++)
         {
+            int slotIndex = i;
+
             VisualElement slot = new VisualElement();
             slot.name = $"Slot_{i + 1:00}";
             slot.AddToClassList("inventory-slot");
@@ -106,61 +206,246 @@ public class InventoryUI : MonoBehaviour
             Image image = new Image();
             image.name = "SlotImage";
             image.AddToClassList("slot-image");
+            image.pickingMode = PickingMode.Ignore;
 
             Label title = new Label();
             title.name = "SlotTitle";
             title.AddToClassList("slot-title");
+            title.pickingMode = PickingMode.Ignore;
 
             Label count = new Label();
             count.name = "SlotCount";
             count.AddToClassList("slot-count");
+            count.pickingMode = PickingMode.Ignore;
+
+            // muestra la durabilidad si el objeto es un arma
+            Label durability = new Label();
+            durability.name = "SlotDurability";
+            durability.AddToClassList("slot-durability");
+            durability.pickingMode = PickingMode.Ignore;
 
             slot.Add(image);
             slot.Add(title);
             slot.Add(count);
+            slot.Add(durability);
+
+            // seleccionar un objeto para moverlo
+            slot.RegisterCallback<PointerDownEvent>(evt => OnSlotPointerDown(evt, slotIndex));
+
+            slot.RegisterCallback<PointerEnterEvent>(evt => ShowItemTooltip(slotIndex));
+
+            slot.RegisterCallback<PointerLeaveEvent>(evt => HideItemTooltip());
 
             inventoryGrid.Add(slot);
             slots.Add(slot);
         }
+
+        // detectar donde se suelta el objeto
+        root.RegisterCallback<PointerUpEvent>(OnRootPointerUp);
     }
+
+    private void CreateDraggedItemVisual()
+    {
+        if (draggedItemVisual != null || root == null)
+            return;
+
+        draggedItemVisual = new VisualElement();
+        draggedItemVisual.name = "DraggedItemVisual";
+
+        draggedItemVisual.style.position = Position.Absolute;
+        draggedItemVisual.style.width = 84;
+        draggedItemVisual.style.height = 84;
+
+        draggedItemVisual.style.backgroundColor = new Color(0.07f, 0.12f, 0.10f, 0.92f);
+
+        draggedItemVisual.style.borderTopWidth = 2;
+        draggedItemVisual.style.borderBottomWidth = 2;
+        draggedItemVisual.style.borderLeftWidth = 2;
+        draggedItemVisual.style.borderRightWidth = 2;
+
+        Color borderColor = new Color(0.69f, 0.29f, 0.22f);
+
+        draggedItemVisual.style.borderTopColor = borderColor;
+        draggedItemVisual.style.borderBottomColor = borderColor;
+        draggedItemVisual.style.borderLeftColor = borderColor;
+        draggedItemVisual.style.borderRightColor = borderColor;
+
+        draggedItemVisual.style.alignItems = Align.Center;
+        draggedItemVisual.style.justifyContent = Justify.Center;
+
+        // para que el icono flotante no intercepte los eventos del mouse
+        draggedItemVisual.pickingMode = PickingMode.Ignore;
+
+        draggedItemImage = new Image();
+        draggedItemImage.style.width = 60;
+        draggedItemImage.style.height = 60;
+        draggedItemImage.scaleMode = ScaleMode.ScaleToFit;
+        draggedItemImage.pickingMode = PickingMode.Ignore;
+
+        draggedItemCount = new Label();
+        draggedItemCount.style.position = Position.Absolute;
+        draggedItemCount.style.left = 3;
+        draggedItemCount.style.top = 2;
+        draggedItemCount.style.color = new Color(0.86f, 0.81f, 0.69f);
+        draggedItemCount.style.unityFontStyleAndWeight = FontStyle.Bold;
+        draggedItemCount.pickingMode = PickingMode.Ignore;
+
+        draggedItemVisual.Add(draggedItemImage);
+        draggedItemVisual.Add(draggedItemCount);
+
+        root.Add(draggedItemVisual);
+        draggedItemVisual.style.display = DisplayStyle.None;
+    }
+
+    // seleccionar un objeto para moverlo
+    private void OnSlotPointerDown(PointerDownEvent evt, int slotIndex)
+    {
+        if (evt.button != 0 || !IsInventoryOpen)
+            return;
+
+        if (slotIndex < 0 || slotIndex >= inventory.Slots.Count)
+            return;
+
+        InventorySlot selectedSlot = inventory.Slots[slotIndex];
+
+        if (selectedSlot.IsEmpty)
+            return;
+
+        draggedSlotIndex = slotIndex;
+
+        // ocultar temporalmente el objeto del slot original
+        slots[slotIndex].AddToClassList("slot-dragging");
+        slots[slotIndex].AddToClassList("slot-selected");
+
+        CreateDraggedItemVisual();
+
+        // limpiar los datos visuales anteriores antes de tomar otro objeto
+        draggedItemImage.image = null;
+        draggedItemCount.text = "";
+
+        // asignar los datos del objeto seleccionado actualmente
+        if (selectedSlot.item.icon != null)
+            draggedItemImage.image = selectedSlot.item.icon.texture;
+
+        if (selectedSlot.amount > 1)
+            draggedItemCount.text = selectedSlot.amount.ToString();
+
+        draggedItemVisual.style.display = DisplayStyle.Flex;
+
+        evt.StopPropagation();
+    }
+
+    // detectar el destino cuando se suelta el objeto
+    private void OnRootPointerUp(PointerUpEvent evt)
+    {
+        if (evt.button != 0 || draggedSlotIndex < 0)
+            return;
+
+        int sourceIndex = draggedSlotIndex;
+        int targetIndex = -1;
+
+        // buscar donde se suelta el objeto
+        VisualElement target = root.panel.Pick(evt.position);
+
+        while (target != null)
+        {
+            for (int i = 0; i < slots.Count; i++)
+            {
+                if (target == slots[i])
+                {
+                    targetIndex = i;
+                    break;
+                }
+            }
+
+            if (targetIndex >= 0 || target == root)
+                break;
+
+            target = target.parent;
+        }
+
+        // mover o intercambiar si el destino es valido
+        if (targetIndex >= 0 &&
+            targetIndex < inventory.Slots.Count &&
+            targetIndex != sourceIndex)
+        {
+            inventory.MoveItem(sourceIndex, targetIndex);
+        }
+
+        // finalizar y limpiar los estados visuales
+        foreach (VisualElement slot in slots)
+        {
+            slot.RemoveFromClassList("slot-selected");
+            slot.RemoveFromClassList("slot-dragging");
+        }
+
+        if (draggedItemVisual != null)
+            draggedItemVisual.style.display = DisplayStyle.None;
+
+        draggedSlotIndex = -1;
+
+        RefreshUI();
+
+        evt.StopPropagation();
+    }
+
 
     private void RefreshUI()
     {
-        foreach (VisualElement slot in slots)
+        if (inventory == null || slots.Count == 0)
+            return;
+
+        int occupiedSlots = 0;
+
+        for (int i = 0; i < slots.Count; i++)
         {
-            slot.Q<Label>("SlotTitle").text = "";
-            slot.Q<Image>("SlotImage").image = null;
-            slot.Q<Label>("SlotCount").text = "";
-        }
+            VisualElement slot = slots[i];
 
-        int index = 0;
+            Label title = slot.Q<Label>("SlotTitle");
+            Image image = slot.Q<Image>("SlotImage");
+            Label count = slot.Q<Label>("SlotCount");
+            Label durability = slot.Q<Label>("SlotDurability");
 
-        foreach (InventorySlot inventorySlot in inventory.Slots)
-        {
-            if (index >= slots.Count)
-                break;
+            title.text = "";
+            image.image = null;
+            count.text = "";
+            durability.text = "";
 
-            if (inventorySlot.item != null)
-            {
-                VisualElement slot = slots[index];
+            slot.RemoveFromClassList("slot-occupied");
 
-                Label title = slot.Q<Label>("SlotTitle");
-                Image image = slot.Q<Image>("SlotImage");
-                Label count = slot.Q<Label>("SlotCount");
+            if (i >= inventory.Slots.Count)
+                continue;
 
-                title.text = inventorySlot.item.itemName;
+            InventorySlot inventorySlot = inventory.Slots[i];
 
-                if (inventorySlot.item.icon != null)
-                    image.image = inventorySlot.item.icon.texture;
+            if (inventorySlot.IsEmpty)
+                continue;
 
+            occupiedSlots++;
+
+            // mientras sostenemos el objeto, no mostrarlo en su slot
+            if (i == draggedSlotIndex)
+                continue;
+
+            title.text = inventorySlot.item.itemName;
+
+            if (inventorySlot.item.icon != null)
+                image.image = inventorySlot.item.icon.texture;
+
+            if (inventorySlot.amount > 1)
                 count.text = inventorySlot.amount.ToString();
+
+            // mostrar la durabilidad actual de cada arma
+            if (inventorySlot.item.IsWeapon() && inventorySlot.item.TryGetWeaponData(out WeaponData weaponData))
+            {
+                durability.text = $"{inventorySlot.weaponDurability}/{weaponData.maxDurability}";
             }
 
-            index++;
+            slot.AddToClassList("slot-occupied");
         }
 
         if (capacityCount != null)
-            capacityCount.text = $"{inventory.Slots.Count} / {slots.Count}";
+            capacityCount.text = $"{occupiedSlots} / {slots.Count}";
     }
 
     private void ToggleInventory()
@@ -172,10 +457,37 @@ public class InventoryUI : MonoBehaviour
 
         inventoryPanel.style.display = IsInventoryOpen ? DisplayStyle.Flex : DisplayStyle.None;
 
+        // priorizar el inventario mientras esta abierto
+        uiDocument.sortingOrder = IsInventoryOpen ? inventoryOpenSortOrder : originalSortOrder;
+
+        if (!IsInventoryOpen)
+        {
+            // cancelar cualquier objeto que estemos sosteniendo
+            if (draggedSlotIndex >= 0 &&
+                draggedSlotIndex < slots.Count)
+            {
+                slots[draggedSlotIndex].RemoveFromClassList("slot-dragging");
+                slots[draggedSlotIndex].RemoveFromClassList("slot-selected");
+            }
+
+            draggedSlotIndex = -1;
+
+            if (draggedItemVisual != null)
+                draggedItemVisual.style.display = DisplayStyle.None;
+
+            foreach (VisualElement slot in slots)
+            {
+                slot.RemoveFromClassList("slot-selected");
+                slot.RemoveFromClassList("slot-dragging");
+            }
+        }
+
         UpdatePlayerState();
 
         UnityEngine.Cursor.visible = IsInventoryOpen;
         UnityEngine.Cursor.lockState = IsInventoryOpen ? CursorLockMode.None : CursorLockMode.Locked;
+
+        RefreshUI();
     }
 
     public void OnInventory(InputAction.CallbackContext context)
@@ -194,4 +506,58 @@ public class InventoryUI : MonoBehaviour
                 playerAnimator.speed = IsInventoryOpen ? 0f : 1f;
         }
     }
+
+    private void ToggleHoverInfo()
+    {
+        hoverInfoEnabled = !hoverInfoEnabled;
+
+        if (!hoverInfoEnabled)
+            HideItemTooltip();
+
+        UpdateHoverToggleIcon();
+    }
+
+    private void UpdateHoverToggleIcon()
+    {
+        if (hoverToggleImage == null)
+            return;
+
+        hoverToggleImage.sprite = hoverInfoEnabled ? eyeOpenedIcon : eyeClosedIcon;
+    }
+
+    private void ShowItemTooltip(int slotIndex)
+    {
+        if (!hoverInfoEnabled || draggedSlotIndex >= 0 || itemTooltip == null || slotIndex < 0 || slotIndex >= inventory.Slots.Count)
+        {
+            return;
+        }
+
+        InventorySlot slot = inventory.Slots[slotIndex];
+
+        if (slot.IsEmpty)
+        {
+            HideItemTooltip();
+            return;
+        }
+
+        tooltipItemName.text = slot.item.itemName;
+        tooltipCategory.text = slot.item.category.ToString();
+        tooltipAmount.text = $"Cantidad: {slot.amount}";
+
+        tooltipDurability.text = "";
+
+        if (slot.item.IsWeapon() && slot.item.TryGetWeaponData(out WeaponData weaponData))
+        {
+            tooltipDurability.text = $"Durabilidad: {slot.weaponDurability}/{weaponData.maxDurability}";
+        }
+
+        itemTooltip.style.display = DisplayStyle.Flex;
+    }
+
+    private void HideItemTooltip()
+    {
+        if (itemTooltip != null)
+            itemTooltip.style.display = DisplayStyle.None;
+    }
+
 }
