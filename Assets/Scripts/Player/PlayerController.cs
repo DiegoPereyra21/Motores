@@ -25,7 +25,38 @@ public class PlayerController : MonoBehaviour
     private float rotationVelocity;
     //publicas
     public bool MovementLocked { get; set; } //lo usa PlayerAttack para frenar al player mientras ataca
+    //tdo para q el se pause al recibir un ataque de un zombie
+    [SerializeField] private float stunImmunityTime = 1f; //tras liberarse, tiempo en que no lo pueden volver a paralizar (evita el stunlock con varios zombies)
+    private float stunEndTime;
+    private float stunImmuneUntil;
+    public bool IsStunned => Time.time < stunEndTime; //paralizado por una mordida (lo setea ZombieAttack)
+    private object stunOwner; //quien puso la parálisis, para que solo ese zombie pueda liberarlo
 
+    //para anim de loot
+    private float busyEndTime;
+    public bool IsBusy => Time.time < busyEndTime; //haciendo una accion de lootear no se mueve ni ataque
+    public void SetBusy(float seconds) => busyEndTime = Time.time + seconds;
+
+
+    public void Stun(float seconds, object owner = null)
+    {
+        //mientras esta paralizado o en la ventana de inmunidad, otros zombies no lo agarran
+        if (Time.time < stunImmuneUntil) return;
+
+        stunEndTime = Time.time + seconds;
+        stunImmuneUntil = stunEndTime + stunImmunityTime;
+        stunOwner = owner;
+    }
+
+    //libera al player antes de tiempo, solo si el agarre lo puso ese mismo owner
+    public void ReleaseStun(object owner)
+    {
+        if (owner == null || stunOwner != owner || !IsStunned) return;
+
+        stunEndTime = Time.time;
+        stunImmuneUntil = Time.time + stunImmunityTime; //queda la ventana de inmunidad para poder alejarse
+        stunOwner = null;
+    }
 
 
     private void Awake()
@@ -45,8 +76,11 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        Vector2 input = MovementLocked ? Vector2.zero : moveAction.action.ReadValue<Vector2>();
-        bool isRunning = !MovementLocked && sprintAction.action.IsPressed();
+
+        bool locked = MovementLocked || IsStunned || IsBusy;
+        Vector2 input = locked ? Vector2.zero : moveAction.action.ReadValue<Vector2>();
+        bool isRunning = !locked && sprintAction.action.IsPressed();
+
         //calc velocidad
         float targetSpeed = input == Vector2.zero ? 0f : (isRunning ? runSpeed : walkSpeed);
         currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, acceleration * Time.deltaTime);

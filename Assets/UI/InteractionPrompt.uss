@@ -1,0 +1,23 @@
+/* Cartel de interaccion ("(E) - Poner barricada"). InteractionPromptUI lo muestra y lo oculta por codigo. */
+
+.prompt-root {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.prompt-label {
+    position: absolute;
+    bottom: 22%;
+    left: 0;
+    right: 0;
+    display: none;
+    font-size: 28px;
+    color: rgb(235, 230, 210);
+    -unity-text-align: middle-center;
+    -unity-font: url("/Assets/Font/Special_Elite/SpecialElite-Regular.ttf");
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(0, 0, 0);
+}

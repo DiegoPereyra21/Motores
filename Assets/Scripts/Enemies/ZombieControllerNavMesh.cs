@@ -6,6 +6,9 @@ public class ZombieControllerNavMesh : MonoBehaviour
 {
     //movimiento
     [SerializeField] private float moveSpeed = 2.5f;
+    [SerializeField] private float acceleration = 20f; //que tan rapido cambia de direccion, xq derrapaba y se quedaba deslizando
+    [SerializeField] private float chaseSpeed = 5f; //velocidad al estar cerca del player, misma animacion pero mas rapida para no complicarme con mixamo 
+    [SerializeField] private float chaseDistance = 6f; //a esta distancia al player empieza a correr
     [SerializeField] private float rotationSpeed = 8f; //que tan rapido gira,poquito porque sino se ve raro el cambio, luego ajustar para q quede con la animacion de giro q pongamos
     //referencias
     [SerializeField] private Transform player; //si me olvido de asignar se autoasigna 
@@ -14,6 +17,8 @@ public class ZombieControllerNavMesh : MonoBehaviour
     [SerializeField] private float attackRangeBuffer = 0.3f; //margen extra para salir del rango de ataque. Sin esto, justo en el limite del attackRange el agente entraba y salia del estado "parado" frame a frame y terminaba empujando al player.
     //privadas
     private NavMeshAgent agent;
+    private ZombieBreachBehaviour breach; //busca aberturas de la cabaña cuando el player esta adentro
+    private ZombieLinkTraversal traversal; //cruza las ventanas (NavMeshLink) trepando
     private Health playerHealth; //para saber si ya murio
     private bool inAttackRange; //estado, lo actualiza UpdateAttackRangeState() en vez de recalcularlo de una con un solo umbral
     //propiedades publicas para q zombie attack pueda leerlas y no duplicar cosas
@@ -30,9 +35,16 @@ public class ZombieControllerNavMesh : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>(); //cache
         agent.speed = moveSpeed;
-        agent.stoppingDistance = attackRange; //frena al acercarse, para q no quede robotico
-        //lo mas importante, para q no gire solo, sino q lo haga con la logica de rotacion de este script
+        agent.acceleration = acceleration; //pisa el valor del prefab
+        agent.stoppingDistance = attackRange * 0.5f; //menor que el rango de ataque: el agente cruza el rango caminando y recien ahi se frena (antes se clavaba justo en el limite)        //lo mas importante, para q no gire solo, sino q lo haga con la logica de rotacion de este script
         agent.updateRotation = false;
+
+        //se agrega solo si no esta en el prefab, asi no hay que tocar los prefabs de los zombies
+        breach = GetComponent<ZombieBreachBehaviour>();
+        if (breach == null) breach = gameObject.AddComponent<ZombieBreachBehaviour>();
+
+        traversal = GetComponent<ZombieLinkTraversal>();
+        if (traversal == null) traversal = gameObject.AddComponent<ZombieLinkTraversal>();
     }
     private void Start()
     {
@@ -52,8 +64,17 @@ public class ZombieControllerNavMesh : MonoBehaviour
     }
     private void Update()
     {
+        if (!agent.enabled) return;
+
+        //cruzando una ventana (NavMeshLink): ZombieLinkTraversal lo mueve y ni persigue ni ataca hasta que termina
+        if (traversal != null && traversal.Control())
+        {
+            inAttackRange = false;
+            return;
+        }
+
         //IMPORTAe, para prevenir q el agente no intente moverse ni nada si es q esta mal colocado o si esta desactivado
-        if (!agent.enabled || !agent.isOnNavMesh) return;
+        if (!agent.isOnNavMesh) return;
 
         //sin player o ya muerto, se queda donde esta (lluego vemos si le ponemos alguna animacion comiendose al player o algoasi)
         if (player == null || IsPlayerDead)
@@ -82,8 +103,16 @@ public class ZombieControllerNavMesh : MonoBehaviour
             return;
         }
 
+        //si el player esta adentro de la cabaña y el zombie afuera, ZombieBreachBehaviour lo manda a una puerta o ventana (rompe la barricada si tiene)
+        if (breach != null && breach.Control(player)) return;
+
         //si se va del rango lo seguira persiguiendo
         agent.isStopped = false;
+
+        //acelera cuando esta cerca del player, suaviza el cambio
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        agent.speed = distanceToPlayer <= chaseDistance ? chaseSpeed : moveSpeed;
+
         agent.SetDestination(player.position);
         //importante, para q mire hacia donde va, no hacia el player todo el rato
         RotateTowards(agent.desiredVelocity);

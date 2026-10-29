@@ -7,13 +7,14 @@ public class ZombieAttack : MonoBehaviour
     [SerializeField] private float damage = 10f; //daño por golpe
     [SerializeField] private float attackCooldown = 1.2f; //segundos entre golpes
     [SerializeField] private float attackWindup = 0.5f; //tiempo que "tarda" en golpear hasta que tengamos animaciones (para que el player pueda esquivar)
-
+    [SerializeField] private float biteParalyzeTime = 0.7f; //segundos que paraliza al player al morderlo, menor q attackooldown sino deja paralizado siempre
     //privadas
     private ZombieControllerNavMesh zombieController;
     private Health myHealth; //salud propia, para chequear si ya murio
     private float nextAttackTime; //momento en que puede iniciar un nuevo golpe
     private bool isWindingUp; //true mientras esta "preparando" el golpe
     private float windupEndTime; //momento (Time.time) en que el golpe conecta
+    private PlayerController grabbedPlayer;
 
     public bool IsWindingUp => isWindingUp; //para la futura animacion
 
@@ -60,12 +61,35 @@ public class ZombieAttack : MonoBehaviour
     {
         isWindingUp = true;
         windupEndTime = Time.time + attackWindup;
+
+
+        //paraliza al player desde que empieza el windup hasta un rato despues de la mordida
+        Transform target = zombieController.Player;
+        if (target != null)
+        {
+            PlayerController playerController = target.GetComponent<PlayerController>();
+            grabbedPlayer = playerController;
+            if (playerController != null) playerController.Stun(attackWindup + biteParalyzeTime, this);
+        }
+
         //aca despues se puede disparar animator.SetTrigger("Attack") cuando tengan animaciones
     }
 
     public void CancelWindup()
     {
         isWindingUp = false;
+        ReleasePlayer();
+    }
+
+    //si el zombie pierde el agarre (lo golpean, muere o se aleja), el player se libera
+    private void ReleasePlayer()
+    {
+        if (grabbedPlayer != null) grabbedPlayer.ReleaseStun(this);
+    }
+
+    private void OnDisable()
+    {
+        ReleasePlayer();
     }
 
     private void LandHit()

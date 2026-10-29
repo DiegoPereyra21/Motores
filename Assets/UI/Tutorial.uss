@@ -1,0 +1,22 @@
+.tutorial-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(10, 9, 7, 0.95);
+}
+
+.tutorial-window {
+    width: 65%;
+    max-width: 800px;
+    min-height: 300px;
+    padding: 32px;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(48, 44, 34);
+    border-width: 2px;
+    border-color: rgb(169, 154, 106);
+}

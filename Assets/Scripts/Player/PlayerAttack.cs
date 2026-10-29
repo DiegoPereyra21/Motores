@@ -40,6 +40,8 @@ public class PlayerAttack : MonoBehaviour
     {
         if (health && health.IsDead) return;//si esta muerto ni intenta revisar si ataco on no
 
+        if (playerController != null && (playerController.IsStunned || playerController.IsBusy)) return;//paralizado u ocupado = no poder atacar
+
         if (attackAction.action.WasPressedThisFrame() && !IsAttacking)
             StartAttack();
     }

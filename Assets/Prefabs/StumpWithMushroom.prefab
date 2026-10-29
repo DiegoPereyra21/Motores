@@ -192,6 +192,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3060410207583996359}
   - component: {fileID: 6195173767878599141}
+  - component: {fileID: 3302072689746176138}
   m_Layer: 0
   m_Name: StumpWithMushroom
   m_TagString: Untagged
@@ -236,6 +237,29 @@ LODGroup:
     - renderer: {fileID: 1897641025510358986}
     - renderer: {fileID: 572110650649757892}
   m_Enabled: 1
+--- !u!136 &3302072689746176138
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6507318605687469635}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.18
+  m_Height: 0.9
+  m_Direction: 1
+  m_Center: {x: -0.02, y: 0.3, z: 0.02}
 --- !u!1 &6780979049158681313
 GameObject:
   m_ObjectHideFlags: 0

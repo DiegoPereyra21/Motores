@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/InteractionPrompt.uss" />
+    <ui:VisualElement name="PromptRoot" class="prompt-root" picking-mode="Ignore">
+        <ui:Label name="PromptLabel" class="prompt-label" text="" picking-mode="Ignore" />
+    </ui:VisualElement>
+</ui:UXML>
