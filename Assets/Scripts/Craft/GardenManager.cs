@@ -1,12 +1,12 @@
 using UnityEngine;
 
-//cuando termina el mensaje de radio de un dia nuevo, cada lugar vacio tiene una chance de que crezca su planta
+//EL RESPAWN ES LUEGO DE TOCAR LA RADIO, NO AL ACABAR LA NOCHE
 public class GardenManager : MonoBehaviour
 {
     [SerializeField, Range(0f, 1f)] private float growChance = 0.25f;
-    [SerializeField] private RadioInteractable radio; //si se deja vacio lo busca solo
-    [SerializeField] private PlantSpot[] spots; //si se deja vacio los busca solo
-
+    [SerializeField] private RadioInteractable radio; //lo busca solo x si me olvido
+    [SerializeField] private PlantSpot[] spots; //lo mismo
+    //privadas
     private int lastRolledDay;
 
     private void Start()
@@ -15,20 +15,19 @@ public class GardenManager : MonoBehaviour
 
         if (radio == null)
         {
-            Debug.LogError("[GardenManager] No se encontro RadioInteractable.", this);
+            Debug.LogError("NO HAY RADIO EN EL NIVEL", this);
             return;
         }
 
         if (spots == null || spots.Length == 0)
             spots = FindObjectsByType<PlantSpot>(FindObjectsSortMode.None);
 
-        //el dia inicial no sortea, solo los siguientes
+        //el dia inicial no hay sorteo, los siguientes si
         GameProgressController progress = GameProgressController.Instance;
         lastRolledDay = progress != null ? progress.CurrentDay : 1;
 
         radio.OnMessageFinished += HandleMessageFinished;
     }
-
     private void OnDestroy()
     {
         if (radio != null)
@@ -37,7 +36,7 @@ public class GardenManager : MonoBehaviour
 
     private void HandleMessageFinished(int day)
     {
-        //la radio se puede volver a escuchar: solo se sortea la primera vez de cada dia
+        //solo la primera vez de cada dia, para q no respawnee cada que tocas la radio
         if (day <= lastRolledDay) return;
 
         lastRolledDay = day;
