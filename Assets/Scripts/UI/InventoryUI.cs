@@ -23,6 +23,9 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private Sprite eyeOpenedIcon;
     [SerializeField] private Sprite eyeClosedIcon;
 
+    [Header("Tooltip")]
+    [SerializeField] private Vector2 tooltipMouseOffset = new Vector2(18f, -18f);
+
     private Animator playerAnimator;
     private float originalSortOrder;
 
@@ -41,6 +44,8 @@ public class InventoryUI : MonoBehaviour
     private Label draggedItemCount;
 
     private Image hoverToggleImage;
+    private VisualElement tooltipParent;
+    private const float TooltipPadding = 8f;
     private VisualElement itemTooltip;
     private Label tooltipItemName;
     private Label tooltipCategory;
@@ -76,6 +81,8 @@ public class InventoryUI : MonoBehaviour
             draggedItemVisual.style.left = panelPosition.x - 42;
             draggedItemVisual.style.top = root.panel.visualTree.layout.height - panelPosition.y - 42;
         }
+
+        UpdateTooltipPosition();
     }
 
     private void OnEnable()
@@ -97,6 +104,7 @@ public class InventoryUI : MonoBehaviour
         sortAmountButton = root.Q<Button>("SortAmount");
 
         itemTooltip = root.Q<VisualElement>("ItemTooltip");
+        tooltipParent = itemTooltip.parent;
         tooltipItemName = root.Q<Label>("TooltipItemName");
         tooltipCategory = root.Q<Label>("TooltipCategory");
         tooltipAmount = root.Q<Label>("TooltipAmount");
@@ -389,7 +397,6 @@ public class InventoryUI : MonoBehaviour
         evt.StopPropagation();
     }
 
-
     private void RefreshUI()
     {
         if (inventory == null || slots.Count == 0)
@@ -541,7 +548,7 @@ public class InventoryUI : MonoBehaviour
         }
 
         tooltipItemName.text = slot.item.itemName;
-        tooltipCategory.text = slot.item.category.ToString();
+        tooltipCategory.text = GetTooltipCategory(slot.item);
         tooltipAmount.text = $"Cantidad: {slot.amount}";
 
         tooltipDurability.text = "";
@@ -552,6 +559,8 @@ public class InventoryUI : MonoBehaviour
         }
 
         itemTooltip.style.display = DisplayStyle.Flex;
+
+        UpdateTooltipPosition();
     }
 
     private void HideItemTooltip()
@@ -560,4 +569,80 @@ public class InventoryUI : MonoBehaviour
             itemTooltip.style.display = DisplayStyle.None;
     }
 
+    private string GetTooltipCategory(ItemData item)
+    {
+        if (item == null)
+            return "";
+
+        if (item.origin == ItemOrigin.Raw)
+            return "MATERIAL";
+
+        switch (item.category)
+        {
+            case ItemCategory.Weapon:
+                return "ARMA";
+
+            case ItemCategory.Consumable:
+                return "CONSUMIBLE";
+
+            case ItemCategory.Placeable:
+                return "REFUERZO";
+
+            case ItemCategory.Trap:
+
+                if (item.specializedData is TrapData trapData)
+                {
+                    switch (trapData.deploymentType)
+                    {
+                        case TrapDeploymentType.Throw:
+                            return "ARROJABLE";
+
+                        case TrapDeploymentType.Place:
+                            return "TRAMPA";
+                    }
+                }
+
+                return "TRAMPA";
+
+            default:
+                return "OBJETO";
+        }
+    }
+
+    // para setear la posicion del popup de info del inventario
+    private void UpdateTooltipPosition()
+    {
+        if (itemTooltip == null || itemTooltip.style.display == DisplayStyle.None || root == null || root.panel == null || Mouse.current == null)
+            return;
+        
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
+
+        Vector2 panelPosition = RuntimePanelUtils.ScreenToPanel(root.panel, mousePosition);
+
+        panelPosition.y = root.panel.visualTree.layout.height - panelPosition.y;
+
+        Vector2 localPosition = tooltipParent.WorldToLocal(panelPosition);
+
+        float tooltipWidth = itemTooltip.resolvedStyle.width;
+        float tooltipHeight = itemTooltip.resolvedStyle.height;
+
+        float containerWidth = tooltipParent.resolvedStyle.width;
+        float containerHeight = tooltipParent.resolvedStyle.height;
+
+        float x = localPosition.x + tooltipMouseOffset.x;
+        float y = localPosition.y + tooltipMouseOffset.y;
+
+        if (x + tooltipWidth > containerWidth - TooltipPadding)
+            x = localPosition.x - tooltipWidth - Mathf.Abs(tooltipMouseOffset.x);
+
+        if (y + tooltipHeight > containerHeight - TooltipPadding)
+            y = localPosition.y - tooltipHeight - Mathf.Abs(tooltipMouseOffset.y);
+
+        x = Mathf.Clamp(x, TooltipPadding, Mathf.Max(TooltipPadding, containerWidth - tooltipWidth - TooltipPadding));
+
+        y = Mathf.Clamp(y, TooltipPadding, Mathf.Max(TooltipPadding, containerHeight - tooltipHeight - TooltipPadding));
+
+        itemTooltip.style.left = x;
+        itemTooltip.style.top = y;
+    }
 }

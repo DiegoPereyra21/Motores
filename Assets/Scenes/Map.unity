@@ -178669,6 +178669,14 @@ PrefabInstance:
       propertyPath: playerController
       value: 
       objectReference: {fileID: 1712976866}
+    - target: {fileID: 1392977919761247990, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
+      propertyPath: tooltipMouseOffset.x
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1392977919761247990, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
+      propertyPath: tooltipMouseOffset.y
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 3124581443071239553, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
       propertyPath: sourceAsset
       value: 

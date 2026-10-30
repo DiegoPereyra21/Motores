@@ -31,11 +31,12 @@
                     <ui:Button text="Por nombre (A-Z)" name="SortName" class="sort-button"/>
                     <ui:Button text="Por Cantidad" name="SortAmount" class="sort-button"/>
                 </ui:VisualElement>
-                <ui:VisualElement name="ItemTooltip" style="flex-grow: 1; position: absolute;">
-                    <ui:Label text="Label" name="TooltipItemName"/>
-                    <ui:Label text="Label" name="TooltipCategory"/>
-                    <ui:Label text="Label" name="TooltipAmount"/>
-                    <ui:Label text="Label" name="TooltipDurability"/>
+                <ui:VisualElement name="ItemTooltip" class="item-tooltip" style="flex-grow: 1; position: absolute;">
+                    <ui:Label text="Label" name="TooltipItemName" class="item-tooltip-name"/>
+                    <ui:Label text="Label" name="TooltipCategory" class="item-tooltip-category"/>
+                    <ui:VisualElement name="TooltipDivider" class="item-tooltip-divider" style="flex-grow: 1;"/>
+                    <ui:Label text="Label" name="TooltipAmount" class="item-tooltip-detail"/>
+                    <ui:Label text="Label" name="TooltipDurability" class="item-tooltip-detail"/>
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
