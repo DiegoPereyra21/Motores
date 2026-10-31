@@ -961760,7 +961760,7 @@ Transform:
   m_GameObject: {fileID: 876703155}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.8069336, y: -1.4279289, z: 1.199991}
+  m_LocalPosition: {x: -0.4, y: -1.15, z: 1.199991}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1100767,7 +1100767,7 @@ Transform:
   m_GameObject: {fileID: 1030138424}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7616529, z: -0, w: 0.6479853}
-  m_LocalPosition: {x: 332.82324, y: 12.959442, z: 126.872185}
+  m_LocalPosition: {x: 332.82324, y: 12.68, z: 126.872185}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1100788,7 +1100788,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CabinOpening
   type: 0
-  size: {x: 3.2277486, y: 2.996376}
+  size: {x: 1.5, y: 2.5}
   requireInside: 1
   maxInteractDistance: 1.8
   facingAngle: 70
@@ -1100855,7 +1100855,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.2277486, y: 2.996376, z: 1.6}
+  m_Size: {x: 1.5, y: 2.5, z: 1.6}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!43 &1030480317
 Mesh:
@@ -1176280,7 +1176280,7 @@ Transform:
   m_GameObject: {fileID: 1151035784}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.9967647, z: -0, w: -0.08037523}
-  m_LocalPosition: {x: 318.63568, y: 13.122363, z: 105.47248}
+  m_LocalPosition: {x: 318.52, y: 13.122363, z: 105.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1176301,7 +1176301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CabinOpening
   type: 1
-  size: {x: 3.29544, y: 1.9165652}
+  size: {x: 3.17, y: 1.9165652}
   requireInside: 1
   maxInteractDistance: 1.8
   facingAngle: 70
@@ -1176368,7 +1176368,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.29544, y: 1.9165652, z: 1.6}
+  m_Size: {x: 3.17, y: 1.9165652, z: 1.6}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1152685367
 PrefabInstance:
@@ -1179001,7 +1179001,7 @@ Transform:
   m_GameObject: {fileID: 1163189305}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.80693346, y: -1.415864, z: 1.2000061}
+  m_LocalPosition: {x: 0.4, y: -1.15, z: 1.2000061}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1236676,7 +1236676,7 @@ Transform:
   m_GameObject: {fileID: 1276545942}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.6479853, z: -0, w: 0.7616529}
-  m_LocalPosition: {x: 313.22244, y: 12.959442, z: 111.40719}
+  m_LocalPosition: {x: 313.22244, y: 12.7, z: 111.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1236697,7 +1236697,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CabinOpening
   type: 0
-  size: {x: 2.4418511, y: 2.996376}
+  size: {x: 1.22, y: 2.5}
   requireInside: 1
   maxInteractDistance: 1.8
   facingAngle: 70
@@ -1236764,7 +1236764,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.4418511, y: 2.996376, z: 1.6}
+  m_Size: {x: 1.22, y: 2.3, z: 1.6}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!43 &1277102302
 Mesh:
@@ -1700135,6 +1700135,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7314671631618709976, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      propertyPath: amountPerPress
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8946478680384145332, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
       propertyPath: m_LocalPosition.x
       value: 333.28
@@ -1919261,7 +1919265,7 @@ Transform:
   m_GameObject: {fileID: 2131157653}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7616529, z: -0, w: 0.6479853}
-  m_LocalPosition: {x: 330.781, y: 12.959442, z: 114.2912}
+  m_LocalPosition: {x: 330.68, y: 12.68, z: 114.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1919282,7 +1919286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CabinOpening
   type: 0
-  size: {x: 3.2277486, y: 2.996376}
+  size: {x: 1.22, y: 2.5}
   requireInside: 1
   maxInteractDistance: 1.8
   facingAngle: 70
@@ -1919349,7 +1919353,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.2277486, y: 2.996376, z: 1.6}
+  m_Size: {x: 1.22, y: 2.5, z: 1.6}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2131242547
 GameObject:
