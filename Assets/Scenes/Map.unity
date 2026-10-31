@@ -1700174,6 +1700174,14 @@ PrefabInstance:
       propertyPath: inventoryUI
       value: 
       objectReference: {fileID: 360846085}
+    - target: {fileID: 5343336580200845003, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      propertyPath: onHealthChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5343336580200845003, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      propertyPath: onHealthChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5953249167122860971, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
       propertyPath: m_Name
       value: Player

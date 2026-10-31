@@ -92,12 +92,17 @@
 }
 
 .health-background {
+    position: relative;
     flex-grow: 1;
     justify-content: flex-end;
     background-color: rgba(65, 61, 51, 0.9);
 }
 
 .health-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     height: 100%;
     background-color: rgb(126, 111, 77);
 }

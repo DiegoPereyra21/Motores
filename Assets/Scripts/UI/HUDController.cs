@@ -130,8 +130,15 @@ public class HUDController : MonoBehaviour
     {
         TryConnectToGameProgress();
         ConnectInputActions();
-        ConnectHealth();
+        StartCoroutine(InitializeHealthHUD());
         ConnectQuickAccess();
+    }
+
+    private System.Collections.IEnumerator InitializeHealthHUD()
+    {
+        yield return null;
+
+        ConnectHealth();
     }
 
     private void OnDisable()
@@ -351,10 +358,10 @@ public class HUDController : MonoBehaviour
     private void ConnectHealth()
     {
         if (playerHealth == null)
-            playerHealth = FindFirstObjectByType<Health>();
-
-        if (playerHealth == null)
+        {
+            Debug.LogError("[HUDController] No se asigno Player Health en el Inspector.", this);
             return;
+        }
 
         playerHealth.onHealthChanged.RemoveListener(UpdateHealthBar);
         playerHealth.onHealthChanged.AddListener(UpdateHealthBar);
