@@ -11,6 +11,7 @@ public class InventoryUI : MonoBehaviour
 
     [SerializeField] private Inventory inventory;
     [SerializeField] private InputActionReference inventoryAction;
+    [SerializeField] private QuickAccessController quickAccessController;
     [SerializeField, Min(1)] private int slotCapacity = 30;
 
     // para manejar el movimiento de la camara con el menu abierto
@@ -37,7 +38,9 @@ public class InventoryUI : MonoBehaviour
     private Button sortAmountButton;
     
     private readonly List<VisualElement> slots = new();
+    private readonly List<VisualElement> quickSlots = new();
     private int draggedSlotIndex = -1;
+    private int draggedQuickSlotIndex = -1;
 
     private VisualElement draggedItemVisual;
     private Image draggedItemImage;
@@ -72,7 +75,7 @@ public class InventoryUI : MonoBehaviour
         }
 
         // mover el icono sostenido junto al cursor
-        if (draggedSlotIndex >= 0 && draggedItemVisual != null && draggedItemVisual.style.display == DisplayStyle.Flex && Mouse.current != null && root != null)
+        if ((draggedSlotIndex >= 0 || draggedQuickSlotIndex >= 0) && draggedItemVisual != null && draggedItemVisual.style.display == DisplayStyle.Flex && Mouse.current != null && root != null)
         {
             Vector2 mousePosition = Mouse.current.position.ReadValue();
 
@@ -123,10 +126,18 @@ public class InventoryUI : MonoBehaviour
         slotCapacity = Mathf.Max(1, slotCapacity);
 
         GenerateSlots();
+        GenerateQuickAccessSlots();
         CreateDraggedItemVisual();
 
         inventory.OnInventoryChanged += RefreshUI;
+
+        if (quickAccessController != null)
+        {
+            quickAccessController.OnQuickAccessChanged += RefreshQuickAccessUI;
+        }
+
         RefreshUI();
+        RefreshQuickAccessUI();
 
         if (inventoryAction != null)
         {
@@ -158,6 +169,10 @@ public class InventoryUI : MonoBehaviour
         if (inventory != null)
             inventory.OnInventoryChanged -= RefreshUI;
 
+        if (quickAccessController != null)
+            quickAccessController.OnQuickAccessChanged -= RefreshQuickAccessUI;
+        
+
         if (inventoryAction != null)
         {
             inventoryAction.action.performed -= OnInventory;
@@ -171,6 +186,7 @@ public class InventoryUI : MonoBehaviour
         draggedItemImage = null;
         draggedItemCount = null;
         draggedSlotIndex = -1;
+        draggedQuickSlotIndex = -1;
 
         if (IsInventoryOpen)
         {
@@ -319,6 +335,16 @@ public class InventoryUI : MonoBehaviour
         if (selectedSlot.IsEmpty)
             return;
 
+        // Doble clic: equipar en el primer slot rápido disponible.
+        if (evt.clickCount == 2)
+        {
+            if (quickAccessController != null)
+                quickAccessController.EquipToFirstEmptySlot(slotIndex);
+
+            evt.StopPropagation();
+            return;
+        }
+
         draggedSlotIndex = slotIndex;
 
         // ocultar temporalmente el objeto del slot original
@@ -346,17 +372,26 @@ public class InventoryUI : MonoBehaviour
     // detectar el destino cuando se suelta el objeto
     private void OnRootPointerUp(PointerUpEvent evt)
     {
-        if (evt.button != 0 || draggedSlotIndex < 0)
+        bool draggingFromInventory = draggedSlotIndex >= 0;
+        bool draggingFromQuickAccess = draggedQuickSlotIndex >= 0;
+
+        if (evt.button != 0 || (!draggingFromInventory && !draggingFromQuickAccess))
+        {
             return;
+        }
 
         int sourceIndex = draggedSlotIndex;
-        int targetIndex = -1;
+        int sourceQuickIndex = draggedQuickSlotIndex;
 
-        // buscar donde se suelta el objeto
+        int targetIndex = -1;
+        int targetQuickIndex = -1;
+
+        // Buscar el elemento debajo del cursor.
         VisualElement target = root.panel.Pick(evt.position);
 
         while (target != null)
         {
+            // Comprobar slots normales del inventario.
             for (int i = 0; i < slots.Count; i++)
             {
                 if (target == slots[i])
@@ -366,33 +401,84 @@ public class InventoryUI : MonoBehaviour
                 }
             }
 
-            if (targetIndex >= 0 || target == root)
+            // Si no encontramos un slot normal, comprobar los rápidos.
+            if (targetIndex < 0)
+            {
+                for (int i = 0; i < quickSlots.Count; i++)
+                {
+                    if (target == quickSlots[i])
+                    {
+                        targetQuickIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            if (targetIndex >= 0 ||
+                targetQuickIndex >= 0 ||
+                target == root)
+            {
                 break;
+            }
 
             target = target.parent;
         }
 
-        // mover o intercambiar si el destino es valido
-        if (targetIndex >= 0 &&
-            targetIndex < inventory.Slots.Count &&
-            targetIndex != sourceIndex)
+        // INVENTARIO -> ACCESO RÁPIDO
+        if (draggingFromInventory)
         {
-            inventory.MoveItem(sourceIndex, targetIndex);
+            if (targetIndex >= 0 && targetIndex < inventory.Slots.Count && targetIndex != sourceIndex)
+            {
+                inventory.MoveItem(sourceIndex, targetIndex);
+            }
+            else if (targetQuickIndex >= 0 && quickAccessController != null)
+            {
+                quickAccessController.EquipFromInventory(sourceIndex, targetQuickIndex);
+            }
         }
 
-        // finalizar y limpiar los estados visuales
+        // ACCESO RÁPIDO -> INVENTARIO
+        else if (draggingFromQuickAccess)
+        {
+            if (targetIndex >= 0 && targetIndex < inventory.Slots.Count && quickAccessController != null)
+            {
+                // Solo permite devolverlo a un espacio vacío.
+                if (inventory.Slots[targetIndex].IsEmpty)
+                {
+                    quickAccessController.UnequipToInventoryIndex(sourceQuickIndex, targetIndex);
+                }
+            }
+
+            // ACCESO RÁPIDO -> OTRO SLOT RÁPIDO
+            else if (targetQuickIndex >= 0 && targetQuickIndex != sourceQuickIndex && quickAccessController != null)
+            {
+                quickAccessController.MoveQuickSlot(sourceQuickIndex, targetQuickIndex);
+            }
+        }
+
+        // Limpiar estados visuales del inventario.
         foreach (VisualElement slot in slots)
         {
             slot.RemoveFromClassList("slot-selected");
             slot.RemoveFromClassList("slot-dragging");
         }
 
+        // Limpiar estados visuales del acceso rápido.
+        foreach (VisualElement slot in quickSlots)
+        {
+            slot.RemoveFromClassList("slot-dragging");
+        }
+
+        // Ocultar el icono que sigue al cursor.
         if (draggedItemVisual != null)
             draggedItemVisual.style.display = DisplayStyle.None;
 
+        // Restablecer ambos índices.
         draggedSlotIndex = -1;
+        draggedQuickSlotIndex = -1;
 
         RefreshUI();
+        RefreshQuickAccessUI();
 
         evt.StopPropagation();
     }
@@ -482,9 +568,17 @@ public class InventoryUI : MonoBehaviour
             if (draggedItemVisual != null)
                 draggedItemVisual.style.display = DisplayStyle.None;
 
+            draggedQuickSlotIndex = -1;
+
+
             foreach (VisualElement slot in slots)
             {
                 slot.RemoveFromClassList("slot-selected");
+                slot.RemoveFromClassList("slot-dragging");
+            }
+
+            foreach (VisualElement slot in quickSlots)
+            {
                 slot.RemoveFromClassList("slot-dragging");
             }
         }
@@ -534,7 +628,7 @@ public class InventoryUI : MonoBehaviour
 
     private void ShowItemTooltip(int slotIndex)
     {
-        if (!hoverInfoEnabled || draggedSlotIndex >= 0 || itemTooltip == null || slotIndex < 0 || slotIndex >= inventory.Slots.Count)
+        if (!hoverInfoEnabled || draggedSlotIndex >= 0 || draggedQuickSlotIndex >= 0 || itemTooltip == null || slotIndex < 0 || slotIndex >= inventory.Slots.Count)
         {
             return;
         }
@@ -644,5 +738,106 @@ public class InventoryUI : MonoBehaviour
 
         itemTooltip.style.left = x;
         itemTooltip.style.top = y;
+    }
+
+    // genera los slots de acceso rapido
+    private void GenerateQuickAccessSlots()
+    {
+        quickSlots.Clear();
+
+        string[] slotNames =
+        {
+        "QuickSlot_01",
+        "QuickSlot_02",
+        "QuickSlot_03",
+        "QuickSlot_04"
+    };
+
+        foreach (string slotName in slotNames)
+        {
+            VisualElement slot = root.Q<VisualElement>(slotName);
+
+            if (slot == null)
+            {
+                Debug.LogError($"[InventoryUI] No se encontro {slotName} en el UXML.");
+                continue;
+            }
+
+            slot.Clear();
+
+            Image icon = new Image();
+            icon.name = "QuickSlotIcon";
+            icon.AddToClassList("quick-slot-icon");
+            icon.pickingMode = PickingMode.Ignore;
+            icon.scaleMode = ScaleMode.ScaleToFit;
+
+            slot.Add(icon);
+
+            quickSlots.Add(slot);
+
+            int quickIndex = quickSlots.Count - 1;
+
+            slot.RegisterCallback<PointerDownEvent>(evt => OnQuickSlotPointerDown(evt, quickIndex));
+        }
+    }
+
+    // actualiza los slots de acceso rapido
+    private void RefreshQuickAccessUI()
+    {
+        if (quickAccessController == null)
+            return;
+
+        for (int i = 0; i < quickSlots.Count; i++)
+        {
+            VisualElement slotVisual = quickSlots[i];
+
+            Image icon = slotVisual.Q<Image>("QuickSlotIcon");
+
+            InventorySlot equippedSlot = quickAccessController.GetEquippedSlot(i);
+
+            icon.image = null;
+
+            slotVisual.RemoveFromClassList("slot-occupied");
+
+            if (equippedSlot == null || equippedSlot.IsEmpty)
+                continue;
+
+            if (equippedSlot.item.icon != null)
+                icon.image = equippedSlot.item.icon.texture;
+
+            slotVisual.AddToClassList("slot-occupied");
+        }
+    }
+
+    private void OnQuickSlotPointerDown(PointerDownEvent evt, int quickIndex)
+    {
+        if (!IsInventoryOpen || quickAccessController == null)
+            return;
+
+        if (evt.button == 1)
+        {
+            quickAccessController.Unequip(quickIndex);
+        }
+        else if (evt.button == 0)
+        {
+            InventorySlot selectedSlot = quickAccessController.GetEquippedSlot(quickIndex);
+
+            if (selectedSlot == null || selectedSlot.IsEmpty)
+                return;
+
+            draggedQuickSlotIndex = quickIndex;
+
+            quickSlots[quickIndex].AddToClassList("slot-dragging");
+
+            CreateDraggedItemVisual();
+
+            draggedItemImage.image = selectedSlot.item.icon != null ? selectedSlot.item.icon.texture : null;
+
+            draggedItemCount.text = "";
+
+            draggedItemVisual.style.display = DisplayStyle.Flex;
+        }
+
+        evt.StopPropagation();
     }
 }

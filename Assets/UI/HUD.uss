@@ -153,10 +153,6 @@
     transition-duration: 120ms;
 }
 
-.slot:hover {
-    background-color: rgba(125, 108, 70, 0.95);
-}
-
 .slot.selected {
     background-color: rgba(100, 89, 62, 0.95);
     border-width: 2px;
@@ -225,4 +221,10 @@
     bottom: 0;
     left: 0;
     width: 100%;
+}
+
+.slot.hovered {
+    background-color: rgba(125, 108, 70, 0.95);
+    border-width: 2px;
+    border-color: rgb(207, 192, 151);
 }

@@ -21,6 +21,17 @@ public class HUDController : MonoBehaviour
     [Header("Quick Selector - Efectos")]
     [SerializeField] private CameraPivot cameraPivot;
     [SerializeField, Range(0f, 1f)] private float slowMotionScale = 0.5f;
+    [SerializeField] private float selectionDeadZone = 20f;
+
+    [Header("Acceso rapido")]
+    [SerializeField] private QuickAccessController quickAccessController;
+    [SerializeField] private int quickSelectorSortOrder = 10;
+    private int hoveredSlotIndex = -1;
+
+
+    private VisualElement[] slotIcons;
+    private VisualElement[] durabilityBars;
+    private VisualElement[] durabilityFills;
 
     private bool isSubscribed;
     private Label dayLabel;
@@ -30,7 +41,9 @@ public class HUDController : MonoBehaviour
     private VisualElement wheel;
     private VisualElement[] slots;
     private bool isQuickSelectorOpen;
+    private float originalSortOrder = 0;
     private float previousTimeScale = 1f;
+    private Vector2 wheelScreenCenter;
 
     private InputAction quickSelectorAction;
     private InputAction tutorialAction;
@@ -67,6 +80,8 @@ public class HUDController : MonoBehaviour
         selector = root.Q<VisualElement>("Selector");
         healthFill = root.Q<VisualElement>("HealthFill");
 
+        originalSortOrder = uiDocument.sortingOrder;
+
         if (dayLabel == null)
             Debug.LogError("[HUDController] No se encontro DayLabel en el UXML.", this);
 
@@ -86,17 +101,19 @@ public class HUDController : MonoBehaviour
             root.Q<VisualElement>("Slot3"),
             root.Q<VisualElement>("Slot4")
         };
-    }
 
-    private void Start()
-    {
-        foreach (VisualElement slot in slots)
+        slotIcons = new VisualElement[4];
+        durabilityBars = new VisualElement[4];
+        durabilityFills = new VisualElement[4];
+
+        for (int i = 0; i < slots.Length; i++)
         {
-            if (slot == null)
+            if (slots[i] == null)
                 continue;
 
-            slot.RegisterCallback<PointerEnterEvent>(OnSlotPointerEnter);
-            slot.RegisterCallback<PointerLeaveEvent>(OnSlotPointerLeave);
+            slotIcons[i] = slots[i].Q<VisualElement>($"Icon{i + 1}");
+            durabilityBars[i] = slots[i].Q<VisualElement>("Durability");
+            durabilityFills[i] = slots[i].Q<VisualElement>("DurabilityFill");
         }
     }
 
@@ -104,6 +121,9 @@ public class HUDController : MonoBehaviour
     {
         if (!isSubscribed)
             TryConnectToGameProgress();
+
+        if (isQuickSelectorOpen)
+            UpdateWheelSelection();
     }
 
     private void OnEnable()
@@ -111,6 +131,7 @@ public class HUDController : MonoBehaviour
         TryConnectToGameProgress();
         ConnectInputActions();
         ConnectHealth();
+        ConnectQuickAccess();
     }
 
     private void OnDisable()
@@ -149,6 +170,15 @@ public class HUDController : MonoBehaviour
 
         if (selector != null)
             selector.style.display = DisplayStyle.None;
+
+        if (quickAccessController != null)
+        {
+            quickAccessController.OnQuickAccessChanged -= UpdateQuickAccess;
+            quickAccessController.OnSelectionChanged -= UpdateSelectedSlot;
+        }
+
+        if (uiDocument != null)
+            uiDocument.sortingOrder = originalSortOrder;
 
         dayChangedHandler = null;
         phaseChangedHandler = null;
@@ -226,6 +256,13 @@ public class HUDController : MonoBehaviour
 
     private void OnQuickSelectorCanceled(InputAction.CallbackContext context)
     {
+        if (hoveredSlotIndex >= 0 && quickAccessController != null)
+        {
+            quickAccessController.SelectSlot(hoveredSlotIndex);
+        }
+
+        UpdateHoveredSlot(-1);
+        hoveredSlotIndex = -1;
         CloseQuickSelector();
     }
 
@@ -236,6 +273,8 @@ public class HUDController : MonoBehaviour
 
         isQuickSelectorOpen = true;
 
+        uiDocument.sortingOrder = quickSelectorSortOrder;
+
         UnityEngine.Cursor.visible = true;
         UnityEngine.Cursor.lockState = CursorLockMode.None;
 
@@ -245,8 +284,26 @@ public class HUDController : MonoBehaviour
         if (cameraPivot != null)
             cameraPivot.enabled = false;
 
-        if (selector != null)
-            selector.style.display = DisplayStyle.Flex;
+        if (wheel != null && wheel.panel != null && Mouse.current != null)
+        {
+            VisualElement root = uiDocument.rootVisualElement;
+
+            if (root.layout.width > 0 && root.layout.height > 0)
+            {
+                Vector2 wheelCenter = wheel.worldBound.center;
+
+                float scaleX = Screen.width / root.layout.width;
+                float scaleY = Screen.height / root.layout.height;
+
+                wheelScreenCenter = new Vector2(wheelCenter.x * scaleX, Screen.height - (wheelCenter.y * scaleY));
+
+                Mouse.current.WarpCursorPosition(wheelScreenCenter);
+            }
+        }
+
+        hoveredSlotIndex = quickAccessController != null ? quickAccessController.SelectedIndex : -1;
+
+        UpdateSelectedSlot(hoveredSlotIndex);
     }
 
     private void CloseQuickSelector()
@@ -256,6 +313,8 @@ public class HUDController : MonoBehaviour
 
         isQuickSelectorOpen = false;
 
+        uiDocument.sortingOrder = originalSortOrder;
+
         UnityEngine.Cursor.visible = false;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
 
@@ -263,28 +322,6 @@ public class HUDController : MonoBehaviour
 
         if (cameraPivot != null)
             cameraPivot.enabled = true;
-
-        if (selector != null)
-            selector.style.display = DisplayStyle.Flex;
-    }
-
-    private void OnSlotPointerEnter(PointerEnterEvent evt)
-    {
-        if (!isQuickSelectorOpen)
-            return;
-
-        if (evt.currentTarget is not VisualElement slot)
-            return;
-
-        slot.style.scale = new Scale(new Vector2(1.08f, 1.08f));
-    }
-
-    private void OnSlotPointerLeave(PointerLeaveEvent evt)
-    {
-        if (evt.currentTarget is not VisualElement slot)
-            return;
-
-        slot.style.scale = new Scale(Vector2.one);
     }
 
     public void HideHUD()
@@ -358,6 +395,140 @@ public class HUDController : MonoBehaviour
 
             if (cameraPivot != null)
                 cameraPivot.enabled = true;
+        }
+    }
+
+    private void UpdateQuickAccess()
+    {
+        if (quickAccessController == null)
+            return;
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            InventorySlot equippedSlot = quickAccessController.GetEquippedSlot(i);
+
+            if (slotIcons[i] == null)
+                continue;
+
+            if (equippedSlot == null || equippedSlot.IsEmpty)
+            {
+                slotIcons[i].style.backgroundImage = StyleKeyword.None;
+                slotIcons[i].style.display = DisplayStyle.None;
+                UpdateDurabilityBar(i, null);
+                continue;
+            }
+
+            slotIcons[i].style.backgroundImage = new StyleBackground(equippedSlot.item.icon);
+            slotIcons[i].style.display = DisplayStyle.Flex;
+
+            UpdateDurabilityBar(i, equippedSlot);
+        }
+
+        UpdateSelectedSlot(quickAccessController.SelectedIndex);
+    }
+
+    private void UpdateDurabilityBar(int index, InventorySlot slot)
+    {
+        if (durabilityBars[index] == null || durabilityFills[index] == null)
+            return;
+
+        if (slot == null || slot.IsEmpty || !slot.item.TryGetWeaponData(out WeaponData weaponData))
+        {
+            durabilityBars[index].style.display = DisplayStyle.None;
+            return;
+        }
+
+        durabilityBars[index].style.display = DisplayStyle.Flex;
+
+        float durabilityPercent = weaponData.maxDurability > 0 ? (float)slot.weaponDurability / weaponData.maxDurability : 0f;
+
+        durabilityFills[index].style.width = Length.Percent(Mathf.Clamp01(durabilityPercent) * 100f);
+    }
+
+    private void UpdateSelectedSlot(int selectedIndex)
+    {
+        if (slots == null || quickAccessController == null)
+            return;
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i] == null)
+                continue;
+
+            InventorySlot equippedSlot = quickAccessController.GetEquippedSlot(i);
+
+            bool hasItem = equippedSlot != null && !equippedSlot.IsEmpty;
+            bool isSelected = i == selectedIndex && hasItem;
+
+            slots[i].EnableInClassList("selected", isSelected);
+        }
+    }
+    private void ConnectQuickAccess()
+    {
+        if (quickAccessController == null)
+            quickAccessController = FindFirstObjectByType<QuickAccessController>();
+
+        if (quickAccessController == null)
+        {
+            Debug.LogWarning("[HUDController] No se encontro QuickAccessController", this);
+            return;
+        }
+
+        quickAccessController.OnQuickAccessChanged += UpdateQuickAccess;
+        quickAccessController.OnSelectionChanged += UpdateSelectedSlot;
+
+        UpdateQuickAccess();
+        UpdateSelectedSlot(quickAccessController.SelectedIndex);
+    }
+
+    private int GetSlotIndexFromDirection(Vector2 direction)
+    {
+        if (direction.x < 0 && direction.y >= 0)
+            return 0; // superior izquierdo
+
+        if (direction.x >= 0 && direction.y >= 0)
+            return 1; // superior derecho
+
+        if (direction.x < 0 && direction.y < 0)
+            return 2; // inferior izquierdo
+
+        return 3;     // inferior derecho
+    }
+    private void UpdateWheelSelection()
+    {
+        if (!isQuickSelectorOpen || Mouse.current == null)
+            return;
+
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
+
+        Vector2 direction = mousePosition - wheelScreenCenter;
+
+        // evita seleccionar por movimientos demasiado pequeños
+        if (direction.magnitude < selectionDeadZone)
+            return;
+
+        int newIndex = GetSlotIndexFromDirection(direction);
+
+        if (newIndex == hoveredSlotIndex)
+            return;
+
+        hoveredSlotIndex = newIndex;
+
+        // actualizamos el resaltado sin confirmar
+        UpdateHoveredSlot(hoveredSlotIndex);
+    }
+
+    private void UpdateHoveredSlot(int hoveredIndex)
+    {
+        if (slots == null)
+            return;
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i] == null)
+                continue;
+
+            slots[i].EnableInClassList("hovered", i == hoveredIndex);
         }
     }
 }

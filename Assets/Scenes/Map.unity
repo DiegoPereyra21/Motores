@@ -178057,6 +178057,10 @@ PrefabInstance:
       propertyPath: tooltipMouseOffset.y
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 1392977919761247990, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
+      propertyPath: quickAccessController
+      value: 
+      objectReference: {fileID: 360846087}
     - target: {fileID: 3124581443071239553, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
       propertyPath: sourceAsset
       value: 
@@ -178112,19 +178116,42 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3873492532463962628, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 360846087}
   m_SourcePrefab: {fileID: 100100000, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
 --- !u!114 &360846085 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1392977919761247990, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
   m_PrefabInstance: {fileID: 360846084}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 360846086}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2f7416ee33a3314d828ce9c967dcb75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryUI
+--- !u!1 &360846086 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3873492532463962628, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
+  m_PrefabInstance: {fileID: 360846084}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &360846087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 360846086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82bdd5a2b73141042992826936244c83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::QuickAccessController
+  inventory: {fileID: 1712976865}
+  inventoryUI: {fileID: 360846085}
+  slotCount: 4
 --- !u!43 &361062097
 Mesh:
   m_ObjectHideFlags: 0
@@ -1923410,6 +1923437,10 @@ PrefabInstance:
       propertyPath: quickActionReference
       value: 
       objectReference: {fileID: 5298509335155144908, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    - target: {fileID: 1069845118292833332, guid: 3d92d9bc565ce7748ab43fe2ec871ca3, type: 3}
+      propertyPath: quickAccessController
+      value: 
+      objectReference: {fileID: 360846087}
     - target: {fileID: 4451086918383607478, guid: 3d92d9bc565ce7748ab43fe2ec871ca3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 381.78564
@@ -1923454,6 +1923485,10 @@ PrefabInstance:
       propertyPath: sourceAsset
       value: 
       objectReference: {fileID: 9197481963319205126, guid: 750303cd4908b6745a1941b24d0be70b, type: 3}
+    - target: {fileID: 5205813910807305262, guid: 3d92d9bc565ce7748ab43fe2ec871ca3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6397178476599890713, guid: 3d92d9bc565ce7748ab43fe2ec871ca3, type: 3}
       propertyPath: m_Name
       value: UIHUD

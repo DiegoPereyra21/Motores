@@ -227,17 +227,8 @@ public class Inventory : MonoBehaviour
         }
 
         // intercambia las posiciones conservando la durabilidad
-        ItemData tempItem = from.item;
-        int tempAmount = from.amount;
-        int tempDurability = from.weaponDurability;
-
-        from.item = to.item;
-        from.amount = to.amount;
-        from.weaponDurability = to.weaponDurability;
-
-        to.item = tempItem;
-        to.amount = tempAmount;
-        to.weaponDurability = tempDurability;
+        slots[fromIndex] = to;
+        slots[toIndex] = from;
 
         OnInventoryChanged?.Invoke();
         return true;
@@ -315,5 +306,54 @@ public class Inventory : MonoBehaviour
 
         OnInventoryChanged?.Invoke();
         return true;
+    }
+
+    // retira una instancia del bolso y deja libre su posicion
+    public InventorySlot TakeSlot(int slotIndex)
+    {
+        if (slotIndex < 0 || slotIndex >= slots.Count)
+            return null;
+
+        InventorySlot slot = slots[slotIndex];
+
+        if (slot.IsEmpty)
+            return null;
+
+        slots[slotIndex] = new InventorySlot(null, 0);
+
+        OnInventoryChanged?.Invoke();
+
+        return slot;
+    }
+
+    // devuelve una instancia al primer espacio disponible
+    public bool ReturnSlot(InventorySlot slot, int preferredIndex = -1)
+    {
+        if (slot == null || slot.IsEmpty)
+            return false;
+
+        // intentar devolverlo a una posicion especifica
+        if (preferredIndex >= 0)
+        {
+            if (preferredIndex >= slots.Count || !slots[preferredIndex].IsEmpty)
+                return false;
+
+            slots[preferredIndex] = slot;
+            OnInventoryChanged?.Invoke();
+            return true;
+        }
+
+        // devolverlo al primer espacio disponible
+        for (int i = 0; i < slots.Count; i++)
+        {
+            if (!slots[i].IsEmpty)
+                continue;
+
+            slots[i] = slot;
+            OnInventoryChanged?.Invoke();
+            return true;
+        }
+
+        return false;
     }
 }

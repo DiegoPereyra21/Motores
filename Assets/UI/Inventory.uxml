@@ -20,7 +20,7 @@
                 <ui:VisualElement name="QuickAccessPocket" class="quick-access-pocket" style="flex-direction: column; flex-wrap: nowrap; justify-content: center; padding-top: 14px; bottom: -266px; left: 9px;">
                     <ui:Label text="ACCESO RAPIDO" name="PocketTitle" class="pocket-title" style="-unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;);"/>
                     <ui:VisualElement name="PocketGrid" style="flex-grow: 1; flex-wrap: wrap; align-self: center; justify-content: center; flex-direction: row;">
-                        <ui:VisualElement name="QuickSlot_01" class="quick-slot"/>
+                        <ui:VisualElement name="QuickSlot_01" class="quick-slot" style="background-image: none;"/>
                         <ui:VisualElement name="QuickSlot_02" class="quick-slot"/>
                         <ui:VisualElement name="QuickSlot_03" class="quick-slot"/>
                         <ui:VisualElement name="QuickSlot_04" class="quick-slot"/>

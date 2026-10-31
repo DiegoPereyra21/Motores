@@ -228,6 +228,9 @@
     flex-shrink: 0;
     margin: 2px;
 
+    justify-content: center;
+    align-items: center;
+
     background-color: rgba(35, 29, 25, 0.9);
     border-width: 1px;
     border-color: rgb(125, 96, 66);
@@ -243,6 +246,18 @@
 .inventory-slot.slot-dragging .slot-count,
 .inventory-slot.slot-dragging .slot-durability {
     visibility: hidden;
+}
+
+.quick-slot-icon {
+    width: 80px;
+    height: 80px;
+
+    flex-shrink: 0;
+    flex-grow: 0;
+
+    align-self: center;
+
+    -unity-background-scale-mode: scale-to-fit;
 }
 
 .sort-buttons-container {
