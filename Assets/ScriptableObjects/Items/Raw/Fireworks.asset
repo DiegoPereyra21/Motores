@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1041f8c7f4901b14ca86de07144cbd29, type: 3}
-  m_Name: Gunpowder
+  m_Name: Fireworks
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemId: gunpowder
-  itemName: Polvora
+  itemId: fireworks
+  itemName: Fuegos Artificiales
   icon: {fileID: 21300000, guid: edf3659f6b03a4d48a8070781a19367d, type: 3}
   maxStackSize: 10
   origin: 0

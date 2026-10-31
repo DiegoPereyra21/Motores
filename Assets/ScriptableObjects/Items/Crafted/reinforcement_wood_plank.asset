@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: reinforcement_wood_plank
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: reinforced_wood_plank
-  itemName: Tabla de refuerzo
+  itemName: Barricada de madera
   icon: {fileID: 21300000, guid: cd8ba97835feddd43bdb34d277f8774d, type: 3}
   maxStackSize: 1
   origin: 1

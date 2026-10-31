@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: reinforcement_metal_plank
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: reinforcement_metal_plank
-  itemName: Tabla de refuerzo metalica
+  itemName: Barricada metalica
   icon: {fileID: 21300000, guid: b176ffc128d0d3448bc9179e0e10b523, type: 3}
   maxStackSize: 1
   origin: 1
