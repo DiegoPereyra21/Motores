@@ -42,6 +42,11 @@ public class RadioMessageUI : MonoBehaviour
     private bool skipRequested;
     private float playStartTime;
 
+    //para q no aparezca el consejo en la intro de camara
+    private bool holdHints;
+    private string pendingHint;
+
+
     private void OnEnable()
     {
         // se buscan en OnEnable porque el UIDocument reconstruye el arbol cada vez que se activa
@@ -98,6 +103,12 @@ public class RadioMessageUI : MonoBehaviour
     {
         if (string.IsNullOrWhiteSpace(text) || objectiveHintLabel == null)
             return;
+
+        if (holdHints)
+        {
+            pendingHint = text;
+            return;
+        }
 
         if (hintRoutine != null)
             StopCoroutine(hintRoutine);
@@ -235,5 +246,21 @@ public class RadioMessageUI : MonoBehaviour
     {
         if (element != null)
             element.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
+    }
+
+    // mientras esta en true los avisos de objetivo no se muestran, quedan en espera y salen al volver a false
+    public bool HoldHints
+    {
+        get => holdHints;
+        set
+        {
+            holdHints = value;
+            if (!holdHints && pendingHint != null)
+            {
+                string text = pendingHint;
+                pendingHint = null;
+                ShowObjectiveHint(text);
+            }
+        }
     }
 }
