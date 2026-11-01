@@ -85408,10 +85408,9 @@ MonoBehaviour:
   - {fileID: 1712976868}
   - {fileID: 1712976867}
   - {fileID: 1712976876}
-  - {fileID: 583824012}
-  - {fileID: 1450195023}
   hideDuringIntro:
   - {fileID: 1189739495}
+  - {fileID: 1450195023}
   pauseWorld: 1
 --- !u!4 &340441901
 Transform:
@@ -85609,9 +85608,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1712976865}
     - target: {fileID: 1392977919761247990, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
+      propertyPath: eyeClosedIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 4e68e3e688f475647983cffd3cc95330, type: 3}
+    - target: {fileID: 1392977919761247990, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
+      propertyPath: eyeOpenedIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 15828a64f08786a43976ac9f08d9d2a2, type: 3}
+    - target: {fileID: 1392977919761247990, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
       propertyPath: playerController
       value: 
       objectReference: {fileID: 1712976866}
+    - target: {fileID: 1392977919761247990, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
+      propertyPath: quickAccessController
+      value: 
+      objectReference: {fileID: 1450195025}
     - target: {fileID: 3124581443071239553, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
       propertyPath: sourceAsset
       value: 
@@ -85667,14 +85678,17 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3873492532463962628, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1450195025}
   m_SourcePrefab: {fileID: 100100000, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
 --- !u!114 &360846085 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1392977919761247990, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
   m_PrefabInstance: {fileID: 360846084}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 525770284}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f2f7416ee33a3314d828ce9c967dcb75, type: 3}
@@ -107021,6 +107035,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6375bdb8c37723f418fd43721d39aa5d, type: 3}
+--- !u!1 &525770284 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3873492532463962628, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
+  m_PrefabInstance: {fileID: 360846084}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &530623849
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -973593,12 +973612,27 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3124581443071239553, guid: ef2532cf39d405547ba8a4a3ad8b9956, type: 3}
   m_PrefabInstance: {fileID: 360846084}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 525770284}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+--- !u!114 &1450195025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525770284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82bdd5a2b73141042992826936244c83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::QuickAccessController
+  inventory: {fileID: 1712976865}
+  inventoryUI: {fileID: 360846085}
+  slotCount: 4
 --- !u!43 &1450236374
 Mesh:
   m_ObjectHideFlags: 0
@@ -1327496,6 +1327530,10 @@ PrefabInstance:
       propertyPath: quickActionReference
       value: 
       objectReference: {fileID: 5298509335155144908, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+    - target: {fileID: 1069845118292833332, guid: 3d92d9bc565ce7748ab43fe2ec871ca3, type: 3}
+      propertyPath: quickAccessController
+      value: 
+      objectReference: {fileID: 1450195025}
     - target: {fileID: 4451086918383607478, guid: 3d92d9bc565ce7748ab43fe2ec871ca3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 381.78564
