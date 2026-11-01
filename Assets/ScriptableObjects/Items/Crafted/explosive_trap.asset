@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: explosive_trap
   itemName: Trampa explosiva
-  icon: {fileID: 21300000, guid: dbf736a41dee39644afb16ea0c809b73, type: 3}
+  icon: {fileID: 21300000, guid: da5fd8ec454b2ff46a24a1d7d626ca1d, type: 3}
   maxStackSize: 1
   origin: 1
   category: 4

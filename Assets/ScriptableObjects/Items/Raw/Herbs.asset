@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: herbs
   itemName: Hierbas
-  icon: {fileID: 21300000, guid: 261ad3d9a07f5794da60b8ab9dd73c07, type: 3}
+  icon: {fileID: 21300000, guid: 2ef8da2768164bc44bbd0c0832fa510c, type: 3}
   maxStackSize: 15
   origin: 0
   category: 0
