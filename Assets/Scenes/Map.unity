@@ -1258746,6 +1258746,14 @@ PrefabInstance:
       propertyPath: amountPerPress
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 8131467032854619556, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      propertyPath: runSpeed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8131467032854619556, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      propertyPath: acceleration
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 8343001647361465839, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
       propertyPath: hitClip
       value: 
