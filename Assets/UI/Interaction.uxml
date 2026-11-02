@@ -5,7 +5,7 @@
             <ui:Label name="PromptKey" text="E" class="prompt-key"/>
             <ui:Label name="PromptText" text="Interactuar" class="prompt-text"/>
         </ui:VisualElement>
-        <ui:VisualElement name="InteractionMenu" class="interaction-menu" style="display: none;">
+        <ui:VisualElement name="InteractionMenu" class="interaction-menu" style="display: none; top: 569px; left: 808px;">
             <ui:Label name="MenuTitle" text="ACCIONES" class="menu-title"/>
             <ui:VisualElement name="ActionsContainer" class="actions-container"/>
             <ui:Label name="CloseHint" text="ESC  ·  Cerrar" class="close-hint"/>

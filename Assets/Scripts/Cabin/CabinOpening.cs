@@ -205,25 +205,11 @@ public class CabinOpening : MonoBehaviour
             return false;
         }
 
-        GameProgressController progress = GameProgressController.Instance;
-        PlayerController player = interactor.GetComponent<PlayerController>();
         inventory = interactor.GetComponent<Inventory>();
 
         if (!IsPlayerWellPlaced(interactor.transform))
         {
             reason = "Acercate desde el interior de la casa para aplicar la baricada.";
-            return false;
-        }
-
-        if (progress != null && (progress.IsGameEnded || progress.IsWorldPaused))
-        {
-            reason = "No deberias romper las leyes de la fisica.";
-            return false;
-        }
-
-        if (player != null && (player.IsBusy || player.IsStunned))
-        {
-            reason = "No podes construir en este momento.";
             return false;
         }
 

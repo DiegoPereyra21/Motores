@@ -33029,6 +33029,26 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4179708888430075626, guid: 63852898a91f3b14787c2e2d69f266ba, type: 3}
+      propertyPath: availableActions.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4179708888430075626, guid: 63852898a91f3b14787c2e2d69f266ba, type: 3}
+      propertyPath: 'availableActions.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: c4c3e3f8b2e75e348aaa2688fe88bbc9, type: 2}
+    - target: {fileID: 4179708888430075626, guid: 63852898a91f3b14787c2e2d69f266ba, type: 3}
+      propertyPath: 'availableActions.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 98df85e0e69bdad4d91e6f0056308409, type: 2}
+    - target: {fileID: 4179708888430075626, guid: 63852898a91f3b14787c2e2d69f266ba, type: 3}
+      propertyPath: onLooted.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4179708888430075626, guid: 63852898a91f3b14787c2e2d69f266ba, type: 3}
+      propertyPath: onLooted.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7599863608633452731, guid: 63852898a91f3b14787c2e2d69f266ba, type: 3}
       propertyPath: m_LocalPosition.x
       value: 15.83
@@ -936688,7 +936708,7 @@ GameObject:
   - component: {fileID: 1402412019}
   - component: {fileID: 1402412018}
   m_Layer: 0
-  m_Name: InteractionUI
+  m_Name: UIInteraction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -936707,6 +936727,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InteractionUI
   uiDocument: {fileID: 1402412019}
+  playerInteraction: {fileID: 1712976876}
 --- !u!114 &1402412019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1248573,6 +1248594,10 @@ PrefabInstance:
       propertyPath: inventoryUI
       value: 
       objectReference: {fileID: 360846085}
+    - target: {fileID: 3172682545380626138, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      propertyPath: cancelAction
+      value: 
+      objectReference: {fileID: 7727032971491509709, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     - target: {fileID: 5953249167122860971, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1328273,6 +1328298,7 @@ SceneRoots:
   - {fileID: 2116287809}
   - {fileID: 3546937348047843446}
   - {fileID: 636313075}
+  - {fileID: 1402412020}
   - {fileID: 1696214290}
   - {fileID: 1087471056}
   - {fileID: 1955413305}
@@ -1328302,4 +1328328,3 @@ SceneRoots:
   - {fileID: 184075545}
   - {fileID: 1802794357}
   - {fileID: 1145063572}
-  - {fileID: 1402412020}

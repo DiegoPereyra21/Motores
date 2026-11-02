@@ -9,6 +9,9 @@ public class InteractionUI : MonoBehaviour
     [Header("UI")]
     [SerializeField] private UIDocument uiDocument;
 
+    [Header("Referencias")]
+    [SerializeField] private PlayerInteraction playerInteraction;
+
     private VisualElement interactionRoot;
     private VisualElement interactionPrompt;
     private VisualElement interactionMenu;
@@ -43,9 +46,87 @@ public class InteractionUI : MonoBehaviour
         actionsContainer = root.Q<VisualElement>("ActionsContainer");
         closeHint = root.Q<Label>("CloseHint");
 
+        if (interactionRoot == null || interactionPrompt == null || interactionMenu == null || actionsContainer == null)
+        {
+            Debug.LogError("[InteractionUI] Faltan elementos en Interaction.uxml.", this);
+        }
+
         HideAll();
     }
 
+    private void OnEnable()
+    {
+        if (playerInteraction == null)
+            return;
+
+        playerInteraction.OnTargetChanged += HandleTargetChanged;
+        playerInteraction.OnMenuOpened += HandleMenuOpened;
+        playerInteraction.OnMenuClosed += HandleMenuClosed;
+
+        HandleTargetChanged(playerInteraction.CurrentTarget);
+    }
+
+    private void OnDisable()
+    {
+        if (playerInteraction == null)
+            return;
+
+        playerInteraction.OnTargetChanged -= HandleTargetChanged;
+        playerInteraction.OnMenuOpened -= HandleMenuOpened;
+        playerInteraction.OnMenuClosed -= HandleMenuClosed;
+    }
+
+    private void HandleTargetChanged(IInteractable target)
+    {
+        if (target != null && !playerInteraction.IsMenuOpen)
+        {
+            ShowPrompt();
+        }
+        else
+        {
+            HidePrompt();
+        }
+    }
+
+    private void HandleMenuOpened(IReadOnlyList<InteractionOption> actions)
+    {
+        HidePrompt();
+        ShowMenu(actions);
+    }
+
+    private void HandleMenuClosed()
+    {
+        HideMenu();
+
+        if (playerInteraction.CurrentTarget != null)
+            ShowPrompt();
+        else
+            HidePrompt();
+    }
+
+    private void ShowPrompt()
+    {
+        if (interactionPrompt != null)
+            interactionPrompt.style.display = DisplayStyle.Flex;
+    }
+
+    private void HidePrompt()
+    {
+        if (interactionPrompt != null)
+            interactionPrompt.style.display = DisplayStyle.None;
+    }
+
+    private void ShowMenu(IReadOnlyList<InteractionOption> actions)
+    {
+        if (interactionMenu != null)
+            interactionMenu.style.display = DisplayStyle.Flex;
+    }
+
+    private void HideMenu()
+    {
+        if (interactionMenu != null)
+            interactionMenu.style.display = DisplayStyle.None;
+    }
     private void HideAll()
     {
         if (interactionPrompt != null)
