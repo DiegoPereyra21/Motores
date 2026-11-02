@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: carrot
   itemName: Zanahoria
-  icon: {fileID: 21300000, guid: 6bc97bf13a642f441a82566813f07b11, type: 3}
+  icon: {fileID: 21300000, guid: 5e3af82e736cdd4478c0e599733fb283, type: 3}
   maxStackSize: 10
   origin: 0
   category: 0

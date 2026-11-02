@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: garden_stew
   itemName: Guiso del huerto
-  icon: {fileID: 21300000, guid: 2472198a3fa006142beca02d0b057fe8, type: 3}
+  icon: {fileID: 21300000, guid: d716121087e95f8418ccdc7a5b97a126, type: 3}
   maxStackSize: 1
   origin: 1
   category: 2

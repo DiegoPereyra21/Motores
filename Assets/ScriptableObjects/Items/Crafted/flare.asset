@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: flare
   itemName: Bengala de auxilio
-  icon: {fileID: 21300000, guid: 6c0aa3e24b975d242880242578918494, type: 3}
+  icon: {fileID: 21300000, guid: 492304603ffda684fb13da7e62f2bd96, type: 3}
   maxStackSize: 1
   origin: 1
   category: 0
