@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     //movimiento
     [SerializeField] private float walkSpeed = 2f;//mismo q el blend de animator
     [SerializeField] private float runSpeed = 6f;//x2
+    [SerializeField] private float backwardSpeedMultiplier = 1f;//<1 para que retroceder sea mas lento (ajustar las Pos Y negativas del blend si lo cambias)
     [SerializeField] private float acceleration = 10f;
     [SerializeField] private float rotationSmoothTime = 0.12f;
     [SerializeField] private float gravity = -15f;
@@ -18,9 +19,11 @@ public class PlayerController : MonoBehaviour
     //sistema de inputs nuevo, elijo directamente el input en vez de usar el inputaction completo
     [SerializeField] private InputActionReference moveAction;
     [SerializeField] private InputActionReference sprintAction;
-    
+
     //privadas
-    private float currentSpeed;
+    private static readonly int MoveXHash = Animator.StringToHash("MoveX");
+    private static readonly int MoveYHash = Animator.StringToHash("MoveY");
+    private Vector3 horizontalVelocity;
     private float verticalVelocity;
     private float rotationVelocity;
     //publicas
@@ -76,24 +79,27 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-
         bool locked = MovementLocked || IsStunned || IsBusy;
         Vector2 input = locked ? Vector2.zero : moveAction.action.ReadValue<Vector2>();
         bool isRunning = !locked && sprintAction.action.IsPressed();
 
-        //calc velocidad
-        float targetSpeed = input == Vector2.zero ? 0f : (isRunning ? runSpeed : walkSpeed);
-        currentSpeed = Mathf.Lerp(currentSpeed, targetSpeed, acceleration * Time.deltaTime);
-        //canc dir y rot
-        Vector3 moveDirection = Vector3.zero;
-        if (input != Vector2.zero)
+        //el cuerpo siempre mira hacia donde mira la camara (si esta ocupado/paralizado no gira)
+        if (!locked)
         {
-            float targetAngle = Mathf.Atan2(input.x, input.y) * Mathf.Rad2Deg + cameraPivot.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref rotationVelocity, rotationSmoothTime);
-            
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, cameraPivot.eulerAngles.y, ref rotationVelocity, rotationSmoothTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
-            moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
         }
+
+        //velocidad objetivo, mas lenta cuanto mas hacia atras vaya (si el multiplier es <1)
+        float targetSpeed = input == Vector2.zero ? 0f : (isRunning ? runSpeed : walkSpeed);
+        if (input.y < 0f)
+            targetSpeed *= Mathf.Lerp(1f, backwardSpeedMultiplier, -input.normalized.y);
+
+        //direccion relativa a la camara, sin rotar al player hacia ella (por eso puede ir de espaldas o de costado)
+        Quaternion cameraYaw = Quaternion.Euler(0f, cameraPivot.eulerAngles.y, 0f);
+        Vector3 targetVelocity = cameraYaw * new Vector3(input.x, 0f, input.y).normalized * targetSpeed;
+        horizontalVelocity = Vector3.Lerp(horizontalVelocity, targetVelocity, acceleration * Time.deltaTime);
+
         //prefiero aca en vez de en otra funcion
         if (controller.isGrounded && verticalVelocity < 0f)
             verticalVelocity = -2f; // Pega el personaje al piso
@@ -101,8 +107,11 @@ public class PlayerController : MonoBehaviour
             verticalVelocity += gravity * Time.deltaTime;
 
         //aplicar los movimientos
-        controller.Move((moveDirection * currentSpeed + Vector3.up * verticalVelocity) * Time.deltaTime);
-        //cambiar el parametro speed del animator para q la animacion cambie
-        animator.SetFloat("Speed", currentSpeed, 0.1f, Time.deltaTime);
+        controller.Move((horizontalVelocity + Vector3.up * verticalVelocity) * Time.deltaTime);
+
+        //velocidad en espacio local del player: X = costado, Y = adelante/atras, para el blend tree 2D
+        Vector3 localVelocity = transform.InverseTransformDirection(horizontalVelocity);
+        animator.SetFloat(MoveXHash, localVelocity.x, 0.1f, Time.deltaTime);
+        animator.SetFloat(MoveYHash, localVelocity.z, 0.1f, Time.deltaTime);
     }
 }
