@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: nails
   itemName: Clavos
-  icon: {fileID: 21300000, guid: 1d9184fd86a711540af36ca85867b3ab, type: 3}
+  icon: {fileID: 21300000, guid: 211e080b3f20bca4890b5775460afa05, type: 3}
   maxStackSize: 20
   origin: 0
   category: 0

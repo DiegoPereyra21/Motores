@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: pottato
   itemName: Papa
-  icon: {fileID: 21300000, guid: dca996b389c7c2441a3b7d74c97eb35a, type: 3}
+  icon: {fileID: 21300000, guid: f99cf4a01b4e6fc4cb45feb6d8beb325, type: 3}
   maxStackSize: 5
   origin: 0
   category: 0

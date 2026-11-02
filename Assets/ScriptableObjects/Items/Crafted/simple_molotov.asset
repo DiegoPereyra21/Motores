@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: simple_molotov
   itemName: Molotov casera
-  icon: {fileID: 21300000, guid: 051835c3f9bac70418a2417abb496320, type: 3}
+  icon: {fileID: 21300000, guid: 49a8099ddeac37545ada2ec7aed65c80, type: 3}
   maxStackSize: 1
   origin: 1
   category: 4

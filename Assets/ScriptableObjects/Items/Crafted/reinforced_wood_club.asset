@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: reinforced_wood_club
   itemName: Palo reforzado
-  icon: {fileID: 21300000, guid: 80f43cc68d3cd8547bd61b8a13396a56, type: 3}
+  icon: {fileID: 21300000, guid: f153f48a0631ee647b42f66c14661107, type: 3}
   maxStackSize: 1
   origin: 1
   category: 1

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: simple_iron_trap
   itemName: Trampa simple
-  icon: {fileID: 21300000, guid: 19c2ecf8c8721194ebfff2c89ae7cdc0, type: 3}
+  icon: {fileID: 21300000, guid: b68e101011cb1f748b76dc7cc2744529, type: 3}
   maxStackSize: 1
   origin: 1
   category: 4
