@@ -12,7 +12,8 @@ public class PlayerDeath : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioSource sfxSource;
     [SerializeField] private AudioClip fallClip;//el cuerpo cae al piso
-    [SerializeField] private float fallSoundDelay = 0.4f;//segundos desde que arranca la anim de muerte hasta que toca el piso (ajustar a ojo)
+    [SerializeField] private float fallSoundDelay = 0.7f;//segundos desde que arranca la anim de muerte hasta que suena (el clip tiene ~0.27s de silencio al inicio, ajustar a ojo)
+    [SerializeField, Range(0f, 1f)] private float fallVolume = 0.4f;//el clip es muy fuerte, esto lo baja sin tocar el volumen de los demas sonidos del player
 
     private static readonly int DeathHash = Animator.StringToHash("Death");
     private Health health;
@@ -60,7 +61,7 @@ public class PlayerDeath : MonoBehaviour
         yield return new WaitForSecondsRealtime(fallSoundDelay);
 
         if (sfxSource != null && fallClip != null)
-            sfxSource.PlayOneShot(fallClip);
+            sfxSource.PlayOneShot(fallClip, fallVolume);
     }
 
     private System.Collections.IEnumerator DeathSequence()
