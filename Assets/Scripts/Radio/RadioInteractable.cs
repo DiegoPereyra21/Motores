@@ -13,7 +13,7 @@ public class RadioMessage
 // el mensaje del dia actual. Congela el mundo con GameProgressController.PauseWorld() mientras se usa la radio para escuchar el mensaje.
 // El mensaje del Dia 1 suena solo al arrancar la escena. Los de los dias siguientes hay que ir a buscarlos a la radio.
 // IMPORTANTE: tiene que estar en la capa "Interact" y con un collider, sino el raycast del player no la detecta.
-public class RadioInteractable : MonoBehaviour, IInteractable
+public class RadioInteractable : MonoBehaviour//, IInteractable
 {
     [Header("Mensajes (posicion 0 = Dia 1, 1 = Dia 2, 2 = Dia 3)")]
     [SerializeField] private RadioMessage[] messages;

@@ -32,7 +32,7 @@ public enum NavBlockMode
 // Convencion: el transform mira (forward) hacia AFUERA de la cabaña, el right es el ancho y el up el alto.
 // Cada abertura lleva: un BoxCollider trigger (zona de interaccion), un NavMeshLink (ventanas) y los puntos de ataque como hijos.
 // Si se re-bakea el NavMesh hay que revisar que sigan igual: ventanas selladas y puertas abiertas.
-public class CabinOpening : MonoBehaviour, IInteractable, IInteractionPrompt
+public class CabinOpening : MonoBehaviour
 {
     //todas las aberturas de la escena, para que los zombies sepan cuales hay
     public static readonly List<CabinOpening> All = new();
@@ -73,6 +73,7 @@ public class CabinOpening : MonoBehaviour, IInteractable, IInteractionPrompt
     public Vector2 Size => size;
     public Barricade Barricade => barricade;
     public Transform[] AttackPoints => attackPoints;
+    public bool IsBuilding => placeRoutine != null;
 
     private void Awake()
     {
@@ -189,49 +190,66 @@ public class CabinOpening : MonoBehaviour, IInteractable, IInteractionPrompt
         return best;
     }
 
-    // lo llama PlayerInteraction cuando el jugador apunta a la abertura y aprieta E
-    public void Interact(GameObject interactor)
-    {
-        if (!CanPlace(interactor, out Inventory inventory, out PlaceableData data))
-            return;
-
-        placeRoutine = StartCoroutine(PlaceRoutine(interactor, inventory, data));
-    }
-
-    // texto del cartel: "(E) - Poner barricada" o "No hay barricadas disponibles"
-    public bool TryGetPrompt(GameObject interactor, out string text)
-    {
-        text = null;
-
-        if (state != OpeningState.Open || placeRoutine != null) return false;
-        if (!IsPlayerWellPlaced(interactor.transform)) return false;
-
-        Inventory inventory = interactor.GetComponent<Inventory>();
-        bool hasBarricade = inventory != null && barricadeItem != null && inventory.HasItem(barricadeItem, 1);
-
-        text = hasBarricade ? "(E) - Poner barricada" : "No hay barricadas disponibles";
-        return true;
-    }
-
-    private bool CanPlace(GameObject interactor, out Inventory inventory, out PlaceableData data)
+    public bool CanPlace(GameObject interactor, out Inventory inventory, out PlaceableData data, out string reason)
     {
         inventory = null;
         data = null;
+        reason = "";
 
-        if (state != OpeningState.Open || placeRoutine != null) return false;
-        if (!IsPlayerWellPlaced(interactor.transform)) return false;
+        if (interactor == null || placeRoutine != null)
+            return false;
+
+        if (state != OpeningState.Open)
+        {
+            reason = "Ya esta protegida.";
+            return false;
+        }
 
         GameProgressController progress = GameProgressController.Instance;
-        if (progress != null && (progress.IsGameEnded || progress.IsWorldPaused)) return false;
-
         PlayerController player = interactor.GetComponent<PlayerController>();
-        if (player != null && (player.IsBusy || player.IsStunned)) return false;
-
         inventory = interactor.GetComponent<Inventory>();
-        if (inventory == null || barricadeItem == null) return false;
-        if (!inventory.HasItem(barricadeItem, 1)) return false;
 
-        return barricadeItem.TryGetPlaceableData(out data);
+        if (!IsPlayerWellPlaced(interactor.transform))
+        {
+            reason = "Acercate desde el interior de la casa para aplicar la baricada.";
+            return false;
+        }
+
+        if (progress != null && (progress.IsGameEnded || progress.IsWorldPaused))
+        {
+            reason = "No deberias romper las leyes de la fisica.";
+            return false;
+        }
+
+        if (player != null && (player.IsBusy || player.IsStunned))
+        {
+            reason = "No podes construir en este momento.";
+            return false;
+        }
+
+        if (inventory == null || barricadeItem == null || !inventory.HasItem(barricadeItem, 1))
+        {
+            reason = "No tenes barricadas para construir disponibles. Crealas en la mesa de trabajo!";
+            return false;
+        }
+
+        if (!barricadeItem.TryGetPlaceableData(out data))
+        {
+            reason = "No se pudo obtener la informacion de la barricada.";
+            return false;
+        }
+
+        return true;
+    }
+
+    // inicia la colocacion de una barricada si se cumplen todas las condiciones
+    public bool TryPlaceBarricade(GameObject interactor)
+    {
+        if (!CanPlace(interactor, out Inventory inventory, out PlaceableData data, out _))
+            return false;
+
+        placeRoutine = StartCoroutine(PlaceRoutine(interactor, inventory, data));
+        return true;
     }
 
     private IEnumerator PlaceRoutine(GameObject interactor, Inventory inventory, PlaceableData data)
@@ -319,7 +337,7 @@ public class CabinOpening : MonoBehaviour, IInteractable, IInteractionPrompt
     }
 
     //el player puede poner la barricada si esta del lado de adentro (forward de la abertura apunta para afuera), bastante cerca,
-    //y su modelo mira hacia la abertura. Sirve tanto para mostrar el cartel como para aceptar la E
+    //y su modelo mira hacia la abertura. Determina si el jugador está bien ubicado para construir.
     private bool IsPlayerWellPlaced(Transform player)
     {
         Vector3 local = transform.InverseTransformPoint(player.position);

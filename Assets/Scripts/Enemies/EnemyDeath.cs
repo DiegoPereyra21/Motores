@@ -63,7 +63,7 @@ public class EnemyDeath : MonoBehaviour
         Invoke(nameof(DestroyCorpse), corpseCleanupDelay);
     }
 
-    //se llama desde el onlooted de lootable, cuando el player ya lo saqueo
+    //se llama desde el onlooted de LootableInteractable, cuando el player ya lo saqueo
     public void OnCorpseLooted()
     {
         //cancelo el timer de respaldo, ya no hace falta

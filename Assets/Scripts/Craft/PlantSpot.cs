@@ -1,7 +1,7 @@
 using UnityEngine;
 
 //Gameobject en interact, con boxcollider y este script
-public class PlantSpot : MonoBehaviour, IInteractable
+public class PlantSpot : MonoBehaviour//, IInteractable
 {
     [SerializeField] private ItemData item;
     [SerializeField, Min(1)] private int amount = 2;//por si queria cambiar la cantidad de las papas, y hierbas

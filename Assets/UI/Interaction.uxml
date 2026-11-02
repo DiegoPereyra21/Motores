@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Interaction.uss?fileID=7433441132597879392&amp;guid=55173d433c9b21844b95444188709c82&amp;type=3#Interaction"/>
+    <ui:VisualElement name="InteractionRoot" class="interaction-root" style="display: flex;">
+        <ui:VisualElement name="InteractionPrompt" class="interaction-prompt" style="display: none;">
+            <ui:Label name="PromptKey" text="E" class="prompt-key"/>
+            <ui:Label name="PromptText" text="Interactuar" class="prompt-text"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="InteractionMenu" class="interaction-menu" style="display: none;">
+            <ui:Label name="MenuTitle" text="ACCIONES" class="menu-title"/>
+            <ui:VisualElement name="ActionsContainer" class="actions-container"/>
+            <ui:Label name="CloseHint" text="ESC  ·  Cerrar" class="close-hint"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
