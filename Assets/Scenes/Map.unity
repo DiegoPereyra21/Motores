@@ -763947,6 +763947,7 @@ GameObject:
   - component: {fileID: 936247507}
   - component: {fileID: 936247504}
   - component: {fileID: 936247503}
+  - component: {fileID: 936247509}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -764096,6 +764097,14 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 20.28, y: -164.9, z: -7.56}
+--- !u!81 &936247509
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936247502}
+  m_Enabled: 1
 --- !u!1 &937662845
 GameObject:
   m_ObjectHideFlags: 0
@@ -861881,6 +861890,84 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5587687104063848236, guid: 853601e367f2b0d489dcd0d242748b48, type: 3}
   m_PrefabInstance: {fileID: 1116197563}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1117797007
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1117797008}
+  - component: {fileID: 1117797010}
+  - component: {fileID: 1117797009}
+  m_Layer: 0
+  m_Name: AudioController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1117797008
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117797007}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 337.98376, y: 9.73999, z: 110.52261}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1117797009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117797007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 567e26a71a9ee6c4eb0b2fe044d9096e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TensionAudioController
+  mixer: {fileID: 24100000, guid: 984bdb7ef19f6d74587c983a013bdf04, type: 2}
+  lowpassParameter: MusicLowpass
+  ambientParameter: AmbientVol
+  safeHealth: 0.6
+  criticalHealth: 0.2
+  farDistance: 25
+  nearDistance: 6
+  scanInterval: 0.4
+  calmCutoff: 22000
+  tenseCutoff: 700
+  ambientDropDb: 6
+  riseTime: 0.8
+  fallTime: 3
+  debugLog: 0
+--- !u!114 &1117797010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117797007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfc01a165cd955149884a1a09bbe6e77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioDuckingController
+  mixer: {fileID: 24100000, guid: 984bdb7ef19f6d74587c983a013bdf04, type: 2}
+  musicParameter: MusicVol
+  duckAmountDb: 12
+  fadeOutTime: 0.4
+  fadeInTime: 1.5
+  radio: {fileID: 0}
+  debugLog: 0
 --- !u!1001 &1118609537
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1328154,6 +1328241,7 @@ SceneRoots:
   - {fileID: 936247508}
   - {fileID: 220380053}
   - {fileID: 540191662}
+  - {fileID: 1117797008}
   - {fileID: 1712976864}
   - {fileID: 1757929009}
   - {fileID: 1360203022}
