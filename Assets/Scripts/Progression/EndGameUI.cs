@@ -45,6 +45,12 @@ public class EndGameUI : MonoBehaviour
     private Button deathRestartButton;
     private Button deathMainMenuButton;
 
+    //audio (el AudioSource tiene que tener Output en el grupo SFX del MainMixer, si esta vacio se busca en este mismo objeto)
+    [Header("Audio")]
+    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioClip clickClip;
+    [SerializeField] private float mainMenuDelay = 0.3f; //espera antes de volver al menu para que el click se escuche (el reintentar ya tiene su fade)
+
     private void Awake()
     {
         // se guarda la iluminacion original
@@ -184,6 +190,8 @@ public class EndGameUI : MonoBehaviour
             return;
         }
 
+        PlayClick();
+
         if (deathRestartButton != null)
             deathRestartButton.SetEnabled(false);
 
@@ -195,11 +203,36 @@ public class EndGameUI : MonoBehaviour
 
     private void ReturnToMainMenu()
     {
+        PlayClick();
+
+        if (deathRestartButton != null)
+            deathRestartButton.SetEnabled(false);
+
+        if (deathMainMenuButton != null)
+            deathMainMenuButton.SetEnabled(false);
+
+        StartCoroutine(ReturnToMainMenuSequence());
+    }
+
+    private IEnumerator ReturnToMainMenuSequence()
+    {
+        //tiempo sin escalar: en la muerte el mundo esta pausado
+        if (clickClip != null && mainMenuDelay > 0f)
+            yield return new WaitForSecondsRealtime(mainMenuDelay);
+
         Time.timeScale = 1f;
 
         RestoreDeathPresentation();
 
         SceneManager.LoadScene("MainMenu");
+    }
+
+    private void PlayClick()
+    {
+        if (sfxSource == null) sfxSource = GetComponent<AudioSource>();
+
+        if (sfxSource != null && clickClip != null)
+            sfxSource.PlayOneShot(clickClip);
     }
 
     private void ShowDeathPresentation()
