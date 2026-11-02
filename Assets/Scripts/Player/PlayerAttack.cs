@@ -15,6 +15,12 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float attackRange = 1.2f;
     [SerializeField] private float attackDamage = 25f;
     [SerializeField] private bool faceCameraOnAttack = true;//hace demasiado cambio, preguntar a furia luego
+    //audio (el AudioSource del player tiene que tener Output en el grupo SFX del MainMixer)
+    [Header("Audio")]
+    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioClip hitClip;//golpe que recibe un zombie
+    [SerializeField] private AudioClip finalHitClip;//golpe que mata al zombie
+    [SerializeField] private AudioClip missClip;//ataque que no toca a nadie
     //privadas
     private static readonly int AttackHash = Animator.StringToHash("Attack");
     private readonly System.Collections.Generic.HashSet<IDamageable> alreadyHit = new();
@@ -27,6 +33,7 @@ public class PlayerAttack : MonoBehaviour
         if (!animator) animator = GetComponent<Animator>();
         if (!playerController) playerController = GetComponent<PlayerController>();
         if (!health) health = GetComponent<Health>();
+        if (!sfxSource) sfxSource = GetComponent<AudioSource>();
     }
     private void OnEnable() => attackAction.action.Enable();
 
@@ -64,6 +71,9 @@ public class PlayerAttack : MonoBehaviour
         Collider[] hits = Physics.OverlapSphere(origin, attackRange, ~0, QueryTriggerInteraction.Ignore);
         alreadyHit.Clear();
 
+        bool hitAny = false;//golpeo a algun zombie
+        bool killedAny = false;//y alguno murio con este golpe
+
         foreach (Collider hit in hits)
         {
             if (!hit.CompareTag("Enemy")) continue;
@@ -72,8 +82,19 @@ public class PlayerAttack : MonoBehaviour
             if (damageable == null || !alreadyHit.Add(damageable)) continue;
 
             damageable.TakeDamage(attackDamage);
+            hitAny = true;
+            if (damageable is Health targetHealth && targetHealth.IsDead) killedAny = true;
             Debug.Log($"HICISTE {attackDamage} DE DAÑO");
         }
+
+        //un solo sonido por golpe: si mato a alguno suena el golpe final, si solo pego el golpe normal y si no toco a nadie el fallo
+        PlaySfx(killedAny ? finalHitClip : hitAny ? hitClip : missClip);
+    }
+
+    private void PlaySfx(AudioClip clip)
+    {
+        if (sfxSource != null && clip != null)
+            sfxSource.PlayOneShot(clip);
     }
     //para q no tenga q hacerlo a ojo
     public void AttackEnd()

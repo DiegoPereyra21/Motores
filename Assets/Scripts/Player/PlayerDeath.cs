@@ -8,6 +8,12 @@ public class PlayerDeath : MonoBehaviour
     [SerializeField] private CameraPivot cameraPivot;
     [SerializeField] private Animator animator;
 
+    //audio (el AudioSource del player tiene que tener Output en el grupo SFX del MainMixer)
+    [Header("Audio")]
+    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioClip fallClip;//el cuerpo cae al piso
+    [SerializeField] private float fallSoundDelay = 0.4f;//segundos desde que arranca la anim de muerte hasta que toca el piso (ajustar a ojo)
+
     private static readonly int DeathHash = Animator.StringToHash("Death");
     private Health health;
 
@@ -15,6 +21,7 @@ public class PlayerDeath : MonoBehaviour
     {
         health = GetComponent<Health>();
         if (!animator) animator = GetComponent<Animator>();
+        if (!sfxSource) sfxSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -43,7 +50,17 @@ public class PlayerDeath : MonoBehaviour
         animator.updateMode = AnimatorUpdateMode.UnscaledTime;
         animator.SetTrigger(DeathHash);
 
+        StartCoroutine(PlayFallSound());
         StartCoroutine(DeathSequence());
+    }
+
+    //tiempo SIN escalar: el fin de partida pausa el mundo (timeScale 0) y la anim de muerte sigue por unscaled time
+    private System.Collections.IEnumerator PlayFallSound()
+    {
+        yield return new WaitForSecondsRealtime(fallSoundDelay);
+
+        if (sfxSource != null && fallClip != null)
+            sfxSource.PlayOneShot(fallClip);
     }
 
     private System.Collections.IEnumerator DeathSequence()
