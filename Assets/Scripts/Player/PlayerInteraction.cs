@@ -63,6 +63,13 @@ public class PlayerInteraction : MonoBehaviour
         if (IsMenuOpen)
             CloseMenu();
 
+        // limpiar el objetivo y avisar a la UI para que oculte el cartel
+        if (CurrentTarget != null)
+        {
+            CurrentTarget = null;
+            OnTargetChanged?.Invoke(null);
+        }
+
         if (interactAction != null)
         {
             interactAction.action.performed -= OnInteractPerformed;
