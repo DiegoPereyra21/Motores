@@ -19,4 +19,15 @@
     background-color: rgb(48, 44, 34);
     border-width: 2px;
     border-color: rgb(169, 154, 106);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-left-color: rgba(169, 154, 106, 0);
+    border-right-color: rgba(169, 154, 106, 0);
+    border-top-color: rgba(169, 154, 106, 0);
+    border-bottom-color: rgba(169, 154, 106, 0);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    background-image: url("project://database/Assets/Art/Icons/icons/Tutorial.png?fileID=2800000&guid=1e0fa47fea341c94d9c944b369fd7a4d&type=3#Tutorial");
+    -unity-background-scale-mode: scale-to-fit;
 }
