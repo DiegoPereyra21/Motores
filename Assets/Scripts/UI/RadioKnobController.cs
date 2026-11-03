@@ -99,7 +99,7 @@ public class RadioKnobController : MonoBehaviour
 
             float duration = animator.GetCurrentAnimatorStateInfo(0).length;
 
-            yield return new WaitForSeconds(duration);
+            yield return new WaitForSecondsRealtime(duration);
 
             animator.enabled = false;
 
