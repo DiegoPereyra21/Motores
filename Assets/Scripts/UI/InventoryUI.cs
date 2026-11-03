@@ -390,12 +390,12 @@ public class InventoryUI : MonoBehaviour
         int targetIndex = -1;
         int targetQuickIndex = -1;
 
-        // Buscar el elemento debajo del cursor.
+        // busca el elemento debajo del cursor
         VisualElement target = root.panel.Pick(evt.position);
 
         while (target != null)
         {
-            // Comprobar slots normales del inventario.
+            // comrpobar slots normales del inventario
             for (int i = 0; i < slots.Count; i++)
             {
                 if (target == slots[i])
@@ -405,7 +405,6 @@ public class InventoryUI : MonoBehaviour
                 }
             }
 
-            // Si no encontramos un slot normal, comprobar los rápidos.
             if (targetIndex < 0)
             {
                 for (int i = 0; i < quickSlots.Count; i++)
@@ -428,7 +427,7 @@ public class InventoryUI : MonoBehaviour
             target = target.parent;
         }
 
-        // INVENTARIO -> ACCESO RÁPIDO
+        // del inventario al acceso rapido
         if (draggingFromInventory)
         {
             if (targetIndex >= 0 && targetIndex < inventory.Slots.Count && targetIndex != sourceIndex)
@@ -441,43 +440,43 @@ public class InventoryUI : MonoBehaviour
             }
         }
 
-        // ACCESO RÁPIDO -> INVENTARIO
+        // del acceso rapido al inventario
         else if (draggingFromQuickAccess)
         {
             if (targetIndex >= 0 && targetIndex < inventory.Slots.Count && quickAccessController != null)
             {
-                // Solo permite devolverlo a un espacio vacío.
+                //solo permite devolverlo a un espacio vacio
                 if (inventory.Slots[targetIndex].IsEmpty)
                 {
                     quickAccessController.UnequipToInventoryIndex(sourceQuickIndex, targetIndex);
                 }
             }
 
-            // ACCESO RÁPIDO -> OTRO SLOT RÁPIDO
+            // acceso rapido a otro slot rapido
             else if (targetQuickIndex >= 0 && targetQuickIndex != sourceQuickIndex && quickAccessController != null)
             {
                 quickAccessController.MoveQuickSlot(sourceQuickIndex, targetQuickIndex);
             }
         }
 
-        // Limpiar estados visuales del inventario.
+        // limpiar estados visuales del inventario
         foreach (VisualElement slot in slots)
         {
             slot.RemoveFromClassList("slot-selected");
             slot.RemoveFromClassList("slot-dragging");
         }
 
-        // Limpiar estados visuales del acceso rápido.
+        // limpiar estados visuales del acceso rapido
         foreach (VisualElement slot in quickSlots)
         {
             slot.RemoveFromClassList("slot-dragging");
         }
 
-        // Ocultar el icono que sigue al cursor.
+        // ocultar el icono que sigue al cursor
         if (draggedItemVisual != null)
             draggedItemVisual.style.display = DisplayStyle.None;
 
-        // Restablecer ambos índices.
+        // restablecer indices
         draggedSlotIndex = -1;
         draggedQuickSlotIndex = -1;
 

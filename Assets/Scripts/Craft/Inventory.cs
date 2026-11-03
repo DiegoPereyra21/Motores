@@ -59,6 +59,7 @@ public class Inventory : MonoBehaviour
     public int Capacity => slots.Count;
 
     public event Action OnInventoryChanged;
+    public event Action<ItemData, int> OnItemAdded;
 
     private void Awake()
     {
@@ -134,6 +135,7 @@ public class Inventory : MonoBehaviour
                 $"[Inventory] Se agrego {addedTotal}x {item.itemName}. " + (remaining > 0 ? $"Inventario lleno: faltaron {remaining}." : ""));
 
             OnInventoryChanged?.Invoke();
+            OnItemAdded?.Invoke(item, addedTotal);
         }
         else
         {

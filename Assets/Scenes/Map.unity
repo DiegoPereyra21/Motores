@@ -1259305,6 +1259305,10 @@ PrefabInstance:
       propertyPath: inventoryUI
       value: 
       objectReference: {fileID: 360846085}
+    - target: {fileID: 2153651938353057487, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      propertyPath: fallClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 09c369e073d1b6649b2d5db4b3170c18, type: 3}
     - target: {fileID: 3172682545380626138, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
       propertyPath: cameraPivot
       value: 
@@ -1259313,10 +1259317,6 @@ PrefabInstance:
       propertyPath: cancelAction
       value: 
       objectReference: {fileID: 7727032971491509709, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-    - target: {fileID: 2153651938353057487, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
-      propertyPath: fallClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 09c369e073d1b6649b2d5db4b3170c18, type: 3}
     - target: {fileID: 4408335001353736137, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
       propertyPath: gatherClips.Array.size
       value: 2
@@ -1339371,6 +1339371,10 @@ PrefabInstance:
       propertyPath: playerHealth
       value: 
       objectReference: {fileID: 1712976869}
+    - target: {fileID: 1069845118292833332, guid: 3d92d9bc565ce7748ab43fe2ec871ca3, type: 3}
+      propertyPath: playerInventory
+      value: 
+      objectReference: {fileID: 1712976865}
     - target: {fileID: 1069845118292833332, guid: 3d92d9bc565ce7748ab43fe2ec871ca3, type: 3}
       propertyPath: tutorialDocument
       value: 

@@ -26,8 +26,14 @@ public class HUDController : MonoBehaviour
     [Header("Acceso rapido")]
     [SerializeField] private QuickAccessController quickAccessController;
     [SerializeField] private int quickSelectorSortOrder = 10;
-    private int hoveredSlotIndex = -1;
 
+    [Header("Notificaciones de loot")]
+    [SerializeField] private Inventory playerInventory;
+    [SerializeField] private float lootNotificationDuration = 2.5f;
+
+    private VisualElement lootNotificationContainer;
+
+    private int hoveredSlotIndex = -1;
 
     private VisualElement[] slotIcons;
     private VisualElement[] durabilityBars;
@@ -87,6 +93,8 @@ public class HUDController : MonoBehaviour
 
         originalSortOrder = uiDocument.sortingOrder;
 
+        lootNotificationContainer = root.Q<VisualElement>("LootNotificationContainer");
+
         if (dayLabel == null)
             Debug.LogError("[HUDController] No se encontro DayLabel en el UXML.", this);
 
@@ -96,6 +104,10 @@ public class HUDController : MonoBehaviour
         if (selector == null)
             Debug.LogError("[HUDController] No se encontro Selector en el UXML.", this);
 
+        if (lootNotificationContainer == null)
+        {
+            Debug.LogError("[HUDController] No se encontro LootNotificationContainer.", this);
+        }
 
         wheel = root.Q<VisualElement>("Wheel");
 
@@ -136,14 +148,8 @@ public class HUDController : MonoBehaviour
         TryConnectToGameProgress();
         ConnectInputActions();
         StartCoroutine(InitializeHealthHUD());
+        StartCoroutine(InitializeInventoryHUD());
         ConnectQuickAccess();
-    }
-
-    private System.Collections.IEnumerator InitializeHealthHUD()
-    {
-        yield return null;
-
-        ConnectHealth();
     }
 
     private void OnDisable()
@@ -189,6 +195,9 @@ public class HUDController : MonoBehaviour
             quickAccessController.OnSelectionChanged -= UpdateSelectedSlot;
         }
 
+        if (playerInventory != null)
+            playerInventory.OnItemAdded -= HandleItemAdded;
+
         if (uiDocument != null)
             uiDocument.sortingOrder = originalSortOrder;
 
@@ -196,6 +205,72 @@ public class HUDController : MonoBehaviour
         phaseChangedHandler = null;
         isSubscribed = false;
         gameProgress = null;
+    }
+
+    private System.Collections.IEnumerator InitializeHealthHUD()
+    {
+        yield return null;
+
+        ConnectHealth();
+    }
+
+    private System.Collections.IEnumerator InitializeInventoryHUD()
+    {
+        yield return null;
+
+        if (playerInventory == null)
+            playerInventory = FindFirstObjectByType<Inventory>();
+
+        if (playerInventory == null)
+        {
+            Debug.LogWarning("[HUDController] No se encontro Inventory.", this);
+            yield break;
+        }
+
+        playerInventory.OnItemAdded -= HandleItemAdded;
+        playerInventory.OnItemAdded += HandleItemAdded;
+    }
+
+    private void HandleItemAdded(ItemData item, int amount)
+    {
+        if (item == null || amount <= 0 || lootNotificationContainer == null)
+            return;
+
+        // crea una notificacion independiente
+        VisualElement notification = new VisualElement();
+        notification.AddToClassList("loot-notification");
+
+        VisualElement icon = new VisualElement();
+        icon.AddToClassList("loot-notification-icon");
+
+        if (item.icon != null)
+            icon.style.backgroundImage = new StyleBackground(item.icon);
+
+        Label text = new Label($"+ {amount} {item.itemName}");
+        text.AddToClassList("loot-notification-text");
+
+        notification.Add(icon);
+        notification.Add(text);
+
+        lootNotificationContainer.Add(notification);
+
+        // activa la animación de entrada
+        notification.schedule.Execute(() => {
+            notification.AddToClassList("visible");
+        }).StartingIn(10);
+
+        // inicia la desaparicion despues del tiempo configurado
+        notification.schedule.Execute(() => {
+            notification.RemoveFromClassList("visible");
+            notification.AddToClassList("leaving");
+
+            // retira el elemento cuando termina la animacion
+            notification.schedule.Execute(() =>
+            {
+                notification.RemoveFromHierarchy();
+            }).StartingIn(250);
+
+        }).StartingIn((long)(lootNotificationDuration * 1000));
     }
 
     private void TryConnectToGameProgress()

@@ -233,3 +233,77 @@
     border-width: 2px;
     border-color: rgb(207, 192, 151);
 }
+
+.loot-notification-container {
+    position: absolute;
+    right: 32px;
+    bottom: 330px;
+
+    width: auto;
+    min-width: 180px;
+    max-width: 420px;
+
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+
+    overflow: visible;
+}
+
+.loot-notification {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    width: auto;
+    min-width: 180px;
+    max-width: 420px;
+    min-height: 62px;
+    flex-shrink: 0;
+
+    padding: 8px;
+    margin-top: 8px;
+
+    background-color: rgba(20, 19, 16, 0.88);
+    border-left-width: 3px;
+    border-left-color: rgb(155, 143, 111);
+
+    opacity: 0;
+    translate: 0 12px;
+
+    transition-property: opacity, translate;
+    transition-duration: 220ms;
+}
+
+.loot-notification.visible {
+    opacity: 1;
+    translate: 0 0;
+}
+
+.loot-notification.leaving {
+    opacity: 0;
+    translate: 0 -24px;
+}
+
+.loot-notification-icon {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+
+    margin-right: 10px;
+
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.loot-notification-text {
+    flex-grow: 0;
+    flex-shrink: 0;
+    white-space: nowrap;
+
+    color: rgb(220, 213, 190);
+    font-size: 17px;
+
+    -unity-font-definition: url("project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&guid=97e524c46899f544dab576384d085a88&type=3#SpecialElite-Regular");
+
+    -unity-text-align: middle-left;
+}
