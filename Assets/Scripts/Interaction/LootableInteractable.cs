@@ -16,7 +16,7 @@ public class Lootable : MonoBehaviour, IInteractable
 
     public bool Interact(InteractionActionData action, GameObject interactor)
     {
-        if (action == null || action.ActionId != "loot" || isLooted || interactor == null)
+        if (action == null || isLooted || interactor == null)
             return false;
 
         // si el player esta ocupado o lo tiene agarrado un zombie no puede lootear
@@ -98,14 +98,23 @@ public class Lootable : MonoBehaviour, IInteractable
 
         foreach (InteractionActionData action in availableActions)
         {
-            if (action == null || action.ActionId != "loot")
+            if (action == null)
                 continue;
 
-            bool canLoot = !isLooted && interactor != null && interactor.GetComponent<Inventory>() != null;
+            // validaciones especificas de cada accion
+            if (action.ActionId == "loot")
+            {
+                bool canLoot = !isLooted && interactor != null && interactor.GetComponent<Inventory>() != null;
 
-            string reason = isLooted ? "No queda nada util." : canLoot ? "" : "No se encontro el inventario.";
+                string reason = isLooted ? "No queda nada util." : canLoot ? "" : "No se encontro el inventario.";
 
-            options.Add(new InteractionOption(action, canLoot, reason));
+                options.Add(new InteractionOption(action, canLoot, reason));
+            }
+            else
+            {
+                // Las demas acciones se agregan sin restricciones especificas
+                options.Add(new InteractionOption(action, true, ""));
+            }
         }
 
         return options;

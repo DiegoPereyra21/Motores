@@ -19,6 +19,8 @@ public class CameraPivot : MonoBehaviour
     //privadas
     private float yaw;
     private float pitch;
+    private bool lookEnabled = true;
+
     private void Start()
     {
         Vector3 angles = transform.eulerAngles;
@@ -43,6 +45,9 @@ public class CameraPivot : MonoBehaviour
     }
     private void LateUpdate()//late para que se mueva luego del player
     {
+        if (!lookEnabled)
+            return;
+
         if (inventoryUI != null && inventoryUI.IsInventoryOpen)
             return;
 
@@ -53,5 +58,22 @@ public class CameraPivot : MonoBehaviour
         yaw += look.x;
         pitch = Mathf.Clamp(pitch - look.y, minPitch, maxPitch);
         transform.rotation = Quaternion.Euler(pitch, yaw, 0f);
+    }
+
+    // maneja la visibilidad del mouse
+    public void SetLookEnabled(bool enabled)
+    {
+        lookEnabled = enabled;
+
+        if (enabled)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 }

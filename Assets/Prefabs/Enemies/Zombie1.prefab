@@ -197,6 +197,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  availableActions:
+  - {fileID: 11400000, guid: 98df85e0e69bdad4d91e6f0056308409, type: 2}
 --- !u!114 &83403564562464673
 MonoBehaviour:
   m_ObjectHideFlags: 0

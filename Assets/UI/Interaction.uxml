@@ -2,13 +2,13 @@
     <Style src="project://database/Assets/UI/Interaction.uss?fileID=7433441132597879392&amp;guid=55173d433c9b21844b95444188709c82&amp;type=3#Interaction"/>
     <ui:VisualElement name="InteractionRoot" class="interaction-root" style="display: flex;">
         <ui:VisualElement name="InteractionPrompt" class="interaction-prompt" style="display: none;">
-            <ui:Label name="PromptKey" text="E" class="prompt-key"/>
-            <ui:Label name="PromptText" text="Interactuar" class="prompt-text"/>
+            <ui:Label name="PromptKey" text="E" class="prompt-key" style="-unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); -unity-text-align: middle-center; white-space: nowrap; justify-content: flex-start; align-self: auto; padding-top: 6px;"/>
+            <ui:Label name="PromptText" text="Interactuar" class="prompt-text" style="-unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); padding-top: 6px;"/>
         </ui:VisualElement>
-        <ui:VisualElement name="InteractionMenu" class="interaction-menu" style="display: none; top: 569px; left: 808px;">
-            <ui:Label name="MenuTitle" text="ACCIONES" class="menu-title"/>
+        <ui:VisualElement name="InteractionMenu" class="interaction-menu" style="display: none; top: 515px; left: 758px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;);">
+            <ui:Label name="MenuTitle" text="ACCIONES" class="menu-title" style="-unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); font-size: 20px;"/>
             <ui:VisualElement name="ActionsContainer" class="actions-container"/>
-            <ui:Label name="CloseHint" text="ESC  ·  Cerrar" class="close-hint"/>
+            <ui:Label name="CloseHint" text="ESC  ·  Cerrar" class="close-hint" style="-unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); font-size: 16px;"/>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

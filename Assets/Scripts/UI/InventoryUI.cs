@@ -27,7 +27,7 @@ public class InventoryUI : MonoBehaviour
     [Header("Tooltip")]
     [SerializeField] private Vector2 tooltipMouseOffset = new Vector2(18f, -18f);
 
-    private Animator playerAnimator;
+    private CameraPivot cameraPivot;
     private float originalSortOrder;
 
     private VisualElement root;
@@ -61,7 +61,12 @@ public class InventoryUI : MonoBehaviour
     private void Awake()
     {
         if (playerController != null)
-            playerAnimator = playerController.GetComponentInChildren<Animator>();
+        {
+            cameraPivot = playerController.GetComponentInChildren<CameraPivot>();
+        }
+
+        if (cameraPivot == null)
+            Debug.LogError("[InventoryUI] No se encontro CameraPivot en el jugador.");
     }
 
     private void Update()
@@ -191,13 +196,12 @@ public class InventoryUI : MonoBehaviour
         if (IsInventoryOpen)
         {
             IsInventoryOpen = false;
-            UpdatePlayerState();
 
             if (uiDocument != null)
                 uiDocument.sortingOrder = originalSortOrder;
 
-            UnityEngine.Cursor.visible = false;
-            UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+            if (cameraPivot != null)
+                cameraPivot.SetLookEnabled(true);
         }
 
         if (sortNameButton != null)
@@ -583,10 +587,8 @@ public class InventoryUI : MonoBehaviour
             }
         }
 
-        UpdatePlayerState();
-
-        UnityEngine.Cursor.visible = IsInventoryOpen;
-        UnityEngine.Cursor.lockState = IsInventoryOpen ? CursorLockMode.None : CursorLockMode.Locked;
+        if (cameraPivot != null)
+            cameraPivot.SetLookEnabled(!IsInventoryOpen);
 
         RefreshUI();
     }
@@ -595,17 +597,6 @@ public class InventoryUI : MonoBehaviour
     {
         if (context.performed)
             ToggleInventory();
-    }
-
-    private void UpdatePlayerState()
-    {
-        if (playerController != null)
-        {
-            playerController.enabled = !IsInventoryOpen;
-
-            if (playerAnimator != null)
-                playerAnimator.speed = IsInventoryOpen ? 0f : 1f;
-        }
     }
 
     private void ToggleHoverInfo()

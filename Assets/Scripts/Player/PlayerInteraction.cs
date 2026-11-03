@@ -1,7 +1,7 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections.Generic;
 
 //detecto si algo es interactuable con E
 public class PlayerInteraction : MonoBehaviour
@@ -11,7 +11,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private InputActionReference cancelAction;
 
     //forma de detectar items cercanos(ver si conviene otra forma segun la camara)
-    [SerializeField] private Transform cameraPivot;
+    [SerializeField] private CameraPivot cameraPivot;
     [SerializeField] private float interactRange = 2.5f;
     [SerializeField] private LayerMask interactLayer;
 
@@ -58,6 +58,9 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnDisable()
     {
+        if (IsMenuOpen)
+            CloseMenu();
+
         if (interactAction != null)
         {
             interactAction.action.performed -= OnInteractPerformed;
@@ -88,13 +91,30 @@ public class PlayerInteraction : MonoBehaviour
 
     private void OnInteractPerformed(InputAction.CallbackContext context)
     {
-        if (IsMenuOpen)
+        if (IsMenuOpen || CurrentTarget == null || !CanInteract())
             return;
 
-        if (CurrentTarget == null)
+        IReadOnlyList<InteractionOption> actions = CurrentTarget.GetActions(gameObject);
+
+        if (actions == null)
             return;
 
-        OpenMenu();
+        List<InteractionOption> validActions = GetValidActions(actions);
+
+        if (validActions.Count == 0)
+            return;
+
+        // si solo tenemos una accion, la ejecutamos directamente
+        if (validActions.Count == 1)
+        {
+            if (validActions[0].IsAvailable)
+                ExecuteActionInternal(validActions[0].Data);
+
+            return;
+        }
+
+        // si tenemos varias acciones se abre el menu
+        OpenMenu(validActions);
     }
 
     private void OnCancelPerformed(InputAction.CallbackContext context)
@@ -103,17 +123,16 @@ public class PlayerInteraction : MonoBehaviour
             CloseMenu();
     }
 
-    private void OpenMenu()
+    private void OpenMenu(IReadOnlyList<InteractionOption> actions)
     {
-        if (!CanInteract() || CurrentTarget == null)
-            return;
-
-        IReadOnlyList<InteractionOption> actions = CurrentTarget.GetActions(gameObject);
-
-        if (actions == null || actions.Count == 0)
+        if (!CanInteract() || CurrentTarget == null || actions == null || actions.Count == 0)
             return;
 
         IsMenuOpen = true;
+
+        if (cameraPivot != null)
+            cameraPivot.SetLookEnabled(false);
+
         OnMenuOpened?.Invoke(actions);
     }
 
@@ -123,34 +142,19 @@ public class PlayerInteraction : MonoBehaviour
             return;
 
         IsMenuOpen = false;
+
+        if (cameraPivot != null)
+            cameraPivot.SetLookEnabled(true);
+
         OnMenuClosed?.Invoke();
     }
 
     public void ExecuteAction(InteractionActionData action)
     {
-        if (!IsMenuOpen || CurrentTarget == null || action == null || !CanInteract())
+        if (!IsMenuOpen)
             return;
 
-        IReadOnlyList<InteractionOption> options = CurrentTarget.GetActions(gameObject);
-
-        if (options == null)
-            return;
-
-        foreach (InteractionOption option in options)
-        {
-            if (option == null || option.Data == null || option.Data != action)
-                continue;
-
-            if (!option.IsAvailable)
-                return;
-
-            if (CurrentTarget.Interact(action, gameObject))
-            {
-                CloseMenu();
-            }
-
-            return;
-        }
+        ExecuteActionInternal(action);
     }
 
     //el raycast de siempre, separado para usarlo tanto al apretar E como para el cartel de interaccion
@@ -159,16 +163,11 @@ public class PlayerInteraction : MonoBehaviour
         if (cameraPivot == null)
             return null;
 
-        Ray ray = new Ray(cameraPivot.position, cameraPivot.forward);
+        Ray ray = new Ray(cameraPivot.transform.position, cameraPivot.transform.forward);
 
         if (Physics.Raycast(ray, out RaycastHit hit, interactRange, interactLayer))
         {
-            IInteractable interactable = hit.collider.GetComponentInParent<IInteractable>();
-
-            if (interactable != null)
-            {
-                return interactable;
-            }
+            return hit.collider.GetComponentInParent<IInteractable>();
         }
 
         return null;
@@ -192,6 +191,68 @@ public class PlayerInteraction : MonoBehaviour
         return true;
     }
 
+    // logica compartida para acciones directas y acciones del menu
+    private void ExecuteActionInternal(InteractionActionData action)
+    {
+        if (CurrentTarget == null || action == null || !CanInteract())
+            return;
+
+        IReadOnlyList<InteractionOption> options = CurrentTarget.GetActions(gameObject);
+
+        if (options == null)
+            return;
+
+        foreach (InteractionOption option in options)
+        {
+            if (option == null || option.Data == null || option.Data != action)
+                continue;
+
+            if (!option.IsAvailable)
+                return;
+
+            if (CurrentTarget.Interact(action, gameObject))
+                CloseMenu();
+
+            return;
+        }
+    }
+
+    // devuelve las opciones validas, ignorando referencias nulas
+    private List<InteractionOption> GetValidActions(IReadOnlyList<InteractionOption> actions)
+    {
+        List<InteractionOption> validActions = new List<InteractionOption>();
+
+        foreach (InteractionOption option in actions)
+        {
+            if (option != null && option.Data != null)
+                validActions.Add(option);
+        }
+
+        return validActions;
+    }
+
+    // texto que muestra el prompt segun el interactuable
+    public string GetPromptText()
+    {
+        if (CurrentTarget == null)
+            return "";
+
+        IReadOnlyList<InteractionOption> actions = CurrentTarget.GetActions(gameObject);
+
+        if (actions == null)
+            return "";
+
+        List<InteractionOption> validActions = GetValidActions(actions);
+
+        if (validActions.Count == 0)
+            return "";
+
+        if (validActions.Count == 1)
+            return validActions[0].Data.DisplayName;
+
+        return "Interactuar";
+    }
+
     //para previsualizar el rango, luego se puede quitar cuando tengamos un rango q nos guste
     private void OnDrawGizmosSelected()
     {
@@ -199,6 +260,6 @@ public class PlayerInteraction : MonoBehaviour
             return;
 
         Gizmos.color = Color.yellow;
-        Gizmos.DrawRay(cameraPivot.position, cameraPivot.forward * interactRange);
+        Gizmos.DrawRay(cameraPivot.transform.position, cameraPivot.transform.forward * interactRange);
     }
 }

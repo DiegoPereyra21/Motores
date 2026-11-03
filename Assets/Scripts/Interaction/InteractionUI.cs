@@ -11,6 +11,7 @@ public class InteractionUI : MonoBehaviour
 
     [Header("Referencias")]
     [SerializeField] private PlayerInteraction playerInteraction;
+    [SerializeField] private Font specialEliteFont;
 
     private VisualElement interactionRoot;
     private VisualElement interactionPrompt;
@@ -80,6 +81,9 @@ public class InteractionUI : MonoBehaviour
     {
         if (target != null && !playerInteraction.IsMenuOpen)
         {
+            if (promptText != null)
+                promptText.text = playerInteraction.GetPromptText();
+
             ShowPrompt();
         }
         else
@@ -99,9 +103,16 @@ public class InteractionUI : MonoBehaviour
         HideMenu();
 
         if (playerInteraction.CurrentTarget != null)
+        {
+            if (promptText != null)
+                promptText.text = playerInteraction.GetPromptText();
+
             ShowPrompt();
+        }
         else
+        {
             HidePrompt();
+        }
     }
 
     private void ShowPrompt()
@@ -118,8 +129,42 @@ public class InteractionUI : MonoBehaviour
 
     private void ShowMenu(IReadOnlyList<InteractionOption> actions)
     {
+        if (actionsContainer == null)
+            return;
+
+        actionsContainer.Clear();
+
+        Debug.Log($"[InteractionUI] Acciones recibidas: {actions.Count}");
+
         if (interactionMenu != null)
             interactionMenu.style.display = DisplayStyle.Flex;
+
+        foreach (InteractionOption option in actions)
+        {
+            if (option == null || option.Data == null)
+                continue;
+
+            Debug.Log($"[InteractionUI] Creando botón: {option.Data.DisplayName}");
+
+            Button actionButton = new Button();
+            actionButton.style.unityFontDefinition = FontDefinition.FromFont(specialEliteFont);
+            actionButton.text = option.Data.DisplayName;
+            actionButton.AddToClassList("action-button");
+
+            actionButton.SetEnabled(option.IsAvailable);
+
+            if (!option.IsAvailable)
+                actionButton.tooltip = option.UnavailableReason;
+
+            InteractionActionData selectedAction = option.Data;
+
+            actionButton.clicked += () =>
+            {
+                playerInteraction.ExecuteAction(selectedAction);
+            };
+
+            actionsContainer.Add(actionButton);
+        }
     }
 
     private void HideMenu()
