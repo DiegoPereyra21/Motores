@@ -22,7 +22,7 @@ public class PlayerFootsteps : MonoBehaviour
     [Header("Sonidos por piso")]
     [SerializeField] private SurfaceSounds[] surfaces;
     [SerializeField] private FootstepSurfaceType fallbackSurface = FootstepSurfaceType.Dirt; //si no se reconoce el piso
-    [SerializeField] private string[] grassKeywords = { "grass", "pasto" }; //si la textura dominante del terreno tiene alguno de estos nombres es pasto, si no es tierra
+    [SerializeField] private string[] grassKeywords = { "grass", "pasto", "heather" }; //si la textura dominante del terreno tiene alguno de estos nombres es pasto, si no es tierra (en este mapa el verde es la capa Heather)
 
     [Header("Ritmo")]
     [SerializeField] private float walkSpeed = 2f; //mismas velocidades que PlayerController
@@ -174,13 +174,28 @@ public class PlayerFootsteps : MonoBehaviour
         string layerName = layers[dominant].name.ToLowerInvariant();
         string textureName = layers[dominant].diffuseTexture != null ? layers[dominant].diffuseTexture.name.ToLowerInvariant() : "";
 
+        FootstepSurfaceType result = FootstepSurfaceType.Dirt;
+
         foreach (string keyword in grassKeywords)
         {
             string key = keyword.ToLowerInvariant();
-            if (layerName.Contains(key) || textureName.Contains(key)) return FootstepSurfaceType.Grass;
+            if (layerName.Contains(key) || textureName.Contains(key))
+            {
+                result = FootstepSurfaceType.Grass;
+                break;
+            }
         }
 
-        if (debugLog) Debug.Log($"[Footsteps] terreno '{terrain.name}': textura dominante '{layers[dominant].name}' -> tierra", this);
-        return FootstepSurfaceType.Dirt;
+        //se muestra siempre (pasto o tierra) con los pesos de todas las capas, para ver que capa gana en cada lugar
+        if (debugLog)
+        {
+            string all = "";
+            for (int i = 0; i < data.alphamapLayers && i < layers.Length; i++)
+                all += $" {(layers[i] != null ? layers[i].name : "(vacia)")}={weights[0, 0, i]:0.00}";
+
+            Debug.Log($"[Footsteps] terreno '{terrain.name}': gana '{layers[dominant].name}' (textura '{textureName}') -> {result} | capas:{all}", this);
+        }
+
+        return result;
     }
 }

@@ -20050,6 +20050,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   walkSpeed: 3
   runSpeed: 7
+  backwardSpeedMultiplier: 1
   acceleration: 12
   rotationSmoothTime: 0.12
   gravity: -15
@@ -20214,6 +20215,7 @@ MonoBehaviour:
   items:
   - {fileID: 11400000, guid: 9a669aeb58e36ae49b5da0ee4c4c81e7, type: 2}
   amountPerPress: 1
+  flareItem: {fileID: 0}
 --- !u!114 &4610667589342635321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20233,7 +20235,7 @@ MonoBehaviour:
     clips:
     - {fileID: 8300000, guid: 23783e5f1b2005044b4cf4c6a14804df, type: 3}
     - {fileID: 8300000, guid: 6f73fa73c55ad104fb52a8fbda5d5ae9, type: 3}
-    volume: 1
+    volume: 0.4
   - surface: 1
     clips:
     - {fileID: 8300000, guid: a21036f39da1ebe458c239f2c3466227, type: 3}
@@ -20252,6 +20254,7 @@ MonoBehaviour:
   grassKeywords:
   - grass
   - pasto
+  - heather
   walkSpeed: 2
   runSpeed: 6
   walkStride: 0.9
