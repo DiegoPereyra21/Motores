@@ -21,6 +21,8 @@ public class EndingCinematic : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioSource[] helicopterSources; //los de victoria y derrota, suenan solos cuando el heli se activa
     [SerializeField, Min(0f)] private float helicopterFadeOut = 1.5f; //baja el sonido al terminar la cinematica, para que no siga sonando debajo del panel final
+    [SerializeField] private AudioSource rescuedSource; //AudioSource 2D (en Ending_Victory) con la voz del rescate y Output en el grupo Voz
+    [SerializeField, Min(0f)] private float rescuedDelay = 2.5f; //segundos desde que arranca la cinematica de victoria hasta que el player dice la frase (cuando entra el helicoptero)
 
     private GameProgressController gameProgressController;
     private bool isSubscribed;
@@ -109,6 +111,10 @@ public class EndingCinematic : MonoBehaviour
         group.SetActive(true);
         director.time = 0;
         director.Play();
+
+        //la voz del rescate solo en la victoria, PlayDelayed no depende del timeScale
+        if (ending == GameEnding.Victory && rescuedSource != null)
+            rescuedSource.PlayDelayed(rescuedDelay);
 
         yield return new WaitForSecondsRealtime(blackHoldTime);
 

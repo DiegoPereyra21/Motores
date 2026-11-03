@@ -16,11 +16,14 @@ public class RadioMessageUI : MonoBehaviour
     [Header("Visuales")]
     [SerializeField] private Texture2D backgroundImage; // la imagen de la radio, difuminada. Si esta vacia queda fondo oscuro
 
-    [Header("Audio (murmullo mientras suenan los subtitulos)")]
-    [SerializeField] private AudioClip murmurClip; // opcional, despues se puede cambiar por voz real si lo decidimos asi.
-    [Range(0f, 1f)] [SerializeField] private float murmurVolume = 0.6f;
+    [Header("Audio (la voz que lee el mensaje)")]
+    [SerializeField] private AudioSource voiceSource; // AudioSource 2D con Output en el grupo Voz del MainMixer, el clip lo pone cada RadioMessage
+    [Range(0f, 1f)] [SerializeField] private float voiceVolume = 1f;
+    [Range(0.3f, 1f)] [SerializeField] private float typeFraction = 0.85f; // con voz: que parte del tiempo de cada frase se usa para escribirla, el resto queda la frase completa
+    [SerializeField] private float voiceEndWait = 4f; // maximo que espera a que termine la voz si los subtitulos terminaron antes
+    [SerializeField] private float voiceSkipFade = 0.15f; // fade de la voz cuando el jugador saltea el mensaje
 
-    [Header("Tiempos")]
+    [Header("Tiempos (sin voz, o mensajes sin clip)")]
     [SerializeField] private float typeSpeed = 30f; // caracteres por segundo
     [SerializeField] private float lineHoldTime = 1.8f; // cuanto se queda la frase completa antes de pasar a la siguiente
     [SerializeField] private float lineGapTime = 0.4f; // pausa entre frases
@@ -34,9 +37,9 @@ public class RadioMessageUI : MonoBehaviour
     private Label objectiveHintLabel;
     private Label newMessageLabel;
 
-    private AudioSource murmurSource;
     private Coroutine playRoutine;
     private Coroutine hintRoutine;
+    private Coroutine voiceFadeRoutine;
 
     private bool isPlaying;
     private bool skipRequested;
@@ -71,6 +74,13 @@ public class RadioMessageUI : MonoBehaviour
 
         if (skipAction != null)
             skipAction.action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        // si se apaga el panel a mitad de mensaje la voz no queda sonando sola
+        if (voiceSource != null)
+            voiceSource.Stop();
     }
 
     private void Update()
@@ -125,28 +135,25 @@ public class RadioMessageUI : MonoBehaviour
         subtitleLabel.text = string.Empty;
         radioPanel.style.opacity = 0f;
         SetDisplay(radioPanel, true);
-        StartMurmur();
+
+        // la voz arranca junto con el fade de entrada, asi los subtitulos se ajustan a lo que queda de audio
+        bool hasVoice = StartVoice(message);
 
         yield return Fade(radioPanel, 0f, 1f, fadeDuration);
 
         if (message.subtitleLines != null)
         {
-            foreach (string line in message.subtitleLines)
-            {
-                if (skipRequested) break;
-
-                yield return TypeLine(line);
-                if (skipRequested) break;
-
-                yield return WaitUnscaled(lineHoldTime);
-                if (skipRequested) break;
-
-                subtitleLabel.text = string.Empty;
-                yield return WaitUnscaled(lineGapTime);
-            }
+            if (hasVoice)
+                yield return PlayLinesSyncedToVoice(message);
+            else
+                yield return PlayLinesFixedTiming(message.subtitleLines);
         }
 
-        StopMurmur();
+        // si los subtitulos terminaron antes que la voz, deja que la voz termine
+        if (hasVoice)
+            yield return WaitForVoiceEnd();
+
+        StopVoice(skipRequested);
 
         // si lo salteo, el fade de salida es mas corto
         yield return Fade(radioPanel, 1f, 0f, skipRequested ? fadeDuration * 0.4f : fadeDuration);
@@ -159,8 +166,85 @@ public class RadioMessageUI : MonoBehaviour
         onFinished?.Invoke();
     }
 
-    // efecto maquina de escribir
-    private IEnumerator TypeLine(string line)
+    // tiempos fijos (typeSpeed, lineHoldTime y lineGapTime), para los mensajes sin voz
+    private IEnumerator PlayLinesFixedTiming(string[] lines)
+    {
+        foreach (string line in lines)
+        {
+            if (skipRequested) break;
+
+            yield return TypeLine(line, typeSpeed);
+            if (skipRequested) break;
+
+            yield return WaitUnscaled(lineHoldTime);
+            if (skipRequested) break;
+
+            subtitleLabel.text = string.Empty;
+            yield return WaitUnscaled(lineGapTime);
+        }
+    }
+
+    // con voz: cada frase empieza cuando se la dice en el audio (message.lineStartTimes). Si no hay tiempos cargados,
+    // lo que queda de audio se reparte entre las frases segun su cantidad de caracteres (aproximado).
+    // Cada frase se escribe a la velocidad justa para terminar un poco antes de que empiece la siguiente.
+    private IEnumerator PlayLinesSyncedToVoice(RadioMessage message)
+    {
+        string[] lines = message.subtitleLines;
+        float clipLength = message.voiceClip.length;
+        float[] starts = GetLineStartTimes(message, clipLength);
+
+        for (int i = 0; i < lines.Length; i++)
+        {
+            if (skipRequested) break;
+
+            float lineStart = starts[i];
+            float lineEnd = i + 1 < lines.Length ? starts[i + 1] : clipLength;
+
+            // espera el momento en que se dice esta frase, medido sobre la posicion real del audio (no sobre el reloj):
+            // si la voz tarda en arrancar o se atrasa, los subtitulos la esperan y no se adelantan
+            yield return WaitForVoiceTime(lineStart);
+            if (skipRequested) break;
+
+            float typeTime = Mathf.Max((lineEnd - lineStart) * typeFraction, 0.05f);
+            yield return TypeLine(lines[i], lines[i].Length / typeTime);
+            if (skipRequested) break;
+
+            // la frase completa queda hasta que empieza la siguiente (la ultima, hasta que termina la voz)
+            yield return WaitForVoiceTime(lineEnd);
+            if (skipRequested) break;
+
+            subtitleLabel.text = string.Empty;
+        }
+    }
+
+    // los tiempos cargados en el mensaje, o un reparto por caracteres si faltan
+    private float[] GetLineStartTimes(RadioMessage message, float clipLength)
+    {
+        string[] lines = message.subtitleLines;
+
+        if (message.lineStartTimes != null && message.lineStartTimes.Length == lines.Length)
+            return message.lineStartTimes;
+
+        float[] starts = new float[lines.Length];
+        float availableTime = Mathf.Max(clipLength - fadeDuration, 1f);
+
+        int totalChars = 0;
+        foreach (string line in lines)
+            totalChars += line.Length;
+
+        float elapsed = fadeDuration;
+
+        for (int i = 0; i < lines.Length; i++)
+        {
+            starts[i] = elapsed;
+            if (totalChars > 0) elapsed += availableTime * lines[i].Length / totalChars;
+        }
+
+        return starts;
+    }
+
+    // efecto maquina de escribir (speed = caracteres por segundo)
+    private IEnumerator TypeLine(string line, float speed)
     {
         float elapsed = 0f;
         int shown = 0;
@@ -168,7 +252,7 @@ public class RadioMessageUI : MonoBehaviour
         while (shown < line.Length && !skipRequested)
         {
             elapsed += Time.unscaledDeltaTime;
-            shown = Mathf.Min(line.Length, Mathf.FloorToInt(elapsed * typeSpeed));
+            shown = Mathf.Min(line.Length, Mathf.FloorToInt(elapsed * speed));
             subtitleLabel.text = line.Substring(0, shown);
             yield return null;
         }
@@ -203,6 +287,13 @@ public class RadioMessageUI : MonoBehaviour
         }
     }
 
+    // espera a que el audio llegue al segundo indicado. Si la voz termina (o se salteo) deja de esperar
+    private IEnumerator WaitForVoiceTime(float seconds)
+    {
+        while (!skipRequested && voiceSource != null && voiceSource.isPlaying && voiceSource.time < seconds)
+            yield return null;
+    }
+
     private IEnumerator Fade(VisualElement element, float from, float to, float duration)
     {
         float elapsed = 0f;
@@ -217,29 +308,75 @@ public class RadioMessageUI : MonoBehaviour
         element.style.opacity = to;
     }
 
-    // murmullo en loop mientras dura el mensaje (sin clip asignado no suena nada)
-    private void StartMurmur()
+    // arranca la voz del mensaje. Devuelve false si el mensaje no tiene clip o no hay AudioSource (en ese caso queda solo con subtitulos)
+    private bool StartVoice(RadioMessage message)
     {
-        if (murmurClip == null)
-            return;
+        if (message.voiceClip == null)
+            return false;
 
-        if (murmurSource == null)
+        if (voiceSource == null)
+            voiceSource = GetComponent<AudioSource>();
+
+        if (voiceSource == null)
         {
-            murmurSource = gameObject.AddComponent<AudioSource>();
-            murmurSource.playOnAwake = false;
-            murmurSource.loop = true;
-            murmurSource.spatialBlend = 0f; // 2D, suena igual desde cualquier lado
+            Debug.LogWarning("[RadioMessageUI] El mensaje tiene voz pero falta asignar el AudioSource (Output en el grupo Voz).", this);
+            return false;
         }
 
-        murmurSource.clip = murmurClip;
-        murmurSource.volume = murmurVolume;
-        murmurSource.Play();
+        if (voiceFadeRoutine != null)
+        {
+            StopCoroutine(voiceFadeRoutine);
+            voiceFadeRoutine = null;
+        }
+
+        voiceSource.Stop();
+        voiceSource.clip = message.voiceClip;
+        voiceSource.volume = voiceVolume;
+        voiceSource.loop = false;
+        voiceSource.Play();
+
+        return true;
     }
 
-    private void StopMurmur()
+    // espera a que termine la voz (con un maximo), o se corta si el jugador saltea
+    private IEnumerator WaitForVoiceEnd()
     {
-        if (murmurSource != null)
-            murmurSource.Stop();
+        float waited = 0f;
+
+        while (voiceSource != null && voiceSource.isPlaying && !skipRequested && waited < voiceEndWait)
+        {
+            waited += Time.unscaledDeltaTime;
+            yield return null;
+        }
+    }
+
+    // al saltear la voz baja con un fade cortito, para que no se corte de golpe
+    private void StopVoice(bool withFade)
+    {
+        if (voiceSource == null || !voiceSource.isPlaying)
+            return;
+
+        if (withFade)
+            voiceFadeRoutine = StartCoroutine(FadeOutVoice());
+        else
+            voiceSource.Stop();
+    }
+
+    private IEnumerator FadeOutVoice()
+    {
+        float startVolume = voiceSource.volume;
+        float elapsed = 0f;
+
+        while (elapsed < voiceSkipFade)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            voiceSource.volume = Mathf.Lerp(startVolume, 0f, elapsed / voiceSkipFade);
+            yield return null;
+        }
+
+        voiceSource.Stop();
+        voiceSource.volume = voiceVolume;
+        voiceFadeRoutine = null;
     }
 
     private static void SetDisplay(VisualElement element, bool visible)

@@ -7,6 +7,8 @@ public class RadioMessage
 {
     [TextArea(2, 4)] public string[] subtitleLines; // cada elemento es una frase de subtitulo, se muestran de a una
     [TextArea(1, 3)] public string objectiveHint;   // el "MENSAJE EN PANTALLA" que queda unos segundos despues del mensaje
+    public AudioClip voiceClip;                     // la voz que lee el mensaje (sale por el grupo Voz). Si esta vacia solo se muestran los subtitulos
+    public float[] lineStartTimes;                  // segundos del audio en que empieza a decirse cada frase (mismo orden que subtitleLines). Si esta vacio, o no coincide la cantidad, se reparte por caracteres
 }
 
 // La radio de la cabaña. El jugador la usa con E (via PlayerInteraction, igual que un objeto looteable) para escuchar

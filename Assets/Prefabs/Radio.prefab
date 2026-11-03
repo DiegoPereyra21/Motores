@@ -254,7 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RadioInteractable
   messages:
   - subtitleLines:
-    - "Este es un mensaje del Servicio de Radiodifusi\xF3n de Emergencia."
+    - "Este es un mensaje del Servicio de RadioFusi\xF3n\u2122 de Emergencia."
     - "Informamos a la poblaci\xF3n que se ha declarado el toque de queda debido
       a la ola masiva de ataques en las calles."
     - "Se recomienda permanecer en sus hogares y contar con alg\xFAn m\xE9todo de
@@ -262,17 +262,31 @@ MonoBehaviour:
     - No intenten aventurarse al exterior y aguarden instrucciones oficiales.
     objectiveHint: "Usa la mesa de trabajo para crear mejoras de arma, medicinas
       y barricadas para la caba\xF1a."
+    voiceClip: {fileID: 8300000, guid: 6b68eafc479eb73449822c7423278723, type: 3}
+    lineStartTimes:
+    - 0.55
+    - 4.9
+    - 12
+    - 17.75
   - subtitleLines:
     - Se ha verificado que los atacantes pueden ser combatidos con armas contundentes
       reforzadas con metal.
     - "Adem\xE1s, recuerden hacer uso de los remedios naturales y comidas nutritivas
       para resistir posibles ataques."
     objectiveHint: Nuevas recetas en la mesa de trabajo disponibles
+    voiceClip: {fileID: 8300000, guid: e1590ea105665bc4094eaa2ad0256a5d, type: 3}
+    lineStartTimes:
+    - 0.35
+    - 7.05
   - subtitleLines:
     - "Confirmamos que se est\xE1n efectuando sobrevuelos de rescate sobre el \xE1rea."
     - "Se recomienda contar con medios para se\xF1alizar posibles aeronaves para
       ser llevado a los centros de supervivientes."
     objectiveHint: Construye la BENGALA IMPROVISADA para el rescate.
+    voiceClip: {fileID: 8300000, guid: 51c22aec6fb53a8439c25c38a1c6f4e4, type: 3}
+    lineStartTimes:
+    - 0.15
+    - 4.9
   messageUI: {fileID: 0}
   playerController: {fileID: 0}
   cameraPivot: {fileID: 0}
