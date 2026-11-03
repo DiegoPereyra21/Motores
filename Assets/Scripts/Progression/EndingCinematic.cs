@@ -17,6 +17,11 @@ public class EndingCinematic : MonoBehaviour
     [SerializeField, Min(0f)] private float fadeDuration = 1f;
     [SerializeField, Min(0f)] private float blackHoldTime = 0.5f; //tiempo en negro mientras se acomoda todo
 
+    //audio (los AudioSource van en cada Heli de la cinematica, con Output en el grupo SFX del MainMixer y Play On Awake activado)
+    [Header("Audio")]
+    [SerializeField] private AudioSource[] helicopterSources; //los de victoria y derrota, suenan solos cuando el heli se activa
+    [SerializeField, Min(0f)] private float helicopterFadeOut = 1.5f; //baja el sonido al terminar la cinematica, para que no siga sonando debajo del panel final
+
     private GameProgressController gameProgressController;
     private bool isSubscribed;
     private bool isPlaying;
@@ -115,7 +120,42 @@ public class EndingCinematic : MonoBehaviour
         if (remaining > 0f)
             yield return new WaitForSecondsRealtime(remaining);
 
+        StartCoroutine(FadeOutHelicopters());
         endGameUI.ShowEndingPanel(ending);
+    }
+
+    //baja el volumen de los helicopteros hasta cortarlos, con tiempo sin escalar porque el panel final puede frenar el tiempo
+    private IEnumerator FadeOutHelicopters()
+    {
+        if (helicopterSources == null || helicopterSources.Length == 0)
+            yield break;
+
+        float[] startVolumes = new float[helicopterSources.Length];
+
+        for (int i = 0; i < helicopterSources.Length; i++)
+            startVolumes[i] = helicopterSources[i] != null ? helicopterSources[i].volume : 0f;
+
+        float elapsed = 0f;
+
+        while (elapsed < helicopterFadeOut)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float k = 1f - Mathf.Clamp01(elapsed / helicopterFadeOut);
+
+            for (int i = 0; i < helicopterSources.Length; i++)
+                if (helicopterSources[i] != null) helicopterSources[i].volume = startVolumes[i] * k;
+
+            yield return null;
+        }
+
+        //se corta y se devuelve el volumen original por si la cinematica se repite
+        for (int i = 0; i < helicopterSources.Length; i++)
+        {
+            if (helicopterSources[i] == null) continue;
+
+            helicopterSources[i].Stop();
+            helicopterSources[i].volume = startVolumes[i];
+        }
     }
 
     //usa el mismo sistema de daño q el combate: cada zombie corre su propia muerte (EnemyDeath)
