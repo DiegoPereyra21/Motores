@@ -9,13 +9,11 @@ public class OpeningInteractable : MonoBehaviour, IInteractable
     [Header("Acciones")]
     [SerializeField] private List<InteractionActionData> availableActions;
 
-
     private void Awake()
     {
         if (cabinOpening == null)
             cabinOpening = GetComponent<CabinOpening>();
     }
-
 
     public bool CanOpenInteraction(GameObject interactor)
     {
@@ -24,7 +22,6 @@ public class OpeningInteractable : MonoBehaviour, IInteractable
 
         return !cabinOpening.IsBuilding;
     }
-
 
     public IReadOnlyList<InteractionOption> GetActions(GameObject interactor)
     {
@@ -42,28 +39,9 @@ public class OpeningInteractable : MonoBehaviour, IInteractable
             {
                 case "place_barricade":
 
-                    bool canPlace = cabinOpening.CanPlace(
-                        interactor,
-                        out _,
-                        out _,
-                        out string reason
-                    );
+                    bool canPlace = cabinOpening.CanPlace(interactor, out _, out _, out string reason, out OpeningPlacementError error);
 
-                    options.Add(new InteractionOption(
-                        action,
-                        canPlace,
-                        reason
-                    ));
-
-                    break;
-
-                case "examine":
-
-                    options.Add(new InteractionOption(
-                        action,
-                        true,
-                        resultMessage: "No parece haber nada más que hacer aquí."
-                    ));
+                    options.Add(new InteractionOption(action, canPlace, reason, feedbackType: error));
 
                     break;
             }
@@ -71,7 +49,6 @@ public class OpeningInteractable : MonoBehaviour, IInteractable
 
         return options;
     }
-
 
     public bool Interact(InteractionActionData action, GameObject interactor)
     {
@@ -82,9 +59,6 @@ public class OpeningInteractable : MonoBehaviour, IInteractable
         {
             case "place_barricade":
                 return cabinOpening.TryPlaceBarricade(interactor);
-
-            case "examine":
-                return true;
 
             default:
                 return false;

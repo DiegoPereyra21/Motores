@@ -28,6 +28,17 @@ public enum NavBlockMode
     Obstacle  //un NavMeshObstacle con carve se prende con la barricada (para aberturas que el NavMesh ya cruza)
 }
 
+// manejo de mensajes de errores
+public enum OpeningPlacementError
+{
+    None,
+    AlreadyProtected,
+    InvalidPosition,
+    PlayerUnavailable,
+    MissingMaterials,
+    ConfigurationError
+}
+
 // Una puerta o ventana de la cabaña. Se pone en un objeto aparte (no en el panel de la puerta/ventana), en la capa "Interact".
 // Convencion: el transform mira (forward) hacia AFUERA de la cabaña, el right es el ancho y el up el alto.
 // Cada abertura lleva: un BoxCollider trigger (zona de interaccion), un NavMeshLink (ventanas) y los puntos de ataque como hijos.
@@ -52,7 +63,24 @@ public class CabinOpening : MonoBehaviour
     [SerializeField] private float obstacleExtraWidth = 0.4f; //ancho extra para que el obstaculo llegue hasta el marco
 
     [Header("Barricada")]
-    [SerializeField] private ItemData barricadeItem; //el item que se gasta (Tabla de refuerzo)
+    [SerializeField] private ItemData barricadeItem;
+    [SerializeField] private GameObject plankPrefab;
+
+    [Header("Generacion de barricada")]
+    [SerializeField] private int plankCount = 6;
+    [SerializeField] private float minAngle = 25f;
+    [SerializeField] private float maxAngle = 55f;
+    [SerializeField] private float depthVariation = 0.05f;
+
+    private readonly float[] testAngles =
+{
+    -45f,
+    38f,
+    -32f,
+    50f,
+    -5f,
+    12f
+};
 
     [Header("Eventos (animacion, sonido, etc.)")]
     [SerializeField] private UnityEvent onPlaceStarted;
@@ -196,38 +224,69 @@ public class CabinOpening : MonoBehaviour
         return best;
     }
 
-    public bool CanPlace(GameObject interactor, out Inventory inventory, out PlaceableData data, out string reason)
+    public bool CanPlace(GameObject interactor, out Inventory inventory, out PlaceableData data, out string reason, out OpeningPlacementError error)
     {
         inventory = null;
         data = null;
         reason = "";
+        error = OpeningPlacementError.None;
 
-        if (interactor == null || placeRoutine != null)
+        if (interactor == null)
+        {
+            reason = "No se puede realizar esta accion.";
+            error = OpeningPlacementError.ConfigurationError;
             return false;
+        }
+
+        if (placeRoutine != null)
+        {
+            reason = "Ya estas colocando una barricada.";
+            error = OpeningPlacementError.PlayerUnavailable;
+            return false;
+        }
 
         if (state != OpeningState.Open)
         {
             reason = "Ya esta protegida.";
+            error = OpeningPlacementError.AlreadyProtected;
+            return false;
+        }
+
+        if (!IsPlayerWellPlaced(interactor.transform))
+        {
+            reason = "Tenes que estar dentro de la cabaña y cerca de la puerta/ventana para construir.";
+            error = OpeningPlacementError.InvalidPosition;
+            return false;
+        }
+
+        PlayerController player = interactor.GetComponent<PlayerController>();
+
+        if (player != null && (player.IsBusy || player.IsStunned))
+        {
+            reason = "No podes construir en este momento.";
+            error = OpeningPlacementError.PlayerUnavailable;
             return false;
         }
 
         inventory = interactor.GetComponent<Inventory>();
-
-        if (!IsPlayerWellPlaced(interactor.transform))
-        {
-            reason = "Acercate desde el interior de la casa para aplicar la baricada.";
-            return false;
-        }
-
         if (inventory == null || barricadeItem == null || !inventory.HasItem(barricadeItem, 1))
         {
             reason = "No tenes barricadas para construir disponibles. Crealas en la mesa de trabajo!";
+            error = OpeningPlacementError.MissingMaterials;
             return false;
         }
 
         if (!barricadeItem.TryGetPlaceableData(out data))
         {
             reason = "No se pudo obtener la informacion de la barricada.";
+            error = OpeningPlacementError.ConfigurationError;
+            return false;
+        }
+
+        if (plankPrefab == null)
+        {
+            reason = "No se configuro el prefab de las tablas.";
+            error = OpeningPlacementError.ConfigurationError;
             return false;
         }
 
@@ -237,7 +296,7 @@ public class CabinOpening : MonoBehaviour
     // inicia la colocacion de una barricada si se cumplen todas las condiciones
     public bool TryPlaceBarricade(GameObject interactor)
     {
-        if (!CanPlace(interactor, out Inventory inventory, out PlaceableData data, out _))
+        if (!CanPlace(interactor, out Inventory inventory, out PlaceableData data, out _, out _))
             return false;
 
         placeRoutine = StartCoroutine(PlaceRoutine(interactor, inventory, data));
@@ -279,8 +338,17 @@ public class CabinOpening : MonoBehaviour
 
     private void Build(PlaceableData data)
     {
+        if (plankPrefab == null)
+        {
+            Debug.LogError($"[CabinOpening] No hay prefab de tabla asignado en {gameObject.name}.", this);
+
+            return;
+        }
+
         state = OpeningState.Barricaded;
-        barricade.Build(data.prefab, size, data.maxDurability);
+
+        barricade.Build(plankPrefab, size, data.maxDurability, plankCount, minAngle, maxAngle, depthVariation);
+
         SetNavBlocked(true);
 
         onBarricaded.Invoke();

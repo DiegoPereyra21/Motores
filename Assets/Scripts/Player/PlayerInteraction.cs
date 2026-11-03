@@ -23,6 +23,7 @@ public class PlayerInteraction : MonoBehaviour
 
     // eventos para InteractionUI
     public event Action<IInteractable> OnTargetChanged;
+    public event Action<InteractionOption> OnUnavailableActionAttempted;
     public event Action<IReadOnlyList<InteractionOption>> OnMenuOpened;
     public event Action OnMenuClosed;
 
@@ -107,9 +108,7 @@ public class PlayerInteraction : MonoBehaviour
         // si solo tenemos una accion, la ejecutamos directamente
         if (validActions.Count == 1)
         {
-            if (validActions[0].IsAvailable)
-                ExecuteActionInternal(validActions[0].Data);
-
+            ExecuteActionInternal(validActions[0].Data);
             return;
         }
 
@@ -208,7 +207,10 @@ public class PlayerInteraction : MonoBehaviour
                 continue;
 
             if (!option.IsAvailable)
+            {
+                OnUnavailableActionAttempted?.Invoke(option);
                 return;
+            }
 
             if (CurrentTarget.Interact(action, gameObject))
                 CloseMenu();

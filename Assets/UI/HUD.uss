@@ -307,3 +307,58 @@
 
     -unity-text-align: middle-left;
 }
+
+.interaction-feedback {
+    position: absolute;
+    top: 32px;
+    left: 50%;
+    width: 520px;
+    max-width: 88%;
+    padding: 18px 24px;
+
+    background-color: rgba(20, 19, 16, 0.96);
+
+    border-left-width: 5px;
+    border-left-color: rgb(155, 143, 111);
+
+    opacity: 0;
+    translate: -50% -12px;
+
+    transition-property: opacity, translate;
+    transition-duration: 220ms;
+}
+
+.interaction-feedback.visible {
+    opacity: 1;
+    translate: -50% 0;
+}
+
+.interaction-feedback-header {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.interaction-feedback-indicator {
+    width: 8px;
+    height: 8px;
+    margin-right: 11px;
+    background-color: rgb(166, 151, 108);
+}
+
+.interaction-feedback-title {
+    color: rgb(201, 184, 139);
+    font-size: 25px;
+    -unity-font-style: bold;
+    letter-spacing: 1px;
+
+    -unity-font-definition: url("project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&guid=97e524c46899f544dab576384d085a88&type=3#SpecialElite-Regular");
+}
+
+.interaction-feedback-text {
+    color: rgb(230, 222, 199);
+    font-size: 22px;
+    white-space: normal;
+
+    -unity-font-definition: url("project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&guid=97e524c46899f544dab576384d085a88&type=3#SpecialElite-Regular");
+}

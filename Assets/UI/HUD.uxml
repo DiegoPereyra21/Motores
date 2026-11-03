@@ -8,8 +8,8 @@
         </ui:VisualElement>
         <ui:VisualElement name="Equipment" class="equipment">
             <ui:VisualElement name="Radio" class="indicator" style="width: 200px; height: 200px; top: -37px;">
-                <ui:VisualElement name="RadioIcon" class="radio-icon" style="background-image: url(&quot;project://database/Assets/Art/Icons/icons/item_radio.png?fileID=2800000&amp;guid=3fb63e730365ed94188a2d95022fb864&amp;type=3#item_radio&quot;); -unity-background-scale-mode: scale-to-fit; width: 150px; height: 170px; right: -32px; top: -10px;"/>
                 <ui:Label name="RadioAlert" text="Sin mensaje" class="radio-alert"/>
+                <ui:VisualElement name="RadioIcon" class="radio-icon" style="background-image: url(&quot;project://database/Assets/Art/Icons/icons/item_radio.png?fileID=2800000&amp;guid=3fb63e730365ed94188a2d95022fb864&amp;type=3#item_radio&quot;); -unity-background-scale-mode: scale-to-fit; width: 150px; height: 150px; right: -27px; top: -30px;"/>
             </ui:VisualElement>
             <ui:VisualElement name="Backpack" class="indicator" style="width: 170px; height: 170px; -unity-background-scale-mode: stretch-to-fill; top: 318px; right: -68px;">
                 <ui:VisualElement name="BackpackIcon" class="backpack-icon" style="background-image: url(&quot;project://database/Assets/Art/Icons/icons/item_mochila.png?fileID=2800000&amp;guid=326c574c73d438347adebd1fc3a890c4&amp;type=3#item_mochila&quot;); width: 130px; height: 150px; display: flex; -unity-background-scale-mode: stretch-to-fill;"/>
@@ -60,5 +60,12 @@
             <ui:Label name="KeyLabel" text="Q" class="key-label" style="font-size: 30px; left: -15px; bottom: -7px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); -unity-font-style: bold;"/>
         </ui:VisualElement>
         <ui:VisualElement name="LootNotificationContainer" class="loot-notification-container" style="position: absolute; top: 936px; left: 904px; -unity-text-align: middle-left; align-self: center; align-items: center; justify-content: flex-start; align-content: center; width: 120px; height: 120px;"/>
+        <ui:VisualElement name="InteractionFeedback" class="interaction-feedback" style="top: 41px; left: 979px; width: 680px;">
+            <ui:VisualElement class="interaction-feedback-header">
+                <ui:VisualElement class="interaction-feedback-indicator"/>
+                <ui:Label name="InteractionFeedbackTitle" text="MATERIALES INSUFICIENTES" class="interaction-feedback-title"/>
+            </ui:VisualElement>
+            <ui:Label name="InteractionFeedbackText" class="interaction-feedback-text"/>
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

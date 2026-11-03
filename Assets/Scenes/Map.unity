@@ -686029,6 +686029,7 @@ GameObject:
   - component: {fileID: 641423539}
   - component: {fileID: 641423542}
   - component: {fileID: 641423541}
+  - component: {fileID: 641423544}
   - component: {fileID: 641423540}
   - component: {fileID: 641423543}
   m_Layer: 8
@@ -686067,7 +686068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40fc24fdf1d101d41bad06211324e95a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CabinOpening
-  type: 1
+  type: 0
   size: {x: 3.2668567, y: 1.9165639}
   requireInside: 1
   maxInteractDistance: 1.8
@@ -686079,6 +686080,11 @@ MonoBehaviour:
   obstacleThickness: 0.6
   obstacleExtraWidth: 0.4
   barricadeItem: {fileID: 11400000, guid: 9a669aeb58e36ae49b5da0ee4c4c81e7, type: 2}
+  plankPrefab: {fileID: 4161833231063843385, guid: b1f6ff980167a6d49bb49f930d0897bc, type: 3}
+  plankCount: 6
+  minAngle: 25
+  maxAngle: 55
+  depthVariation: 0.05
   onPlaceStarted:
     m_PersistentCalls:
       m_Calls: []
@@ -686236,6 +686242,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &641423544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641423538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc2dbdea523f765459f6be0192685ba5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OpeningInteractable
+  cabinOpening: {fileID: 641423540}
+  availableActions:
+  - {fileID: 11400000, guid: 536f8b94d4946264eaac1d4b6871b8e1, type: 2}
 --- !u!43 &641712859
 Mesh:
   m_ObjectHideFlags: 0
@@ -856075,6 +856096,11 @@ MonoBehaviour:
   obstacleThickness: 0.6
   obstacleExtraWidth: 0.4
   barricadeItem: {fileID: 11400000, guid: 9a669aeb58e36ae49b5da0ee4c4c81e7, type: 2}
+  plankPrefab: {fileID: 0}
+  plankCount: 6
+  minAngle: 25
+  maxAngle: 55
+  depthVariation: 0.05
   onPlaceStarted:
     m_PersistentCalls:
       m_Calls: []
@@ -900856,6 +900882,11 @@ MonoBehaviour:
   obstacleThickness: 0.6
   obstacleExtraWidth: 0.4
   barricadeItem: {fileID: 11400000, guid: 9a669aeb58e36ae49b5da0ee4c4c81e7, type: 2}
+  plankPrefab: {fileID: 0}
+  plankCount: 6
+  minAngle: 25
+  maxAngle: 55
+  depthVariation: 0.05
   onPlaceStarted:
     m_PersistentCalls:
       m_Calls: []
@@ -934841,6 +934872,7 @@ GameObject:
   - component: {fileID: 1276545943}
   - component: {fileID: 1276545946}
   - component: {fileID: 1276545945}
+  - component: {fileID: 1276545948}
   - component: {fileID: 1276545944}
   - component: {fileID: 1276545947}
   m_Layer: 8
@@ -934891,6 +934923,11 @@ MonoBehaviour:
   obstacleThickness: 0.6
   obstacleExtraWidth: 0.4
   barricadeItem: {fileID: 11400000, guid: 9a669aeb58e36ae49b5da0ee4c4c81e7, type: 2}
+  plankPrefab: {fileID: 4161833231063843385, guid: b1f6ff980167a6d49bb49f930d0897bc, type: 3}
+  plankCount: 6
+  minAngle: 25
+  maxAngle: 55
+  depthVariation: 0.05
   onPlaceStarted:
     m_PersistentCalls:
       m_Calls: []
@@ -935048,6 +935085,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1276545948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276545942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc2dbdea523f765459f6be0192685ba5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OpeningInteractable
+  cabinOpening: {fileID: 1276545944}
+  availableActions:
+  - {fileID: 11400000, guid: 536f8b94d4946264eaac1d4b6871b8e1, type: 2}
 --- !u!43 &1279904275
 Mesh:
   m_ObjectHideFlags: 0
@@ -997012,6 +997064,11 @@ MonoBehaviour:
   obstacleThickness: 0.6
   obstacleExtraWidth: 0.4
   barricadeItem: {fileID: 11400000, guid: 9a669aeb58e36ae49b5da0ee4c4c81e7, type: 2}
+  plankPrefab: {fileID: 0}
+  plankCount: 6
+  minAngle: 25
+  maxAngle: 55
+  depthVariation: 0.05
   onPlaceStarted:
     m_PersistentCalls:
       m_Calls: []
@@ -1259305,6 +1259362,22 @@ PrefabInstance:
       propertyPath: inventoryUI
       value: 
       objectReference: {fileID: 360846085}
+    - target: {fileID: 1613494252014594668, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1613494252014594668, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1613494252014594668, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1613494252014594668, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2153651938353057487, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
       propertyPath: fallClip
       value: 
@@ -1337502,6 +1337575,7 @@ GameObject:
   - component: {fileID: 2131157654}
   - component: {fileID: 2131157657}
   - component: {fileID: 2131157656}
+  - component: {fileID: 2131157659}
   - component: {fileID: 2131157655}
   - component: {fileID: 2131157658}
   m_Layer: 8
@@ -1337552,6 +1337626,11 @@ MonoBehaviour:
   obstacleThickness: 0.6
   obstacleExtraWidth: 0.4
   barricadeItem: {fileID: 11400000, guid: 9a669aeb58e36ae49b5da0ee4c4c81e7, type: 2}
+  plankPrefab: {fileID: 4161833231063843385, guid: b1f6ff980167a6d49bb49f930d0897bc, type: 3}
+  plankCount: 6
+  minAngle: 25
+  maxAngle: 55
+  depthVariation: 0.05
   onPlaceStarted:
     m_PersistentCalls:
       m_Calls: []
@@ -1337709,6 +1337788,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2131157659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131157653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc2dbdea523f765459f6be0192685ba5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OpeningInteractable
+  cabinOpening: {fileID: 2131157655}
+  availableActions:
+  - {fileID: 11400000, guid: 536f8b94d4946264eaac1d4b6871b8e1, type: 2}
 --- !u!1 &2132670705
 GameObject:
   m_ObjectHideFlags: 0
@@ -1339379,6 +1339473,10 @@ PrefabInstance:
       propertyPath: tutorialDocument
       value: 
       objectReference: {fileID: 636313076}
+    - target: {fileID: 1069845118292833332, guid: 3d92d9bc565ce7748ab43fe2ec871ca3, type: 3}
+      propertyPath: playerInteraction
+      value: 
+      objectReference: {fileID: 1712976876}
     - target: {fileID: 1069845118292833332, guid: 3d92d9bc565ce7748ab43fe2ec871ca3, type: 3}
       propertyPath: quickActionReference
       value: 

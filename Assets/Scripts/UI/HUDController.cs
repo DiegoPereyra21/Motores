@@ -31,6 +31,10 @@ public class HUDController : MonoBehaviour
     [SerializeField] private Inventory playerInventory;
     [SerializeField] private float lootNotificationDuration = 2.5f;
 
+    [Header("Feedback de interacciones")]
+    [SerializeField] private PlayerInteraction playerInteraction;
+    [SerializeField] private float interactionFeedbackDuration = 2.5f;
+
     private VisualElement lootNotificationContainer;
 
     private int hoveredSlotIndex = -1;
@@ -55,6 +59,12 @@ public class HUDController : MonoBehaviour
     private float originalSortOrder = 0;
     private float previousTimeScale = 1f;
     private Vector2 wheelScreenCenter;
+
+    private VisualElement interactionFeedback;
+    private Label interactionFeedbackTitle;
+    private Label interactionFeedbackText;
+    private IVisualElementScheduledItem interactionFeedbackSchedule;
+    
 
     private InputAction quickSelectorAction;
     private InputAction tutorialAction;
@@ -95,6 +105,10 @@ public class HUDController : MonoBehaviour
 
         lootNotificationContainer = root.Q<VisualElement>("LootNotificationContainer");
 
+        interactionFeedback = root.Q<VisualElement>("InteractionFeedback");
+        interactionFeedbackTitle = root.Q<Label>("InteractionFeedbackTitle");
+        interactionFeedbackText = root.Q<Label>("InteractionFeedbackText");
+
         if (dayLabel == null)
             Debug.LogError("[HUDController] No se encontro DayLabel en el UXML.", this);
 
@@ -108,6 +122,15 @@ public class HUDController : MonoBehaviour
         {
             Debug.LogError("[HUDController] No se encontro LootNotificationContainer.", this);
         }
+
+        if (interactionFeedback == null)
+            Debug.LogError("[HUDController] No se encontro InteractionFeedback.", this);
+
+        if (interactionFeedbackTitle == null)
+            Debug.LogError("[HUDController] No se encontro InteractionFeedbackTitle.", this);
+
+        if (interactionFeedbackText == null)
+            Debug.LogError("[HUDController] No se encontro InteractionFeedbackText.", this);
 
         wheel = root.Q<VisualElement>("Wheel");
 
@@ -149,6 +172,7 @@ public class HUDController : MonoBehaviour
         ConnectInputActions();
         StartCoroutine(InitializeHealthHUD());
         StartCoroutine(InitializeInventoryHUD());
+        ConnectInteractionFeedback();
         ConnectQuickAccess();
     }
 
@@ -200,6 +224,11 @@ public class HUDController : MonoBehaviour
 
         if (uiDocument != null)
             uiDocument.sortingOrder = originalSortOrder;
+
+        if (playerInteraction != null)
+            playerInteraction.OnUnavailableActionAttempted -= ShowInteractionFeedback;
+
+        interactionFeedbackSchedule?.Pause();
 
         dayChangedHandler = null;
         phaseChangedHandler = null;
@@ -617,6 +646,68 @@ public class HUDController : MonoBehaviour
                 continue;
 
             slots[i].EnableInClassList("hovered", i == hoveredIndex);
+        }
+    }
+
+    private void ConnectInteractionFeedback()
+    {
+        if (playerInteraction == null)
+            playerInteraction = FindFirstObjectByType<PlayerInteraction>();
+
+        if (playerInteraction == null)
+        {
+            Debug.LogWarning("[HUDController] No se encontro PlayerInteraction.", this);
+            return;
+        }
+
+        playerInteraction.OnUnavailableActionAttempted -= ShowInteractionFeedback;
+        playerInteraction.OnUnavailableActionAttempted += ShowInteractionFeedback;
+    }
+
+    private void ShowInteractionFeedback(InteractionOption option)
+    {
+        if (option == null || interactionFeedback == null || interactionFeedbackTitle == null || interactionFeedbackText == null)
+            return;
+
+        string reason = string.IsNullOrEmpty(option.UnavailableReason) ? "No podés realizar esta acción." : option.UnavailableReason;
+
+        interactionFeedbackTitle.text = GetInteractionFeedbackTitle(option.FeedbackType);
+        interactionFeedbackText.text = reason;
+
+        interactionFeedbackSchedule?.Pause();
+
+        interactionFeedback.RemoveFromClassList("visible");
+
+        interactionFeedback.schedule.Execute(() => {
+            interactionFeedback.AddToClassList("visible");
+        }).StartingIn(10);
+
+        interactionFeedbackSchedule = interactionFeedback.schedule.Execute(() => {
+            interactionFeedback.RemoveFromClassList("visible");
+        }).StartingIn((long)(interactionFeedbackDuration * 1000));
+    }
+
+    private string GetInteractionFeedbackTitle(OpeningPlacementError error)
+    {
+        switch (error)
+        {
+            case OpeningPlacementError.AlreadyProtected:
+                return "ABERTURA PROTEGIDA";
+
+            case OpeningPlacementError.InvalidPosition:
+                return "UBICACION INCORRECTA";
+
+            case OpeningPlacementError.PlayerUnavailable:
+                return "ACCION NO DISPONIBLE";
+
+            case OpeningPlacementError.MissingMaterials:
+                return "MATERIALES INSUFICIENTES";
+
+            case OpeningPlacementError.ConfigurationError:
+                return "ERROR DE CONFIGURACION";
+
+            default:
+                return "ACCION NO DISPONIBLE";
         }
     }
 
