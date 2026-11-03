@@ -999843,7 +999843,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 82216722d70230b438a21ca34f93c4ef, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1271977450119052356, guid: 82216722d70230b438a21ca34f93c4ef, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -1261054,6 +1261054,10 @@ PrefabInstance:
       value: -0.039272934
       objectReference: {fileID: 0}
     - target: {fileID: 7314671631618709976, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      propertyPath: flareItem
+      value: 
+      objectReference: {fileID: 11400000, guid: 95ae904d696863742b63f136eb38a7f3, type: 2}
+    - target: {fileID: 7314671631618709976, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
       propertyPath: amountPerPress
       value: 5
       objectReference: {fileID: 0}
@@ -1298496,11 +1298500,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 130882876745271318, guid: 9e2ede504bd519845805a44a005e225f, type: 3}
       propertyPath: dayDuration
-      value: 60
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 130882876745271318, guid: 9e2ede504bd519845805a44a005e225f, type: 3}
       propertyPath: nightDuration
-      value: 180
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 130882876745271318, guid: 9e2ede504bd519845805a44a005e225f, type: 3}
       propertyPath: playerInventory
