@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 //el objeto el cual es looteable
-public class Lootable : MonoBehaviour, IInteractable
+public class LootableInteractable : MonoBehaviour, IInteractable
 {
     [SerializeField] private LootTable lootTable;
     [SerializeField] private bool requireZombieDeath = false; // para loot proveniente de zombies
