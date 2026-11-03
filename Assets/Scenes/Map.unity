@@ -1327491,11 +1327491,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 130882876745271318, guid: 9e2ede504bd519845805a44a005e225f, type: 3}
       propertyPath: dayDuration
-      value: 20
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 130882876745271318, guid: 9e2ede504bd519845805a44a005e225f, type: 3}
       propertyPath: nightDuration
-      value: 20
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 130882876745271318, guid: 9e2ede504bd519845805a44a005e225f, type: 3}
       propertyPath: playerInventory
