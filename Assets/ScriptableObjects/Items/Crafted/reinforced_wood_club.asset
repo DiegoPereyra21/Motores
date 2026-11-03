@@ -26,6 +26,6 @@ MonoBehaviour:
     - rid: 8075318640762159187
       type: {class: WeaponData, ns: , asm: Assembly-CSharp}
       data:
-        damage: 40
+        damage: 50
         maxDurability: 70
         prefab: {fileID: 1509638308810923556, guid: 96820b877dc48254fb334eaad62f2293, type: 3}

@@ -15,7 +15,7 @@ MonoBehaviour:
   result: {fileID: 11400000, guid: 8ade84a77c007594ebde68b940c07c56, type: 2}
   resultAmount: 1
   description: "Arma de da\xF1o medio, es una version mejorada del palo de ataque
-    simple.\n\n+ 40 de ataque\n+ 70 de durabilidad"
+    simple.\n\n+ 50 de ataque"
   ingredients:
   - item: {fileID: 11400000, guid: 5506deeef8967944e8e7050d0ed43c15, type: 2}
     amount: 1

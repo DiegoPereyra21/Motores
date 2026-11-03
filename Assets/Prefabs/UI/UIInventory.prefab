@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3915301685712665111}
   - component: {fileID: 3124581443071239553}
   - component: {fileID: 1392977919761247990}
+  - component: {fileID: 407022007024177037}
   m_Layer: 5
   m_Name: UIInventory
   m_TagString: Untagged
@@ -72,4 +73,26 @@ MonoBehaviour:
   playerController: {fileID: 0}
   inventory: {fileID: 0}
   inventoryAction: {fileID: 1056446163668948550, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  quickAccessController: {fileID: 407022007024177037}
   slotCapacity: 30
+  inventoryOpenSortOrder: 50
+  eyeOpenedIcon: {fileID: 21300000, guid: 15828a64f08786a43976ac9f08d9d2a2, type: 3}
+  eyeClosedIcon: {fileID: 21300000, guid: 4e68e3e688f475647983cffd3cc95330, type: 3}
+  tooltipMouseOffset: {x: 18, y: -18}
+--- !u!114 &407022007024177037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3873492532463962628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82bdd5a2b73141042992826936244c83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::QuickAccessController
+  inventory: {fileID: 0}
+  inventoryUI: {fileID: 1392977919761247990}
+  playerHealth: {fileID: 0}
+  useItemAction: {fileID: 8875241046390192889, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  slotCount: 4

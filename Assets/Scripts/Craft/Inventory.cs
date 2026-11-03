@@ -358,4 +358,23 @@ public class Inventory : MonoBehaviour
 
         return false;
     }
+
+    // reemplaza la primera instancia de un objeto por otro en la misma posicion
+    public bool ReplaceItem(ItemData from, ItemData to)
+    {
+        if (from == null || to == null)
+            return false;
+
+        foreach (InventorySlot slot in slots)
+        {
+            if (slot.IsEmpty || slot.item != from)
+                continue;
+
+            slot.SetItem(to, 1);
+            OnInventoryChanged?.Invoke();
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -71,3 +71,4 @@ MonoBehaviour:
   uiDocument: {fileID: 7746132551328283471}
   craftTable: {fileID: 0}
   inventory: {fileID: 0}
+  quickAccessController: {fileID: 0}
