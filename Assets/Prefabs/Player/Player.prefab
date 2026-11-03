@@ -19959,6 +19959,8 @@ GameObject:
   - component: {fileID: 5701854420994613412}
   - component: {fileID: 4408335001353736137}
   - component: {fileID: 7314671631618709976}
+  - component: {fileID: 4610667589342635321}
+  - component: {fileID: 3960413093621423498}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -20048,6 +20050,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   walkSpeed: 3
   runSpeed: 7
+  backwardSpeedMultiplier: 1
   acceleration: 12
   rotationSmoothTime: 0.12
   gravity: -15
@@ -20091,6 +20094,10 @@ MonoBehaviour:
   playerController: {fileID: 8131467032854619556}
   cameraPivot: {fileID: 1459768277271011018}
   animator: {fileID: 2164108943230245708}
+  sfxSource: {fileID: 0}
+  fallClip: {fileID: 8300000, guid: 09c369e073d1b6649b2d5db4b3170c18, type: 3}
+  fallSoundDelay: 0.7
+  fallVolume: 0.4
 --- !u!114 &8343001647361465839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20112,6 +20119,10 @@ MonoBehaviour:
   attackRange: 0.74
   attackDamage: 35
   faceCameraOnAttack: 1
+  sfxSource: {fileID: 0}
+  hitClip: {fileID: 8300000, guid: 8276fa7afec9bd74ab6f982e56a4acb8, type: 3}
+  finalHitClip: {fileID: 8300000, guid: 488f1a5754729d446a72fe638fed3c37, type: 3}
+  missClip: {fileID: 8300000, guid: ef2c8e190ba05d348b4dacbbe15137a8, type: 3}
 --- !u!114 &641306032829803605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20184,6 +20195,11 @@ MonoBehaviour:
   playerController: {fileID: 8131467032854619556}
   objectTime: 1.5
   corpseTime: 2
+  gatherTime: 2.5
+  sfxSource: {fileID: 0}
+  gatherClips:
+  - {fileID: 8300000, guid: 63896accf99cbff4a90d8540f79b94ad, type: 3}
+  - {fileID: 8300000, guid: 0f56f2dc77f45b9479019e764571bd46, type: 3}
 --- !u!114 &7314671631618709976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20199,6 +20215,154 @@ MonoBehaviour:
   items:
   - {fileID: 11400000, guid: 9a669aeb58e36ae49b5da0ee4c4c81e7, type: 2}
   amountPerPress: 1
+  flareItem: {fileID: 0}
+--- !u!114 &4610667589342635321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5953249167122860971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb7181b34943cb2408248722f980a825, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerFootsteps
+  sfxSource: {fileID: 3960413093621423498}
+  playerController: {fileID: 8131467032854619556}
+  surfaces:
+  - surface: 0
+    clips:
+    - {fileID: 8300000, guid: 23783e5f1b2005044b4cf4c6a14804df, type: 3}
+    - {fileID: 8300000, guid: 6f73fa73c55ad104fb52a8fbda5d5ae9, type: 3}
+    volume: 0.4
+  - surface: 1
+    clips:
+    - {fileID: 8300000, guid: a21036f39da1ebe458c239f2c3466227, type: 3}
+    - {fileID: 8300000, guid: 7a7b7afd21c7e3a4e83ee32c13bd4417, type: 3}
+    volume: 0.12
+  - surface: 2
+    clips:
+    - {fileID: 8300000, guid: 76b5fd8e1adc7a44b876086156bcf439, type: 3}
+    - {fileID: 8300000, guid: 18baa12dd452d7b4587126da563140d5, type: 3}
+    volume: 0.35
+  - surface: 3
+    clips:
+    - {fileID: 8300000, guid: b7f2dc8d8b0852741913c48ea6fcbb2e, type: 3}
+    volume: 0.35
+  fallbackSurface: 1
+  grassKeywords:
+  - grass
+  - pasto
+  - heather
+  walkSpeed: 2
+  runSpeed: 6
+  walkStride: 0.9
+  runStride: 2
+  minSpeed: 0.3
+  walkVolume: 0.6
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  rayLength: 1.5
+  debugLog: 0
+--- !u!82 &3960413093621423498
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5953249167122860971}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -1708532335067979941, guid: 984bdb7ef19f6d74587c983a013bdf04, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &6047730197896309596
 GameObject:
   m_ObjectHideFlags: 0

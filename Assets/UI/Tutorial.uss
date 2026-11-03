@@ -7,6 +7,7 @@
     align-items: center;
     justify-content: center;
     background-color: rgba(10, 9, 7, 0.95);
+    background-image: none;
 }
 
 .tutorial-window {
@@ -19,4 +20,15 @@
     background-color: rgb(48, 44, 34);
     border-width: 2px;
     border-color: rgb(169, 154, 106);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    border-left-color: rgba(169, 154, 106, 0);
+    border-right-color: rgba(169, 154, 106, 0);
+    border-top-color: rgba(169, 154, 106, 0);
+    border-bottom-color: rgba(169, 154, 106, 0);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    background-image: url("project://database/Assets/Art/Icons/icons/tutorial%201.png?fileID=21300000&guid=727dfccf4da98874abce16349e00ace9&type=3#tutorial 1");
+    -unity-background-scale-mode: scale-to-fit;
 }
