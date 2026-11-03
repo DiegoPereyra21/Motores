@@ -381,4 +381,38 @@ public class QuickAccessController : MonoBehaviour
 
         return true;
     }
+
+    // reemplaza un arma equipada por su version mejorada en el mismo slot (mantiene la seleccion)
+    public bool ReplaceEquippedItem(ItemData from, ItemData to)
+    {
+        InitializeSlots();
+
+        if (from == null || to == null)
+            return false;
+
+        for (int i = 0; i < equippedSlots.Length; i++)
+        {
+            InventorySlot slot = equippedSlots[i];
+
+            if (slot == null || slot.IsEmpty || slot.item != from)
+                continue;
+
+            slot.SetItem(to, 1);
+            NotifyQuickAccessChanged();
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool HasEquipped(ItemData item)
+    {
+        InitializeSlots();
+
+        foreach (InventorySlot slot in equippedSlots)
+            if (slot != null && !slot.IsEmpty && slot.item == item)
+                return true;
+
+        return false;
+    }
 }
