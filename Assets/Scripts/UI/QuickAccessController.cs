@@ -10,6 +10,10 @@ public class QuickAccessController : MonoBehaviour
     [SerializeField] private Inventory inventory;
     [SerializeField] private InventoryUI inventoryUI;
 
+    [Header("Uso de objetos")]
+    [SerializeField] private Health playerHealth;
+    [SerializeField] private InputActionReference useItemAction;
+
     [Header("Configuracion")]
     [SerializeField, Min(1)] private int slotCount = 4;
 
@@ -28,23 +32,9 @@ public class QuickAccessController : MonoBehaviour
         InitializeSlots();
     }
 
-    private void OnEnable()
-    {
-        InitializeSlots();
-
-        if (inventory != null)
-            inventory.OnInventoryChanged += ValidateEquippedSlots;
-    }
-
     private void Start()
     {
         NotifyQuickAccessChanged();
-    }
-
-    private void OnDisable()
-    {
-        if (inventory != null)
-            inventory.OnInventoryChanged -= ValidateEquippedSlots;
     }
 
     private void Update()
@@ -67,6 +57,32 @@ public class QuickAccessController : MonoBehaviour
 
         if (Keyboard.current.digit4Key.wasPressedThisFrame)
             SelectSlot(3);
+    }
+
+    private void OnEnable()
+    {
+        InitializeSlots();
+
+        if (inventory != null)
+            inventory.OnInventoryChanged += ValidateEquippedSlots;
+
+        if (useItemAction != null)
+        {
+            useItemAction.action.performed += OnUseItem;
+            useItemAction.action.Enable();
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (inventory != null)
+            inventory.OnInventoryChanged -= ValidateEquippedSlots;
+
+        if (useItemAction != null)
+        {
+            useItemAction.action.performed -= OnUseItem;
+            useItemAction.action.Disable();
+        }
     }
 
     private void InitializeSlots()
@@ -300,5 +316,69 @@ public class QuickAccessController : MonoBehaviour
         }
 
         SelectSlot(-1);
+    }
+
+    private void OnUseItem(InputAction.CallbackContext context)
+    {
+        // no consumir objetos mientras el inventario esta abierto
+        if (inventoryUI != null && inventoryUI.IsInventoryOpen)
+            return;
+
+        UseSelectedItem();
+    }
+
+    private bool UseSelectedItem()
+    {
+        InventorySlot slot = SelectedSlot;
+
+        // check de que haya un objeto seleccionado
+        if (slot == null || slot.item == null || slot.amount <= 0)
+            return false;
+
+        // check consumible
+        if (!slot.item.TryGetConsumableData(out ConsumableData data))
+            return false;
+
+        if (data.effectType.ToString() != "Heal")
+            return false;
+
+        if (data.effectOverTime > 0f)
+        {
+            Debug.LogWarning("Este consumible utiliza curacion progresiva, todavia no implementada.");
+            return false;
+        }
+
+        if (playerHealth == null)
+        {
+            Debug.LogError("QuickAccessController: falta asignar Player Health.");
+            return false;
+        }
+
+        // no consumir si el jugador esta muerto o tiene la vida completa
+        if (playerHealth.IsDead || playerHealth.Current >= playerHealth.Max)
+            return false;
+
+        // comprobar que la cantidad de curación sea valida
+        if (data.effectAmount <= 0f)
+            return false;
+
+        // aplicar la curacion
+        playerHealth.Heal(data.effectAmount);
+
+        // consumir una unidad del stack
+        slot.amount--;
+
+        // si se agoto vaciar el slot
+        if (slot.amount <= 0)
+        {
+            equippedSlots[SelectedIndex] = null;
+        }
+
+        // actualizar el HUD
+        NotifyQuickAccessChanged();
+
+        Debug.Log($"Consumible utilizado: {slot.item.itemName}");
+
+        return true;
     }
 }

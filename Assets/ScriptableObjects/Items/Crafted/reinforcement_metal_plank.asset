@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: reinforcement_metal_plank
   itemName: Barricada metalica
   icon: {fileID: 21300000, guid: b176ffc128d0d3448bc9179e0e10b523, type: 3}
-  maxStackSize: 1
+  maxStackSize: 5
   origin: 1
   category: 3
   specializedData:

@@ -42,6 +42,7 @@ public class HUDController : MonoBehaviour
     private VisualElement[] slotIcons;
     private VisualElement[] durabilityBars;
     private VisualElement[] durabilityFills;
+    private Label[] consumableAmounts;
 
     //audio (el AudioSource tiene que tener Output en el grupo SFX del MainMixer, si esta vacio se busca en este mismo objeto)
     [Header("Audio")]
@@ -145,6 +146,7 @@ public class HUDController : MonoBehaviour
         slotIcons = new VisualElement[4];
         durabilityBars = new VisualElement[4];
         durabilityFills = new VisualElement[4];
+        consumableAmounts = new Label[4];
 
         for (int i = 0; i < slots.Length; i++)
         {
@@ -154,6 +156,23 @@ public class HUDController : MonoBehaviour
             slotIcons[i] = slots[i].Q<VisualElement>($"Icon{i + 1}");
             durabilityBars[i] = slots[i].Q<VisualElement>("Durability");
             durabilityFills[i] = slots[i].Q<VisualElement>("DurabilityFill");
+
+            // etiqueta de cantidad para consumibles
+            consumableAmounts[i] = new Label();
+            consumableAmounts[i].name = $"ConsumableAmount{i + 1}";
+
+            consumableAmounts[i].style.position = Position.Absolute;
+            consumableAmounts[i].style.right = 2;
+            consumableAmounts[i].style.bottom = 0;
+            consumableAmounts[i].style.minWidth = 26;
+            consumableAmounts[i].style.height = 23;
+            consumableAmounts[i].style.fontSize = 17;
+            consumableAmounts[i].style.color = Color.white;
+            consumableAmounts[i].style.backgroundColor = new Color(0f, 0f, 0f, 0.8f);
+            consumableAmounts[i].style.unityTextAlign = TextAnchor.MiddleCenter;
+            consumableAmounts[i].style.display = DisplayStyle.None;
+
+            slots[i].Add(consumableAmounts[i]);
         }
     }
 
@@ -527,16 +546,29 @@ public class HUDController : MonoBehaviour
             if (slotIcons[i] == null)
                 continue;
 
+            if (consumableAmounts[i] != null)
+            {
+                consumableAmounts[i].text = "";
+                consumableAmounts[i].style.display = DisplayStyle.None;
+            }
+
             if (equippedSlot == null || equippedSlot.IsEmpty)
             {
                 slotIcons[i].style.backgroundImage = StyleKeyword.None;
                 slotIcons[i].style.display = DisplayStyle.None;
+
                 UpdateDurabilityBar(i, null);
                 continue;
             }
 
             slotIcons[i].style.backgroundImage = new StyleBackground(equippedSlot.item.icon);
             slotIcons[i].style.display = DisplayStyle.Flex;
+
+            if (equippedSlot.item.TryGetConsumableData(out ConsumableData consumableData))
+            {
+                consumableAmounts[i].text = equippedSlot.amount.ToString();
+                consumableAmounts[i].style.display = DisplayStyle.Flex;
+            }
 
             UpdateDurabilityBar(i, equippedSlot);
         }

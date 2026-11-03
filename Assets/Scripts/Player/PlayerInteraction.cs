@@ -166,7 +166,10 @@ public class PlayerInteraction : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, interactRange, interactLayer))
         {
-            return hit.collider.GetComponentInParent<IInteractable>();
+            IInteractable interactable = hit.collider.GetComponentInParent<IInteractable>();
+
+            if (interactable != null && interactable.CanOpenInteraction(gameObject))
+                return interactable;
         }
 
         return null;

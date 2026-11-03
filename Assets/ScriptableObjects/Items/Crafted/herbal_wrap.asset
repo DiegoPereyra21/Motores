@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: herbal_wrap
   itemName: Cataplasma
   icon: {fileID: 21300000, guid: 40f7235c73ae76645a589eb41868e023, type: 3}
-  maxStackSize: 1
+  maxStackSize: 7
   origin: 1
   category: 2
   specializedData:
