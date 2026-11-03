@@ -2,22 +2,16 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Playables;
 
-//cinematica de final: victoria (bengala + heli se queda) o derrota (heli pasa de largo). Al terminar le pide a EndGameUI que muestre el panel
+//victoria (bengala + heli se queda) o derrota (heli pasa de largo). Al terminar le pide a EndGameUI que muestre el panel
 public class EndingCinematic : MonoBehaviour
 {
-    [Header("Timelines (Play On Awake OFF, Wrap Mode Hold, Update Method Unscaled Game Time)")]
     [SerializeField] private PlayableDirector victoryDirector;
     [SerializeField] private PlayableDirector defeatDirector;
-
-    [Header("Grupos de la cinematica (desactivados por defecto en la escena)")]
-    [SerializeField] private GameObject victoryGroup; //doble, heli, camaras, bengala y el director de victoria
-    [SerializeField] private GameObject defeatGroup;  //doble, heli, camaras y el director de derrota
-
-    [Header("Player")]
-    [SerializeField] private GameObject playerRoot; //se apaga entero, en la cinematica actua el doble
-    [SerializeField] private Behaviour[] disableBeforeFade; //PlayerController, CameraPivot, PlayerAttack, PlayerInteraction: para q no se mueva durante el fade
-
-    [Header("UI")]
+    //grupos, desactivados x defecto
+    [SerializeField] private GameObject victoryGroup;
+    [SerializeField] private GameObject defeatGroup;
+    [SerializeField] private GameObject playerRoot; //se apaga entero, en la cinematica actua unn doble
+    [SerializeField] private Behaviour[] disableBeforeFade; //PlayerController, CameraPivot, PlayerAttack y PlayerInteraction, pa q no se mueva durante el fade
     [SerializeField] private EndGameUI endGameUI;
     [SerializeField] private HUDController hudController;
     [SerializeField, Min(0f)] private float fadeDuration = 1f;

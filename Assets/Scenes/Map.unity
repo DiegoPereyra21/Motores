@@ -1282453,7 +1282453,11 @@ MonoBehaviour:
   victoryGroup: {fileID: 954885739}
   defeatGroup: {fileID: 705326471}
   playerRoot: {fileID: 169197685}
-  disableBeforeFade: []
+  disableBeforeFade:
+  - {fileID: 1712976866}
+  - {fileID: 1712976868}
+  - {fileID: 1712976867}
+  - {fileID: 1712976876}
   endGameUI: {fileID: 917788459}
   hudController: {fileID: 583824012}
   fadeDuration: 1
