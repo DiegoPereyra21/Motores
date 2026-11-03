@@ -7,6 +7,11 @@ public class EnemyDeath : MonoBehaviour
     //config muerte
     [SerializeField] private float corpseCleanupDelay = 120f;//tiempo de respaldo para limpiar el cuerpo si nadie lo saquea
     [SerializeField] private float lootedDestroyDelay = 0.5f;//delay al destruir despues de saqueado, para sonido/efecto
+    //audio (AudioSource 3D en el zombie, con Output en el grupo SFX del MainMixer)
+    [Header("Audio")]
+    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioClip fallClip;//el cuerpo cae al piso
+    [SerializeField] private float fallSoundDelay = 0.6f;//segundos desde que arranca la anim de muerte hasta que toca el piso (ajustar a ojo)
     //privadas
     private Health health;
     private Collider enemyCollider;
@@ -21,6 +26,7 @@ public class EnemyDeath : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();//cache del navmesh
         zombieController = GetComponent<ZombieControllerNavMesh>();//cache de la ia
         zombieAttack = GetComponent<ZombieAttack>();//cache del ataque
+        if (!sfxSource) sfxSource = GetComponent<AudioSource>();
 
     }
     private void OnEnable()
@@ -61,6 +67,15 @@ public class EnemyDeath : MonoBehaviour
 
         //timer de respaldo por si el player nunca lo saquea
         Invoke(nameof(DestroyCorpse), corpseCleanupDelay);
+
+        //el sonido de la caida suena cuando el cuerpo toca el piso, no apenas muere
+        Invoke(nameof(PlayFallSound), fallSoundDelay);
+    }
+
+    private void PlayFallSound()
+    {
+        if (sfxSource != null && fallClip != null)
+            sfxSource.PlayOneShot(fallClip);
     }
 
     //se llama desde el onlooted de LootableInteractable, cuando el player ya lo saqueo

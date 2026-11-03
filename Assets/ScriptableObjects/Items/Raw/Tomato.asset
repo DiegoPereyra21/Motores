@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: tomato
   itemName: Tomate
-  icon: {fileID: 21300000, guid: 0cb841cfb2183c145b583a85bbb9c202, type: 3}
+  icon: {fileID: 21300000, guid: 87c61133529e6b14fa400853e2d99ce0, type: 3}
   maxStackSize: 10
   origin: 0
   category: 0

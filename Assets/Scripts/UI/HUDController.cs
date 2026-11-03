@@ -33,6 +33,11 @@ public class HUDController : MonoBehaviour
     private VisualElement[] durabilityBars;
     private VisualElement[] durabilityFills;
 
+    //audio (el AudioSource tiene que tener Output en el grupo SFX del MainMixer, si esta vacio se busca en este mismo objeto)
+    [Header("Audio")]
+    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioClip tutorialToggleClip;//suena al abrir y al cerrar el tutorial
+
     private bool isSubscribed;
     private Label dayLabel;
     private Label timeLabel;
@@ -386,6 +391,7 @@ public class HUDController : MonoBehaviour
         isTutorialOpen = !isTutorialOpen;
 
         tutorialOverlay.style.display = isTutorialOpen ? DisplayStyle.Flex : DisplayStyle.None;
+        PlaySfx(tutorialToggleClip);
 
         if (isTutorialOpen)
         {
@@ -537,5 +543,14 @@ public class HUDController : MonoBehaviour
 
             slots[i].EnableInClassList("hovered", i == hoveredIndex);
         }
+    }
+
+    private void PlaySfx(AudioClip clip)
+    {
+        if (sfxSource == null) sfxSource = GetComponent<AudioSource>();
+
+        if (sfxSource != null && clip != null)
+            sfxSource.PlayOneShot(clip);
+
     }
 }

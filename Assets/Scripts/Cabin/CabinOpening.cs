@@ -60,6 +60,11 @@ public class CabinOpening : MonoBehaviour
     [SerializeField] private UnityEvent onBarricaded;
     [SerializeField] private UnityEvent onBarricadeBroken;
 
+    //audio (AudioSource 3D en la abertura, con Output en el grupo SFX del MainMixer)
+    [Header("Audio")]
+    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioClip barricadeBreakClip; //suena cuando los zombies rompen la barricada
+
     private OpeningState state = OpeningState.Open;
     private Barricade barricade;
     private NavMeshLink link;
@@ -78,6 +83,7 @@ public class CabinOpening : MonoBehaviour
     private void Awake()
     {
         link = GetComponent<NavMeshLink>();
+        if (!sfxSource) sfxSource = GetComponent<AudioSource>();
         attackPointOwners = new object[attackPoints != null ? attackPoints.Length : 0];
 
         bool useObstacle = navBlockMode == NavBlockMode.Obstacle || (navBlockMode == NavBlockMode.Auto && type == OpeningType.Door);
@@ -285,6 +291,9 @@ public class CabinOpening : MonoBehaviour
     {
         state = OpeningState.Open;
         SetNavBlocked(false);
+
+        if (sfxSource != null && barricadeBreakClip != null)
+            sfxSource.PlayOneShot(barricadeBreakClip);
 
         onBarricadeBroken.Invoke();
         OnOpeningStateChanged?.Invoke(this);

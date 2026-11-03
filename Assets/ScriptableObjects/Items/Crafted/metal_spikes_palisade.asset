@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: metal_spikes_palisade
   itemName: Empalizada metalica
-  icon: {fileID: 21300000, guid: 0dc22ed6b1906a848b13ca4bc3826137, type: 3}
+  icon: {fileID: 21300000, guid: 401dd67b198c3a242800f3b003fc425f, type: 3}
   maxStackSize: 1
   origin: 1
   category: 3
