@@ -5,7 +5,12 @@ using UnityEngine.UIElements;
 [RequireComponent(typeof(UIDocument))]
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] private string gameSceneName = "MAPA"; //poner la version final 
+    [SerializeField] private string gameSceneName = "MAPA"; //poner la version final
+    //audio (el AudioSource tiene que tener Output en el grupo SFX del MainMixer, si esta vacio se busca en este mismo objeto)
+    [Header("Audio")]
+    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioClip clickClip;
+    [SerializeField] private float actionDelay = 0.3f; //espera antes de cargar la escena o salir, para que el click se escuche (si no se corta al cambiar de escena)
     //privados
     private Button playButton;
     private Button quitButton;
@@ -28,9 +33,33 @@ public class MainMenu : MonoBehaviour
     }
     private void OnPlayClicked()
     {
-        SceneManager.LoadScene(gameSceneName);
+        PlayClick();
+        StartCoroutine(RunAfterDelay(() => SceneManager.LoadScene(gameSceneName)));
     }
-    private void OnQuitClicked()//para que ande tambien en unity, sino no hace nada 
+    private void OnQuitClicked()
+    {
+        PlayClick();
+        StartCoroutine(RunAfterDelay(QuitGame));
+    }
+
+    private void PlayClick()
+    {
+        if (sfxSource == null) sfxSource = GetComponent<AudioSource>();
+
+        if (sfxSource != null && clickClip != null)
+            sfxSource.PlayOneShot(clickClip);
+    }
+
+    //sin clip no espera nada (queda como antes). Tiempo sin escalar por si el menu se abre con timeScale en 0
+    private System.Collections.IEnumerator RunAfterDelay(System.Action action)
+    {
+        if (clickClip != null && actionDelay > 0f)
+            yield return new WaitForSecondsRealtime(actionDelay);
+
+        action();
+    }
+
+    private void QuitGame()//para que ande tambien en unity, sino no hace nada
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;

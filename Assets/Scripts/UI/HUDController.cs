@@ -22,6 +22,11 @@ public class HUDController : MonoBehaviour
     [SerializeField] private CameraPivot cameraPivot;
     [SerializeField, Range(0f, 1f)] private float slowMotionScale = 0.5f;
 
+    //audio (el AudioSource tiene que tener Output en el grupo SFX del MainMixer, si esta vacio se busca en este mismo objeto)
+    [Header("Audio")]
+    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioClip tutorialToggleClip;//suena al abrir y al cerrar el tutorial
+
     private bool isSubscribed;
     private Label dayLabel;
     private Label timeLabel;
@@ -342,6 +347,7 @@ public class HUDController : MonoBehaviour
         isTutorialOpen = !isTutorialOpen;
 
         tutorialOverlay.style.display = isTutorialOpen ? DisplayStyle.Flex : DisplayStyle.None;
+        PlaySfx(tutorialToggleClip);
 
         if (isTutorialOpen)
         {
@@ -359,5 +365,13 @@ public class HUDController : MonoBehaviour
             if (cameraPivot != null)
                 cameraPivot.enabled = true;
         }
+    }
+
+    private void PlaySfx(AudioClip clip)
+    {
+        if (sfxSource == null) sfxSource = GetComponent<AudioSource>();
+
+        if (sfxSource != null && clip != null)
+            sfxSource.PlayOneShot(clip);
     }
 }

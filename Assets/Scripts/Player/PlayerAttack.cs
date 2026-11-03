@@ -59,9 +59,7 @@ public class PlayerAttack : MonoBehaviour
         if (faceCameraOnAttack && cameraPivot)//quitar facecameraonattack si es q queremos q ataque hacia donde este el cuerpo
             transform.rotation = Quaternion.Euler(0f, cameraPivot.eulerAngles.y, 0f);
 
-        if (playerController)
-            playerController.MovementLocked = true;//para q no se deslice mientras ataca, osea se quede quieto mientras ataca
-
+        //ya no se frena: el ataque esta en la capa UpperAttack (solo torso), las piernas siguen con la locomocion
         animator.SetTrigger(AttackHash);
     }
     //en el frame donde golpea en la animacion, hace esto. si es clip de mixamo hay q hacerlo desde el fbx

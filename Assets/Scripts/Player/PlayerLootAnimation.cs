@@ -15,6 +15,12 @@ public class PlayerLootAnimation : MonoBehaviour
     [SerializeField] private float gatherTime = 2.5f; //working on device anim
     private static readonly int GatherHash = Animator.StringToHash("Gather");
 
+    //audio (el AudioSource del player tiene que tener Output en el grupo SFX del MainMixer)
+    [Header("Audio")]
+    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioClip[] gatherClips;//variantes del sonido de cosechar, no repite la misma dos veces seguidas
+    private int lastGatherClip = -1;
+
     //privadas
     private static readonly int PickUpHash = Animator.StringToHash("PickUp");
     private static readonly int LiftHash = Animator.StringToHash("Lift");
@@ -26,6 +32,7 @@ public class PlayerLootAnimation : MonoBehaviour
     {
         if (!animator) animator = GetComponent<Animator>();
         if (!playerController) playerController = GetComponent<PlayerController>();
+        if (!sfxSource) sfxSource = GetComponent<AudioSource>();
     }
 
     public void Play(LootAnimType type)
@@ -39,11 +46,28 @@ public class PlayerLootAnimation : MonoBehaviour
             case LootAnimType.Gather:
                 animator.SetTrigger(GatherHash);
                 playerController.SetBusy(gatherTime);
+                PlayRandomGatherSound();
                 break;
             default:
                 animator.SetTrigger(PickUpHash);
                 playerController.SetBusy(objectTime);
                 break;
         }
+    }
+
+    //elige una variante al azar pero nunca la misma que sono la vez anterior (con una sola variante suena siempre esa)
+    private void PlayRandomGatherSound()
+    {
+        if (sfxSource == null || gatherClips == null || gatherClips.Length == 0) return;
+
+        int index = Random.Range(0, gatherClips.Length);
+
+        if (gatherClips.Length > 1 && index == lastGatherClip)
+            index = (index + Random.Range(1, gatherClips.Length)) % gatherClips.Length;
+
+        lastGatherClip = index;
+
+        if (gatherClips[index] != null)
+            sfxSource.PlayOneShot(gatherClips[index]);
     }
 }
