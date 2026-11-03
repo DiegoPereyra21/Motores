@@ -57,6 +57,7 @@ public class HUDController : MonoBehaviour
     private VisualElement wheel;
     private VisualElement[] slots;
     private bool isQuickSelectorOpen;
+    public bool IsQuickSelectorOpen => isQuickSelectorOpen;
     private float originalSortOrder = 0;
     private float previousTimeScale = 1f;
     private Vector2 wheelScreenCenter;
