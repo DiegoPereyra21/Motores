@@ -421,7 +421,7 @@ public class HUDController : MonoBehaviour
         Time.timeScale = slowMotionScale;
 
         if (cameraPivot != null)
-            cameraPivot.enabled = false;
+            cameraPivot.SetLookEnabled(false);
 
         if (wheel != null && wheel.panel != null && Mouse.current != null)
         {
@@ -460,7 +460,7 @@ public class HUDController : MonoBehaviour
         Time.timeScale = previousTimeScale;
 
         if (cameraPivot != null)
-            cameraPivot.enabled = true;
+            cameraPivot.SetLookEnabled(true);
     }
 
     public void HideHUD()
@@ -526,7 +526,7 @@ public class HUDController : MonoBehaviour
             UnityEngine.Cursor.lockState = CursorLockMode.None;
 
             if (cameraPivot != null)
-                cameraPivot.enabled = false;
+                cameraPivot.SetLookEnabled(false);
         }
         else
         {
@@ -534,7 +534,7 @@ public class HUDController : MonoBehaviour
             UnityEngine.Cursor.lockState = CursorLockMode.Locked;
 
             if (cameraPivot != null)
-                cameraPivot.enabled = true;
+                cameraPivot.SetLookEnabled(true);
         }
     }
 

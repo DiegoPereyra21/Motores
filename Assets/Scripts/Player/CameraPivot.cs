@@ -45,18 +45,18 @@ public class CameraPivot : MonoBehaviour
     }
     private void LateUpdate()//late para que se mueva luego del player
     {
-        if (!lookEnabled)
-            return;
+        bool canLook = lookEnabled
+            && !(inventoryUI != null && inventoryUI.IsInventoryOpen)
+            && !(craftingUI != null && craftingUI.IsMenuOpen);
 
-        if (inventoryUI != null && inventoryUI.IsInventoryOpen)
-            return;
+        if (canLook)
+        {
+            Vector2 look = lookAction.action.ReadValue<Vector2>() * sensitivity;
+            yaw += look.x;
+            pitch = Mathf.Clamp(pitch - look.y, minPitch, maxPitch);
+        }
 
-        if (craftingUI != null && craftingUI.IsMenuOpen)
-            return;
-
-        Vector2 look = lookAction.action.ReadValue<Vector2>() * sensitivity;
-        yaw += look.x;
-        pitch = Mathf.Clamp(pitch - look.y, minPitch, maxPitch);
+        // se reaplica siempre, aunque no se pueda mirar, para que el pivot no herede la rotación del Player
         transform.rotation = Quaternion.Euler(pitch, yaw, 0f);
     }
 
