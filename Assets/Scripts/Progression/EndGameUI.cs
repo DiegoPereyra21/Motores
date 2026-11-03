@@ -11,6 +11,9 @@ public class EndGameUI : MonoBehaviour
     [Header("HUD")]
     [SerializeField] private HUDController hudController;
 
+    [Header("Cinematica de final (opcional)")]
+    [SerializeField] private EndingCinematic endingCinematic; //si esta asignada, victoria/derrota esperan a q termine la cinematica
+
     [Header("Camara de muerte")]
     [SerializeField] private GameObject deathCamera;
 
@@ -19,6 +22,9 @@ public class EndGameUI : MonoBehaviour
 
     [Header("Fade de muerte")]
     [SerializeField] private float deathFadeDuration = 2f;
+
+    [Header("Fade de victoria/derrota")]
+    [SerializeField] private float endingPanelFadeDuration = 1.5f;
 
     [Header("Fade de restart")]
     [SerializeField] private float fadeToBlackDuration = 1f;
@@ -29,7 +35,7 @@ public class EndGameUI : MonoBehaviour
 
     private GameProgressController gameProgressController;
     private bool isSubscribed;
-    private Coroutine deathFadeCoroutine;
+    private Coroutine panelFadeCoroutine;
 
     private VisualElement endingRoot;
     private VisualElement victoryPanel;
@@ -42,8 +48,12 @@ public class EndGameUI : MonoBehaviour
     private float originalAmbientIntensity;
     private bool ambientIntensitySaved;
     private bool deathPresentationActive;
+
     private Button deathRestartButton;
     private Button deathMainMenuButton;
+    private Button victoryMainMenuButton;
+    private Button defeatRetryButton;
+    private Button defeatMainMenuButton;
 
     //audio (el AudioSource tiene que tener Output en el grupo SFX del MainMixer, si esta vacio se busca en este mismo objeto)
     [Header("Audio")]
@@ -67,16 +77,20 @@ public class EndGameUI : MonoBehaviour
 
             deathPanel = root.Q<VisualElement>("DeathPanel");
             deathTitle = root.Q<Label>("DeathTitle");
+
             deathRestartButton = root.Q<Button>("DeathCheckpointButton");
             deathMainMenuButton = root.Q<Button>("DeathMainMenuButton");
+            victoryMainMenuButton = root.Q<Button>("VictoryMainMenuButton");
+            defeatRetryButton = root.Q<Button>("DefeatRetryButton");
+            defeatMainMenuButton = root.Q<Button>("DefeatMainMenuButton");
 
             blackScreen = root.Q<VisualElement>("BlackScreen");
 
-            if (deathRestartButton != null)
-                deathRestartButton.clicked += RestartGame;
-
-            if (deathMainMenuButton != null)
-                deathMainMenuButton.clicked += ReturnToMainMenu;
+            if (deathRestartButton != null) deathRestartButton.clicked += RestartGame;
+            if (deathMainMenuButton != null) deathMainMenuButton.clicked += ReturnToMainMenu;
+            if (victoryMainMenuButton != null) victoryMainMenuButton.clicked += ReturnToMainMenu;
+            if (defeatRetryButton != null) defeatRetryButton.clicked += RestartGame;
+            if (defeatMainMenuButton != null) defeatMainMenuButton.clicked += ReturnToMainMenu;
 
             HideAllPanels();
         }
@@ -122,7 +136,6 @@ public class EndGameUI : MonoBehaviour
         isSubscribed = true;
     }
 
-
     private void HandleGameEnded(GameEnding ending)
     {
         HideAllPanels();
@@ -130,17 +143,12 @@ public class EndGameUI : MonoBehaviour
         switch (ending)
         {
             case GameEnding.Victory:
-                if (victoryPanel != null)
-                    victoryPanel.style.display = DisplayStyle.Flex;
-
-                Debug.Log("Mostrar pantalla de victoria");
-                break;
-
             case GameEnding.Defeat:
-                if (defeatPanel != null)
-                    defeatPanel.style.display = DisplayStyle.Flex;
+                //con cinematica, ella llama a ShowEndingPanel cuando termina
+                if (endingCinematic != null && endingCinematic.isActiveAndEnabled)
+                    return;
 
-                Debug.Log("Mostrar pantalla de derrota");
+                ShowEndingPanel(ending);
                 break;
 
             case GameEnding.Death:
@@ -149,18 +157,10 @@ public class EndGameUI : MonoBehaviour
 
                 if (deathPanel != null)
                 {
-                    deathPanel.style.display = DisplayStyle.Flex;
-                    deathPanel.style.opacity = 0f;
-
-                    if (deathFadeCoroutine != null)
-                        StopCoroutine(deathFadeCoroutine);
-
                     if (deathCamera != null)
-                    {
                         deathCamera.SetActive(true);
-                    }
 
-                    deathFadeCoroutine = StartCoroutine(FadeInDeathPanel());
+                    StartPanelFade(deathPanel, deathFadeDuration, true);
                 }
 
                 ShowDeathPresentation();
@@ -168,6 +168,47 @@ public class EndGameUI : MonoBehaviour
                 Debug.Log("Mostrar pantalla de muerte");
                 break;
         }
+    }
+
+    //lo llama EndingCinematic al terminar (o HandleGameEnded si no hay cinematica)
+    public void ShowEndingPanel(GameEnding ending)
+    {
+        if (hudController != null)
+            hudController.HideHUD();
+
+        VisualElement panel = ending == GameEnding.Victory ? victoryPanel : defeatPanel;
+
+        if (panel == null)
+            return;
+
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.visible = true;
+
+        StartPanelFade(panel, endingPanelFadeDuration, false);
+    }
+
+    //fade de la pantalla negra, se usa en la cinematica y en el restart. Al terminar en 0 se oculta para q no tape los botones
+    public IEnumerator FadeBlackScreen(float from, float to, float duration)
+    {
+        if (blackScreen == null)
+            yield break;
+
+        blackScreen.style.display = DisplayStyle.Flex;
+        blackScreen.style.opacity = from;
+
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            blackScreen.style.opacity = Mathf.Lerp(from, to, Mathf.Clamp01(elapsed / duration));
+            yield return null;
+        }
+
+        blackScreen.style.opacity = to;
+
+        if (to <= 0f)
+            blackScreen.style.display = DisplayStyle.None;
     }
 
     private void HideAllPanels()
@@ -182,35 +223,32 @@ public class EndGameUI : MonoBehaviour
             deathPanel.style.display = DisplayStyle.None;
     }
 
+    private void SetButtonsEnabled(bool enabled)
+    {
+        if (deathRestartButton != null) deathRestartButton.SetEnabled(enabled);
+        if (deathMainMenuButton != null) deathMainMenuButton.SetEnabled(enabled);
+        if (victoryMainMenuButton != null) victoryMainMenuButton.SetEnabled(enabled);
+        if (defeatRetryButton != null) defeatRetryButton.SetEnabled(enabled);
+        if (defeatMainMenuButton != null) defeatMainMenuButton.SetEnabled(enabled);
+    }
+
     private void RestartGame()
     {
         if (blackScreen == null)
         {
-            Debug.LogError("[EndGameUI] No se encontró BlackScreen.", this);
+            Debug.LogError("[EndGameUI] No se encontro BlackScreen.", this);
             return;
         }
 
         PlayClick();
-
-        if (deathRestartButton != null)
-            deathRestartButton.SetEnabled(false);
-
-        if (deathMainMenuButton != null)
-            deathMainMenuButton.SetEnabled(false);
-
+        SetButtonsEnabled(false);
         StartCoroutine(RestartGameSequence());
     }
 
     private void ReturnToMainMenu()
     {
         PlayClick();
-
-        if (deathRestartButton != null)
-            deathRestartButton.SetEnabled(false);
-
-        if (deathMainMenuButton != null)
-            deathMainMenuButton.SetEnabled(false);
-
+        SetButtonsEnabled(false);
         StartCoroutine(ReturnToMainMenuSequence());
     }
 
@@ -260,62 +298,50 @@ public class EndGameUI : MonoBehaviour
         }
     }
 
-    private System.Collections.IEnumerator FadeInDeathPanel()
+    private void StartPanelFade(VisualElement panel, float duration, bool animateDeathTitle)
     {
-        if (deathPanel == null)
-            yield break;
+        if (panelFadeCoroutine != null)
+            StopCoroutine(panelFadeCoroutine);
 
-        deathPanel.style.opacity = 0f;
+        panelFadeCoroutine = StartCoroutine(FadeInPanel(panel, duration, animateDeathTitle));
+    }
 
-        if (deathTitle != null)
+    private IEnumerator FadeInPanel(VisualElement panel, float duration, bool animateDeathTitle)
+    {
+        panel.style.display = DisplayStyle.Flex;
+        panel.style.opacity = 0f;
+
+        bool animateTitle = animateDeathTitle && deathTitle != null;
+
+        if (animateTitle)
             deathTitle.style.fontSize = titleStartSize;
 
         float elapsed = 0f;
 
-        while (elapsed < deathFadeDuration)
+        while (elapsed < duration)
         {
             elapsed += Time.unscaledDeltaTime;
 
-            float progress = Mathf.Clamp01(elapsed / deathFadeDuration);
-            deathPanel.style.opacity = progress;
+            float progress = Mathf.Clamp01(elapsed / duration);
+            panel.style.opacity = progress;
 
-            if (deathTitle != null)
-            {
-                float currentSize = Mathf.Lerp(titleStartSize, titleEndSize, progress);
-
-                deathTitle.style.fontSize = currentSize;
-            }
+            if (animateTitle)
+                deathTitle.style.fontSize = Mathf.Lerp(titleStartSize, titleEndSize, progress);
 
             yield return null;
         }
 
-        deathPanel.style.opacity = 1f;
+        panel.style.opacity = 1f;
 
-        if (deathTitle != null)
+        if (animateTitle)
             deathTitle.style.fontSize = titleEndSize;
 
-        deathFadeCoroutine = null;
+        panelFadeCoroutine = null;
     }
 
     private IEnumerator RestartGameSequence()
     {
-        blackScreen.style.display = DisplayStyle.Flex;
-        blackScreen.style.opacity = 0f;
-
-        float elapsed = 0f;
-
-        while (elapsed < fadeToBlackDuration)
-        {
-            elapsed += Time.unscaledDeltaTime;
-
-            float progress = Mathf.Clamp01(elapsed / fadeToBlackDuration);
-
-            blackScreen.style.opacity = progress;
-
-            yield return null;
-        }
-
-        blackScreen.style.opacity = 1f;
+        yield return FadeBlackScreen(0f, 1f, fadeToBlackDuration);
 
         Time.timeScale = 1f;
 
