@@ -257,7 +257,7 @@ public class PlayerInteraction : MonoBehaviour
             return "";
 
         if (validActions.Count == 1)
-            return validActions[0].Data.DisplayName;
+            return validActions[0].DisplayName;
 
         return "Interactuar";
     }
