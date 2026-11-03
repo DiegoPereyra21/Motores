@@ -999056,6 +999056,83 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1001 &1649870184
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 82216722d70230b438a21ca34f93c4ef, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 346.19705
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 82216722d70230b438a21ca34f93c4ef, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 27.08775
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 82216722d70230b438a21ca34f93c4ef, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 136.39607
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 82216722d70230b438a21ca34f93c4ef, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.22723967
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 82216722d70230b438a21ca34f93c4ef, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.021338835
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 82216722d70230b438a21ca34f93c4ef, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.96809953
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 82216722d70230b438a21ca34f93c4ef, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.10339271
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 82216722d70230b438a21ca34f93c4ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -12.116
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 82216722d70230b438a21ca34f93c4ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -153.545
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 82216722d70230b438a21ca34f93c4ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -0.332
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 82216722d70230b438a21ca34f93c4ef, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 6167bee743131b245bd8b75c659a1ad1, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 82216722d70230b438a21ca34f93c4ef, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 6167bee743131b245bd8b75c659a1ad1, type: 2}
+    - target: {fileID: -5473032718520107599, guid: 82216722d70230b438a21ca34f93c4ef, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 6167bee743131b245bd8b75c659a1ad1, type: 2}
+    - target: {fileID: 919132149155446097, guid: 82216722d70230b438a21ca34f93c4ef, type: 3}
+      propertyPath: m_Name
+      value: Bell Huey
+      objectReference: {fileID: 0}
+    - target: {fileID: 1271977450119052356, guid: 82216722d70230b438a21ca34f93c4ef, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 6167bee743131b245bd8b75c659a1ad1, type: 2}
+    - target: {fileID: 2164724070813637474, guid: 82216722d70230b438a21ca34f93c4ef, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 6167bee743131b245bd8b75c659a1ad1, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 82216722d70230b438a21ca34f93c4ef, type: 3}
 --- !u!43 &1651566966
 Mesh:
   m_ObjectHideFlags: 0
@@ -1340397,3 +1340474,4 @@ SceneRoots:
   - {fileID: 340441901}
   - {fileID: 1763961742}
   - {fileID: 184075545}
+  - {fileID: 1649870184}
