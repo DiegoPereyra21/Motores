@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using System.Collections.Generic;
 
 // scripts para mensajes de radio que suenan al arrancar la escena o cuando el jugador interactua con la radio de la cabaña
 [Serializable]
@@ -15,7 +16,7 @@ public class RadioMessage
 // el mensaje del dia actual. Congela el mundo con GameProgressController.PauseWorld() mientras se usa la radio para escuchar el mensaje.
 // El mensaje del Dia 1 suena solo al arrancar la escena. Los de los dias siguientes hay que ir a buscarlos a la radio.
 // IMPORTANTE: tiene que estar en la capa "Interact" y con un collider, sino el raycast del player no la detecta.
-public class RadioInteractable : MonoBehaviour//, IInteractable
+public class RadioInteractable : MonoBehaviour, IInteractable
 {
     [Header("Mensajes (posicion 0 = Dia 1, 1 = Dia 2, 2 = Dia 3)")]
     [SerializeField] private RadioMessage[] messages;
@@ -25,6 +26,7 @@ public class RadioInteractable : MonoBehaviour//, IInteractable
     [SerializeField] private PlayerController playerController; // si estan vacias se buscan solas en Start
     [SerializeField] private CameraPivot cameraPivot;
     [SerializeField] private PlayerAttack playerAttack;
+    [SerializeField] private InteractionActionData listenAction;
 
     [Header("Config")]
     [SerializeField] private bool playIntroOnStart = true; // el mensaje del Dia 1 suena solo al arrancar
@@ -41,7 +43,7 @@ public class RadioInteractable : MonoBehaviour//, IInteractable
     private int currentMessageDay;
     private float lastCloseTime = -10f; // Time.unscaledTime de la ultima vez que se cerro un mensaje
 
-    private readonly System.Collections.Generic.HashSet<int> heardDays = new();
+    private readonly HashSet<int> heardDays = new();
 
 
     // Start y no Awake: asi GameProgressController.Instance ya existe seguro
@@ -77,20 +79,12 @@ public class RadioInteractable : MonoBehaviour//, IInteractable
     }
 
     // lo llama PlayerInteraction cuando el jugador apunta a la radio y aprieta E
-    public void Interact(GameObject interactor)
+    public bool Interact(InteractionActionData action, GameObject interactor)
     {
-        if (gameProgress == null || IsListening)
-            return;
+        if (action == null || listenAction == null || action.ActionId != listenAction.ActionId || !CanOpenInteraction(interactor))
+            return false;
 
-        // la E que acaba de saltear/cerrar el mensaje tambien le llega a PlayerInteraction, no queremos reabrirlo
-        if (Time.unscaledTime < lastCloseTime + reopenBlockTime)
-            return;
-
-        // no escuchar si la partida termino o el mundo ya esta pausado por otra cosa (ej: mesa de crafteo)
-        if (gameProgress.IsGameEnded || gameProgress.IsWorldPaused)
-            return;
-
-        StartListening(gameProgress.CurrentDay);
+        return StartListening(gameProgress.CurrentDay);
     }
 
     // arranca un dia nuevo: si hay un mensaje que todavia no se escucho, avisa al jugador que vaya a la radio
@@ -100,12 +94,15 @@ public class RadioInteractable : MonoBehaviour//, IInteractable
             messageUI.SetNewMessageHint(true);
     }
 
-    private void StartListening(int day)
+    private bool StartListening(int day)
     {
+        if (IsListening)
+            return false;
+
         RadioMessage message = GetMessageForDay(day);
 
         if (message == null)
-            return;
+            return false;
 
         // logica para no pausar el mundo despues de la primera vez que se escucha un mensaje por dia
         bool isFirstListen = !heardDays.Contains(day);
@@ -114,7 +111,7 @@ public class RadioInteractable : MonoBehaviour//, IInteractable
         {
             // PauseWorld devuelve false si ya estaba pausado o la partida termino, en ese caso no hacemos nada
             if (!gameProgress.PauseWorld())
-                return;
+                return false;
 
             gameProgress.PauseDayTimerForRadio();
         }
@@ -127,6 +124,8 @@ public class RadioInteractable : MonoBehaviour//, IInteractable
 
         OnMessageStarted?.Invoke(day);
         messageUI.Play(message, HandleMessageFinished);
+
+        return true;
     }
 
     // lo llama RadioMessageUI cuando el mensaje termina solo o el jugador lo saltea con E
@@ -171,5 +170,32 @@ public class RadioInteractable : MonoBehaviour//, IInteractable
         if (playerController == null) playerController = FindFirstObjectByType<PlayerController>();
         if (cameraPivot == null) cameraPivot = FindFirstObjectByType<CameraPivot>();
         if (playerAttack == null) playerAttack = FindFirstObjectByType<PlayerAttack>();
+    }
+
+    public bool CanOpenInteraction(GameObject interactor)
+    {
+        if (interactor == null || gameProgress == null || IsListening || gameProgress.IsGameEnded || gameProgress.IsWorldPaused)
+            return false;
+
+        if (Time.unscaledTime < lastCloseTime + reopenBlockTime)
+            return false;
+
+        return GetMessageForDay(gameProgress.CurrentDay) != null;
+    }
+
+    public IReadOnlyList<InteractionOption> GetActions(GameObject interactor)
+    {
+        List<InteractionOption> options = new();
+
+        if (!CanOpenInteraction(interactor) || listenAction == null)
+            return options;
+
+        bool alreadyHeard = heardDays.Contains(gameProgress.CurrentDay);
+
+        string actionName = alreadyHeard ? "Volver a escuchar" : "Escuchar radio";
+
+        options.Add(new InteractionOption(listenAction, displayName: actionName));
+
+        return options;
     }
 }

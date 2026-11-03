@@ -9,6 +9,7 @@ public class CraftingUI : MonoBehaviour
     [SerializeField] private UIDocument uiDocument;
     [SerializeField] private CraftTable craftTable;
     [SerializeField] private Inventory inventory;
+    [SerializeField] private QuickAccessController quickAccessController;
 
     // check para la camara mientras crafteamos
     public bool IsMenuOpen { get; private set; }
@@ -474,7 +475,8 @@ public class CraftingUI : MonoBehaviour
             Label name = new Label(ingredient.item.itemName);
             name.AddToClassList("ingredient-name");
 
-            int available = inventory != null ? inventory.GetItemCount(ingredient.item) : 0;
+            // cuenta el inventario + el arma equipada en el quick access
+            int available = GetAvailableCount(ingredient.item);
 
             Label amount = new Label($"{available}/{ingredient.amount}");
             amount.AddToClassList("ingredient-count");
@@ -557,7 +559,8 @@ public class CraftingUI : MonoBehaviour
             if (ingredient.amount <= 0)
                 return false;
 
-            if (!inventory.HasItem(ingredient.item, ingredient.amount))
+            // cuenta el inventario + el arma equipada en el quick access
+            if (GetAvailableCount(ingredient.item) < ingredient.amount)
                 return false;
         }
 
@@ -583,22 +586,24 @@ public class CraftingUI : MonoBehaviour
             return;
         }
 
-        // revisamos los items antes de consumir los ingredientes
+        ItemData upgradeSource = GetUpgradeSource(selectedRecipe);
+
         foreach (CraftingIngredient ingredient in selectedRecipe.ingredients)
         {
             if (ingredient == null || ingredient.item == null)
                 continue;
 
-            if (!inventory.HasItem(ingredient.item, ingredient.amount))
+            if (GetAvailableCount(ingredient.item) < ingredient.amount)
             {
                 UpdateCraftButton();
                 return;
             }
         }
 
+        // consumir ingredientes comunes (el arma a mejorar no se consume, se reemplaza)
         foreach (CraftingIngredient ingredient in selectedRecipe.ingredients)
         {
-            if (ingredient == null || ingredient.item == null)
+            if (ingredient == null || ingredient.item == null || ingredient.item == upgradeSource)
                 continue;
 
             if (!inventory.RemoveItem(ingredient.item, ingredient.amount))
@@ -609,7 +614,21 @@ public class CraftingUI : MonoBehaviour
             }
         }
 
-        inventory.AddItem(selectedRecipe.result, selectedRecipe.resultAmount);
+        if (upgradeSource != null)
+        {
+            // primero el arma equipada (queda en el mismo slot y seleccionada), si no la del bolso
+            bool replaced = quickAccessController != null && quickAccessController.ReplaceEquippedItem(upgradeSource, selectedRecipe.result);
+
+            if (!replaced)
+                replaced = inventory.ReplaceItem(upgradeSource, selectedRecipe.result);
+
+            if (!replaced)
+                Debug.LogError("[CraftingUI] No se encontro el arma a mejorar.");
+        }
+        else
+        {
+            inventory.AddItem(selectedRecipe.result, selectedRecipe.resultAmount);
+        }
 
         LoadRecipeInfo();
         RefreshRecipes();
@@ -650,5 +669,32 @@ public class CraftingUI : MonoBehaviour
 
         if (selectedRecipe != null)
             LoadIngredients();
+    }
+
+
+    private int GetAvailableCount(ItemData item)
+    {
+        if (item == null || inventory == null)
+            return 0;
+
+        int count = inventory.GetItemCount(item);
+
+        if (quickAccessController != null && item.IsWeapon() && quickAccessController.HasEquipped(item))
+            count++;
+
+        return count;
+    }
+
+    // arma usada como ingrediente de una receta cuyo resultado tambien es un arma (mejora)
+    private ItemData GetUpgradeSource(CraftingRecipe recipe)
+    {
+        if (recipe == null || recipe.result == null || !recipe.result.IsWeapon() || recipe.ingredients == null)
+            return null;
+
+        foreach (CraftingIngredient ingredient in recipe.ingredients)
+            if (ingredient != null && ingredient.item != null && ingredient.item.IsWeapon())
+                return ingredient.item;
+
+        return null;
     }
 }

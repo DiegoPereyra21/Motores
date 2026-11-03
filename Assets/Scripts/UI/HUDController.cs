@@ -57,6 +57,7 @@ public class HUDController : MonoBehaviour
     private VisualElement wheel;
     private VisualElement[] slots;
     private bool isQuickSelectorOpen;
+    public bool IsQuickSelectorOpen => isQuickSelectorOpen;
     private float originalSortOrder = 0;
     private float previousTimeScale = 1f;
     private Vector2 wheelScreenCenter;
@@ -245,7 +246,10 @@ public class HUDController : MonoBehaviour
             uiDocument.sortingOrder = originalSortOrder;
 
         if (playerInteraction != null)
+        {
             playerInteraction.OnUnavailableActionAttempted -= ShowInteractionFeedback;
+            playerInteraction.OnActionExecuted -= ShowSuccessfulInteractionFeedback;
+        }
 
         interactionFeedbackSchedule?.Pause();
 
@@ -694,29 +698,9 @@ public class HUDController : MonoBehaviour
 
         playerInteraction.OnUnavailableActionAttempted -= ShowInteractionFeedback;
         playerInteraction.OnUnavailableActionAttempted += ShowInteractionFeedback;
-    }
 
-    private void ShowInteractionFeedback(InteractionOption option)
-    {
-        if (option == null || interactionFeedback == null || interactionFeedbackTitle == null || interactionFeedbackText == null)
-            return;
-
-        string reason = string.IsNullOrEmpty(option.UnavailableReason) ? "No podés realizar esta acción." : option.UnavailableReason;
-
-        interactionFeedbackTitle.text = GetInteractionFeedbackTitle(option.FeedbackType);
-        interactionFeedbackText.text = reason;
-
-        interactionFeedbackSchedule?.Pause();
-
-        interactionFeedback.RemoveFromClassList("visible");
-
-        interactionFeedback.schedule.Execute(() => {
-            interactionFeedback.AddToClassList("visible");
-        }).StartingIn(10);
-
-        interactionFeedbackSchedule = interactionFeedback.schedule.Execute(() => {
-            interactionFeedback.RemoveFromClassList("visible");
-        }).StartingIn((long)(interactionFeedbackDuration * 1000));
+        playerInteraction.OnActionExecuted -= ShowSuccessfulInteractionFeedback;
+        playerInteraction.OnActionExecuted += ShowSuccessfulInteractionFeedback;
     }
 
     private string GetInteractionFeedbackTitle(OpeningPlacementError error)
@@ -741,6 +725,45 @@ public class HUDController : MonoBehaviour
             default:
                 return "ACCION NO DISPONIBLE";
         }
+    }
+
+    private void ShowInteractionFeedback(InteractionOption option)
+    {
+        if (option == null)
+            return;
+
+        string reason = string.IsNullOrEmpty(option.UnavailableReason) ? "No podes realizar esta accion." : option.UnavailableReason;
+
+        ShowInteractionFeedbackMessage(GetInteractionFeedbackTitle(option.FeedbackType), reason);
+    }
+
+    private void ShowInteractionFeedbackMessage(string title, string message)
+    {
+        if (interactionFeedback == null || interactionFeedbackTitle == null || interactionFeedbackText == null)
+            return;
+
+        interactionFeedbackTitle.text = title;
+        interactionFeedbackText.text = message;
+
+        interactionFeedbackSchedule?.Pause();
+
+        interactionFeedback.RemoveFromClassList("visible");
+
+        interactionFeedback.schedule.Execute(() => {
+            interactionFeedback.AddToClassList("visible");
+        }).StartingIn(10);
+
+        interactionFeedbackSchedule = interactionFeedback.schedule.Execute(() => {
+            interactionFeedback.RemoveFromClassList("visible");
+        }).StartingIn((long)(interactionFeedbackDuration * 1000));
+    }
+
+    private void ShowSuccessfulInteractionFeedback(InteractionOption option)
+    {
+        if (option == null || string.IsNullOrEmpty(option.ResultMessage))
+            return;
+
+        ShowInteractionFeedbackMessage("INFORMACION", option.ResultMessage);
     }
 
     private void PlaySfx(AudioClip clip)

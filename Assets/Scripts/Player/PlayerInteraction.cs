@@ -25,6 +25,7 @@ public class PlayerInteraction : MonoBehaviour
     public event Action<IInteractable> OnTargetChanged;
     public event Action<InteractionOption> OnUnavailableActionAttempted;
     public event Action<IReadOnlyList<InteractionOption>> OnMenuOpened;
+    public event Action<InteractionOption> OnActionExecuted;
     public event Action OnMenuClosed;
 
     private PlayerController playerController;
@@ -216,7 +217,10 @@ public class PlayerInteraction : MonoBehaviour
             }
 
             if (CurrentTarget.Interact(action, gameObject))
+            {
+                OnActionExecuted?.Invoke(option);
                 CloseMenu();
+            }
 
             return;
         }
@@ -253,7 +257,7 @@ public class PlayerInteraction : MonoBehaviour
             return "";
 
         if (validActions.Count == 1)
-            return validActions[0].Data.DisplayName;
+            return validActions[0].DisplayName;
 
         return "Interactuar";
     }

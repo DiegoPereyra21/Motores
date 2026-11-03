@@ -75,6 +75,13 @@ MonoBehaviour:
   inputActions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   cameraPivot: {fileID: 0}
   slowMotionScale: 0.5
+  selectionDeadZone: 20
+  quickAccessController: {fileID: 0}
+  quickSelectorSortOrder: 10
+  playerInventory: {fileID: 0}
+  lootNotificationDuration: 2.5
+  playerInteraction: {fileID: 0}
+  interactionFeedbackDuration: 2.5
   sfxSource: {fileID: 0}
   tutorialToggleClip: {fileID: 8300000, guid: f7b4aeb342fa6ea409f70a98bafcb68e, type: 3}
 --- !u!82 &5534830944661302705
