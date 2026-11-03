@@ -1,6 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Tutorial.uss?fileID=7433441132597879392&amp;guid=7378a2d44b27f554fb926a74fa4dbc16&amp;type=3#Tutorial"/>
     <ui:VisualElement name="TutorialOverlay" class="tutorial-overlay" style="flex-grow: 1; display: none;">
-        <ui:VisualElement name="TutorialWindow" class="tutorial-window" style="flex-grow: 1;"/>
+        <ui:VisualElement name="TutorialWindow" class="tutorial-window" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Art/Icons/icons/Tutorial.png?fileID=21300000&amp;guid=1e0fa47fea341c94d9c944b369fd7a4d&amp;type=3#Tutorial&quot;); -unity-background-scale-mode: scale-and-crop;"/>
     </ui:VisualElement>
 </ui:UXML>
