@@ -35,6 +35,13 @@ public class HUDController : MonoBehaviour
     [SerializeField] private PlayerInteraction playerInteraction;
     [SerializeField] private float interactionFeedbackDuration = 2.5f;
 
+    [Header("Radio HUD")]
+    [SerializeField] private Texture2D radioOffIcon;
+    [SerializeField] private Texture2D radioOnIcon;
+    [SerializeField] private RadioInteractable radioInteractable;
+
+    private VisualElement radioIcon;
+
     private VisualElement lootNotificationContainer;
 
     private int hoveredSlotIndex = -1;
@@ -66,7 +73,12 @@ public class HUDController : MonoBehaviour
     private Label interactionFeedbackTitle;
     private Label interactionFeedbackText;
     private IVisualElementScheduledItem interactionFeedbackSchedule;
-    
+
+    private Label radioAlert;
+    private IVisualElementScheduledItem radioPopupSchedule;
+    private bool radioStateInitialized;
+    private bool lastRadioPendingMessage;
+    private const float RadioPopupDuration = 1.2f;
 
     private InputAction quickSelectorAction;
     private InputAction tutorialAction;
@@ -110,6 +122,10 @@ public class HUDController : MonoBehaviour
         interactionFeedback = root.Q<VisualElement>("InteractionFeedback");
         interactionFeedbackTitle = root.Q<Label>("InteractionFeedbackTitle");
         interactionFeedbackText = root.Q<Label>("InteractionFeedbackText");
+
+        radioIcon = root.Q<VisualElement>("RadioIcon");
+
+        radioAlert = root.Q<Label>("RadioAlert");
 
         if (dayLabel == null)
             Debug.LogError("[HUDController] No se encontro DayLabel en el UXML.", this);
@@ -193,6 +209,7 @@ public class HUDController : MonoBehaviour
         StartCoroutine(InitializeHealthHUD());
         StartCoroutine(InitializeInventoryHUD());
         ConnectInteractionFeedback();
+        ConnectRadio();
         ConnectQuickAccess();
     }
 
@@ -251,7 +268,13 @@ public class HUDController : MonoBehaviour
             playerInteraction.OnActionExecuted -= ShowSuccessfulInteractionFeedback;
         }
 
+        if (radioInteractable != null)
+            radioInteractable.OnPendingMessageChanged -= UpdateRadioIcon;
+
         interactionFeedbackSchedule?.Pause();
+
+        radioPopupSchedule?.Pause();
+        radioPopupSchedule = null;
 
         dayChangedHandler = null;
         phaseChangedHandler = null;
@@ -743,7 +766,7 @@ public class HUDController : MonoBehaviour
         ShowInteractionFeedbackMessage(GetInteractionFeedbackTitle(option.FeedbackType), reason);
     }
 
-    private void ShowInteractionFeedbackMessage(string title, string message)
+    public void ShowInteractionFeedbackMessage(string title, string message)
     {
         if (interactionFeedback == null || interactionFeedbackTitle == null || interactionFeedbackText == null)
             return;
@@ -770,6 +793,81 @@ public class HUDController : MonoBehaviour
             return;
 
         ShowInteractionFeedbackMessage("INFORMACION", option.ResultMessage);
+    }
+
+    private void UpdateRadioIcon(bool hasPendingMessage)
+    {
+        if (radioIcon == null)
+            return;
+
+        Texture2D icon = hasPendingMessage ? radioOnIcon : radioOffIcon;
+
+        if (icon != null)
+            radioIcon.style.backgroundImage = new StyleBackground(icon);
+
+        if (radioAlert != null)
+        {
+            radioAlert.text = hasPendingMessage ? "NUEVA TRANSMISION!" : "SIN NOVEDADES";
+
+            radioAlert.style.color = hasPendingMessage ? new Color(0.75f, 0.16f, 0.15f) : new Color(0.70f, 0.67f, 0.56f);
+        }
+
+        bool shouldAnimate = hasPendingMessage && (!radioStateInitialized || !lastRadioPendingMessage);
+
+        lastRadioPendingMessage = hasPendingMessage;
+        radioStateInitialized = true;
+
+        if (shouldAnimate)
+            PlayRadioPopup();
+    }
+
+    private void ConnectRadio()
+    {
+        if (radioInteractable == null)
+            radioInteractable = FindFirstObjectByType<RadioInteractable>();
+
+        if (radioInteractable == null)
+        {
+            Debug.LogWarning("[HUDController] No se encontró RadioInteractable.", this);
+            return;
+        }
+
+        radioInteractable.OnPendingMessageChanged -= UpdateRadioIcon;
+        radioInteractable.OnPendingMessageChanged += UpdateRadioIcon;
+
+        UpdateRadioIcon(radioInteractable.HasPendingMessage);
+    }
+
+    private void PlayRadioPopup()
+    {
+        if (radioIcon == null)
+            return;
+
+        radioPopupSchedule?.Pause();
+
+        float startTime = Time.unscaledTime;
+
+        radioPopupSchedule = radioIcon.schedule.Execute(() => {
+            float elapsed = Time.unscaledTime - startTime;
+            float progress = Mathf.Clamp01(elapsed / RadioPopupDuration);
+
+            float scale = 1f + Mathf.Sin(progress * Mathf.PI * 2f) * 0.2f;
+
+            float shake = Mathf.Sin(progress * Mathf.PI * 20f) * (1f - progress) * 12f;
+
+            radioIcon.style.scale = new Scale(Vector2.one * scale);
+
+            radioIcon.style.rotate = new StyleRotate(new Angle(shake, AngleUnit.Degree));
+
+            if (progress >= 1f) {
+                radioIcon.style.scale = new Scale(Vector2.one);
+                radioIcon.style.rotate = new StyleRotate(new Angle(0f, AngleUnit.Degree));
+
+                radioPopupSchedule?.Pause();
+                radioPopupSchedule = null;
+            }
+
+        }).Every(16);
     }
 
     private void PlaySfx(AudioClip clip)
