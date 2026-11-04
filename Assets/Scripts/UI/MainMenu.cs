@@ -33,9 +33,11 @@ public class MainMenu : MonoBehaviour
     }
     private void OnPlayClicked()
     {
+        if (SceneLoader.IsLoading) return;//evita doble click mientras carga
         PlayClick();
-        StartCoroutine(RunAfterDelay(() => SceneManager.LoadScene(gameSceneName)));
+        StartCoroutine(RunAfterDelay(() => SceneLoader.Load(gameSceneName)));
     }
+
     private void OnQuitClicked()
     {
         PlayClick();
