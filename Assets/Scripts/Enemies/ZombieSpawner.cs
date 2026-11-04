@@ -85,9 +85,10 @@ public class ZombieSpawner : MonoBehaviour
 
         gameProgressController.OnPhaseChanged += HandlePhaseChanged;
         gameProgressController.OnGameEnded += HandleGameEnded;
+        gameProgressController.OnFinaleStarted += StopEnemiesSpawn;
 
         // Comprobar si la partida ya terminó.
-        if (gameProgressController.IsGameEnded)
+        if (gameProgressController.IsGameEnded || gameProgressController.IsFinaleActive)
         {
             StopEnemiesSpawn();
             return;
@@ -104,6 +105,7 @@ public class ZombieSpawner : MonoBehaviour
 
         gameProgressController.OnPhaseChanged -= HandlePhaseChanged;
         gameProgressController.OnGameEnded -= HandleGameEnded; // detiene el spawn de enemigos al terminar la partida
+        gameProgressController.OnFinaleStarted -= StopEnemiesSpawn;
     }
 
     private int GetMaxZombiesForCurrentDay()
@@ -138,7 +140,7 @@ public class ZombieSpawner : MonoBehaviour
     // revisa la fase en la que nos encontramos
     private void HandlePhaseChanged(DayNightPhase phase)
     {
-        if (phase == DayNightPhase.Night && !gameProgressController.IsGameEnded)
+        if (phase == DayNightPhase.Night && !gameProgressController.IsGameEnded && !gameProgressController.IsFinaleActive)
         {
             StartEnemiesSpawn();
         }

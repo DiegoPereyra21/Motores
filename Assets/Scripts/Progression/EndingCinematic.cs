@@ -165,7 +165,7 @@ public class EndingCinematic : MonoBehaviour
     }
 
     //usa el mismo sistema de daño q el combate: cada zombie corre su propia muerte (EnemyDeath)
-    private void KillAliveZombies()
+    public static void KillAliveZombies()
     {
         foreach (GameObject zombie in GameObject.FindGameObjectsWithTag("Enemy"))
         {
