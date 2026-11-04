@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameProgressController
   daySpeedWithZombiesAlive: 0.5
-  dayDuration: 2
+  dayDuration: 60
   nightDuration: 50
   startingDay: 1
   rescueWaitDays: 4

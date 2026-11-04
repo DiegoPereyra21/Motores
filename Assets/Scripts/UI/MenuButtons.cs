@@ -1,11 +1,11 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MenuButtons : MonoBehaviour
 {
     public void Jugar(string escena)
     {
-        SceneManager.LoadScene(escena);
+        if (SceneLoader.IsLoading) return;//evita doble click mientras carga
+        SceneLoader.Load(escena);
     }
 
     public void Salir()
