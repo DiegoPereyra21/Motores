@@ -95705,6 +95705,7 @@ MonoBehaviour:
   hideDuringIntro:
   - {fileID: 1189739495}
   - {fileID: 1450195023}
+  - {fileID: 636313076}
   pauseWorld: 1
 --- !u!4 &340441901
 Transform:
@@ -1286354,7 +1286355,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5953249167122860971, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 2109579067}
   m_SourcePrefab: {fileID: 100100000, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
 --- !u!114 &1712976865 stripped
 MonoBehaviour:
@@ -1324327,11 +1324331,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 130882876745271318, guid: 9e2ede504bd519845805a44a005e225f, type: 3}
       propertyPath: dayDuration
-      value: 3
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 130882876745271318, guid: 9e2ede504bd519845805a44a005e225f, type: 3}
       propertyPath: nightDuration
-      value: 3
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 130882876745271318, guid: 9e2ede504bd519845805a44a005e225f, type: 3}
       propertyPath: playerInventory
@@ -1361341,6 +1361345,26 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8946478680384145332, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
   m_PrefabInstance: {fileID: 1712976864}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2109579067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091836804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3848a4f3b569bd4186c8fbc78a75725, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StartingInventory
+  inventory: {fileID: 1712976865}
+  startingItems:
+  - item: {fileID: 11400000, guid: 070ecd4fc48a8ac42b80e89ca5935b5c, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: 33a5f359781a07a4d8153c1268584083, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: 1bf9447b7e6a3f849b8831662951c62e, type: 2}
+    amount: 1
 --- !u!43 &2109836824
 Mesh:
   m_ObjectHideFlags: 0
