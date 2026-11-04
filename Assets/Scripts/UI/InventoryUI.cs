@@ -577,7 +577,7 @@ public class InventoryUI : MonoBehaviour
 
     public void OnInventory(InputAction.CallbackContext context)
     {
-        if (!IsInventoryOpen && GameProgressController.Instance != null && GameProgressController.Instance.IsFinaleActive)
+        if (!IsInventoryOpen && GameProgressController.Instance != null && GameProgressController.Instance.IsFinaleLocked)
             return;
 
         if (context.performed)

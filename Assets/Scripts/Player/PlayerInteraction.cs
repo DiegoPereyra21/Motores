@@ -87,9 +87,9 @@ public class PlayerInteraction : MonoBehaviour
     {
         IInteractable newTarget = FindTarget();
 
-        // durante el final solo se puede usar la radio
+        // despues de escuchar el mensaje final no se puede interactuar con nada (solo la E de la bengala)
         GameProgressController progress = GameProgressController.Instance;
-        if (progress != null && progress.IsFinaleActive && newTarget is not RadioInteractable)
+        if (progress != null && progress.IsFinaleLocked)
             newTarget = null;
 
         // si cambio el objetivo, cerramos el menu anterior
