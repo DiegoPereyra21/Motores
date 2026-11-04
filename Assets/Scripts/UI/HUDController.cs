@@ -766,7 +766,7 @@ public class HUDController : MonoBehaviour
         ShowInteractionFeedbackMessage(GetInteractionFeedbackTitle(option.FeedbackType), reason);
     }
 
-    private void ShowInteractionFeedbackMessage(string title, string message)
+    public void ShowInteractionFeedbackMessage(string title, string message)
     {
         if (interactionFeedback == null || interactionFeedbackTitle == null || interactionFeedbackText == null)
             return;

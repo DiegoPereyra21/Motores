@@ -79264,6 +79264,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1360203022}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!143 &272749430 stripped
+CharacterController:
+  m_CorrespondingSourceObject: {fileID: 3881723904312049808, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+  m_PrefabInstance: {fileID: 1712976864}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &274611464
 GameObject:
   m_ObjectHideFlags: 0
@@ -127188,6 +127193,37 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
+--- !u!1 &552594665
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 552594666}
+  m_Layer: 0
+  m_Name: UnstuckPoints
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &552594666
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552594665}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.69140506, z: -0, w: 0.7224673}
+  m_LocalPosition: {x: 338.466, y: 12.165, z: 112.983}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -87.483, z: 0}
 --- !u!1 &554061758
 GameObject:
   m_ObjectHideFlags: 0
@@ -1286918,7 +1286954,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5953249167122860971, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2109579067}
   m_SourcePrefab: {fileID: 100100000, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
 --- !u!114 &1712976865 stripped
 MonoBehaviour:
@@ -1362035,6 +1362074,30 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8946478680384145332, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
   m_PrefabInstance: {fileID: 1712976864}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2109579067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091836804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d980cb9b6bd0f5446a903efa3c769c47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerUnstuck
+  playerController: {fileID: 1712976866}
+  controller: {fileID: 272749430}
+  hud: {fileID: 583824012}
+  moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  unstuckAction: {fileID: -369203156606365736, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  safePoints:
+  - {fileID: 552594666}
+  stuckSeconds: 4
+  minSpeed: 0.1
+  cooldown: 60
+  enemyBlockRadius: 6
+  hintRepeatSeconds: 5
 --- !u!43 &2109836824
 Mesh:
   m_ObjectHideFlags: 0
@@ -1372402,6 +1372465,7 @@ SceneRoots:
   - {fileID: 485268161}
   - {fileID: 1814364155}
   - {fileID: 1801061692}
+  - {fileID: 552594666}
   - {fileID: 5265257185677102793}
   - {fileID: 4216230161415095488}
   - {fileID: 1560912718}
