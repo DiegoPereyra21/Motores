@@ -20,7 +20,7 @@ public class MusicController : MonoBehaviour
     [SerializeField] private RadioInteractable radio; //si esta vacia se busca sola
 
     [Header("Fades (segundos)")]
-    [SerializeField] private float dayNightFade = 3f; //al pasar de dia a noche y al reves
+    [SerializeField] private float dayNightFade = 2f; //al pasar de dia a noche y al reves
     [SerializeField] private float deathFade = 0.8f; //al morir: corta rapido la pista anterior y entra la de muerte
     [SerializeField] private float endingFade = 1.5f; //al terminar con victoria o derrota la musica se apaga
 
