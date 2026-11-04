@@ -262,7 +262,7 @@ public class EndGameUI : MonoBehaviour
 
         RestoreDeathPresentation();
 
-        SceneManager.LoadScene("MainMenu");
+        SceneLoader.Load("MainMenu", 0f);
     }
 
     private void PlayClick()
@@ -352,6 +352,6 @@ public class EndGameUI : MonoBehaviour
             GameProgressController.Instance.ResetGameProgress();
         }
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneLoader.Load(SceneManager.GetActiveScene().name);
     }
 }
