@@ -46,6 +46,7 @@ public class GameProgressController : MonoBehaviour
     public bool IsGameEnded { get; private set; } // indica si la partida termino
     public bool IsWaitingForRadio { get; private set; } // check para esperar la radio
     public bool IsFinaleActive { get; private set; } // termino la ultima noche: tiempo congelado, solo se puede caminar (y tirar la bengala)
+    public bool IsFinaleLocked { get; private set; } // ya se escucho el mensaje final: solo se puede tirar la bengala (E)
 
     public GameEnding CurrentEnding { get; private set; } = GameEnding.None;
     public event Action<GameEnding> OnGameEnded; // evento que avisa del fin de la partida
@@ -201,6 +202,14 @@ public class GameProgressController : MonoBehaviour
         OnFinaleStarted.Invoke();
     }
 
+    public void LockFinale()
+    {
+        if (!IsFinaleActive || IsGameEnded)
+            return;
+
+        IsFinaleLocked = true;
+    }
+
     private void NotifyPhaseProgress()
     {
         float progress = 1f - (PhaseRemainingTime / CurrentPhaseDuration);
@@ -224,6 +233,7 @@ public class GameProgressController : MonoBehaviour
 
         IsWaitingForRadio = false;
         IsFinaleActive = false;
+        IsFinaleLocked = false;
 
         OnDayChanged?.Invoke(CurrentDay);
         OnPhaseChanged?.Invoke(CurrentPhase);

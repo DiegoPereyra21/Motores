@@ -407,7 +407,7 @@ public class HUDController : MonoBehaviour
 
     private void OpenQuickSelector()
     {
-        if (GameProgressController.Instance != null && GameProgressController.Instance.IsFinaleActive)
+        if (GameProgressController.Instance != null && GameProgressController.Instance.IsFinaleLocked)
             return;
 
         if (isQuickSelectorOpen)
@@ -515,7 +515,7 @@ public class HUDController : MonoBehaviour
 
     private void ToggleTutorial()
     {
-        if (!isTutorialOpen && GameProgressController.Instance != null && GameProgressController.Instance.IsFinaleActive)
+        if (!isTutorialOpen && GameProgressController.Instance != null && GameProgressController.Instance.IsFinaleLocked)
             return;
 
         if (tutorialOverlay == null)

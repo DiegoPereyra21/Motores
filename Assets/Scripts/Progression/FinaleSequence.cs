@@ -91,7 +91,7 @@ public class FinaleSequence : MonoBehaviour
             return;
 
         finaleStarted = true;
-        EndingCinematic.KillAliveZombies();
+        // los zombies ya no mueren aca: EndingCinematic los mata al cargar la cinematica final
     }
 
     // termino (o se salteo) un mensaje de radio: si es el final, se resuelve el final
@@ -101,6 +101,7 @@ public class FinaleSequence : MonoBehaviour
             return;
 
         messageResolved = true;
+        progress.LockFinale();
         StartCoroutine(ResolveFinale());
     }
 
