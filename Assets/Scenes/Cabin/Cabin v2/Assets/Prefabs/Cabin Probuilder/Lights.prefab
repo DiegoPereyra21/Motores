@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5659302699953735948}
   - component: {fileID: 7077738506455382563}
+  - component: {fileID: 4853226896204383943}
   m_Layer: 0
   m_Name: Lights
   m_TagString: Untagged
@@ -44,20 +45,20 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 1245141760647808224, guid: 984bdb7ef19f6d74587c983a013bdf04, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 727d1677e1261b14baab4858d909d8bb, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.9
+  m_Resource: {fileID: 8300000, guid: f4eb4677d4e343b4cbff9cc088c01672, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 20
-  DopplerLevel: 1
-  MinDistance: 0.2
-  MaxDistance: 1.2
+  DopplerLevel: 0
+  MinDistance: 0.5
+  MaxDistance: 4.5
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -130,6 +131,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4853226896204383943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2494025066875814397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54e247012ff0cfb439ef4743de0fa373, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PhaseAudioSource
+  source: {fileID: 0}
+  radio: {fileID: 0}
+  activeIn: 0
+  waitForFirstRadioMessage: 1
+  fadeOutOnGameEnd: 1
+  fadeTime: 3
+  debugLog: 1
 --- !u!1 &5121055445062870724
 GameObject:
   m_ObjectHideFlags: 0

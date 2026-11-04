@@ -90,6 +90,8 @@ public class PhaseAudioSource : MonoBehaviour
                 gameProgress.OnGameEnded += HandleGameEnded;
         }
 
+        if (!source.enabled) return; //el AudioSource esta apagado a mano (ej: la lampara de la habitacion de la chimenea), no hay nada que reproducir
+
         bool shouldPlay = ShouldPlay();
 
         if (debugLog && shouldPlay != wasTarget)
