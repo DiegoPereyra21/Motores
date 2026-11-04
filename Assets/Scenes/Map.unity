@@ -116697,7 +116697,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2260104362079365480, guid: 7e7b797b00cabc14aa49fb54db3ef790, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 581006990}
   m_SourcePrefab: {fileID: 100100000, guid: 7e7b797b00cabc14aa49fb54db3ef790, type: 3}
 --- !u!43 &489498667
 Mesh:
@@ -689877,6 +689880,30 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6032044967118042018, guid: 2f98ac525a01fbe4fbe5ffbcc5d6648c, type: 3}
   m_PrefabInstance: {fileID: 580615967}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &581006987 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2260104362079365480, guid: 7e7b797b00cabc14aa49fb54db3ef790, type: 3}
+  m_PrefabInstance: {fileID: 485268161}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &581006990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581006987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6a88dc2124d0ec40aea9a289e65d82e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FinaleSequence
+  radio: {fileID: 1112746348}
+  interactionUI: {fileID: 1402412018}
+  flareAction: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  promptKey: E
+  promptText: Activar bengala
+  ignoreInputTime: 0.4
+  defeatDelay: 1
 --- !u!1 &583074605
 GameObject:
   m_ObjectHideFlags: 0
@@ -957571,6 +957598,43 @@ PrefabInstance:
       propertyPath: playerController
       value: 
       objectReference: {fileID: 1712976866}
+    - target: {fileID: 7159567552921159047, guid: 27522631fc7a80e428243f8d28d2769d, type: 3}
+      propertyPath: messages.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7159567552921159047, guid: 27522631fc7a80e428243f8d28d2769d, type: 3}
+      propertyPath: messages.Array.data[3].voiceClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 51c22aec6fb53a8439c25c38a1c6f4e4, type: 3}
+    - target: {fileID: 7159567552921159047, guid: 27522631fc7a80e428243f8d28d2769d, type: 3}
+      propertyPath: messages.Array.data[3].objectiveHint
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7159567552921159047, guid: 27522631fc7a80e428243f8d28d2769d, type: 3}
+      propertyPath: messages.Array.data[3].subtitleLines.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7159567552921159047, guid: 27522631fc7a80e428243f8d28d2769d, type: 3}
+      propertyPath: messages.Array.data[3].lineStartTimes.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7159567552921159047, guid: 27522631fc7a80e428243f8d28d2769d, type: 3}
+      propertyPath: 'messages.Array.data[3].subtitleLines.Array.data[0]'
+      value: USAR LA BENGALA (cambiar de texto y audio), dejar vacio objective hint
+      objectReference: {fileID: 0}
+    - target: {fileID: 7159567552921159047, guid: 27522631fc7a80e428243f8d28d2769d, type: 3}
+      propertyPath: 'messages.Array.data[3].subtitleLines.Array.data[1]'
+      value: "Se recomienda contar con medios para se\xF1alizar posibles aeronaves
+        para ser llevado a los centros de supervivientes."
+      objectReference: {fileID: 0}
+    - target: {fileID: 7159567552921159047, guid: 27522631fc7a80e428243f8d28d2769d, type: 3}
+      propertyPath: 'messages.Array.data[3].lineStartTimes.Array.data[0]'
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7159567552921159047, guid: 27522631fc7a80e428243f8d28d2769d, type: 3}
+      propertyPath: 'messages.Array.data[3].lineStartTimes.Array.data[1]'
+      value: 4.9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1286355,10 +1286419,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5953249167122860971, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
-      insertIndex: 4
-      addedObject: {fileID: 2109579067}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
 --- !u!114 &1712976865 stripped
 MonoBehaviour:
@@ -1324331,11 +1324392,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 130882876745271318, guid: 9e2ede504bd519845805a44a005e225f, type: 3}
       propertyPath: dayDuration
-      value: 60
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 130882876745271318, guid: 9e2ede504bd519845805a44a005e225f, type: 3}
       propertyPath: nightDuration
-      value: 180
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 130882876745271318, guid: 9e2ede504bd519845805a44a005e225f, type: 3}
       propertyPath: playerInventory
@@ -1361345,26 +1361406,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8946478680384145332, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
   m_PrefabInstance: {fileID: 1712976864}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2109579067
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2091836804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3848a4f3b569bd4186c8fbc78a75725, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StartingInventory
-  inventory: {fileID: 1712976865}
-  startingItems:
-  - item: {fileID: 11400000, guid: 070ecd4fc48a8ac42b80e89ca5935b5c, type: 2}
-    amount: 1
-  - item: {fileID: 11400000, guid: 33a5f359781a07a4d8153c1268584083, type: 2}
-    amount: 1
-  - item: {fileID: 11400000, guid: 1bf9447b7e6a3f849b8831662951c62e, type: 2}
-    amount: 1
 --- !u!43 &2109836824
 Mesh:
   m_ObjectHideFlags: 0

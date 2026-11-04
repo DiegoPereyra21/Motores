@@ -45,6 +45,7 @@ public class GameProgressController : MonoBehaviour
     public bool IsWorldPaused { get; private set; }
     public bool IsGameEnded { get; private set; } // indica si la partida termino
     public bool IsWaitingForRadio { get; private set; } // check para esperar la radio
+    public bool IsFinaleActive { get; private set; } // termino la ultima noche: tiempo congelado, solo se puede caminar (y tirar la bengala)
 
     public GameEnding CurrentEnding { get; private set; } = GameEnding.None;
     public event Action<GameEnding> OnGameEnded; // evento que avisa del fin de la partida
@@ -53,11 +54,17 @@ public class GameProgressController : MonoBehaviour
     public event Action<int> OnDayChanged;
     public event Action<float> OnPhaseProgressChanged;
     public event Action OnRadioWaitStarted;
+    public event Action OnFinaleStarted; // termino la ultima noche (lo escucha FinaleSequence)
     //public event Action OnRunFinished;
 
     public float CurrentPhaseDuration => CurrentPhase == DayNightPhase.Day ? dayDuration : nightDuration;
 
     public float DaySpeedWithZombiesAlive => daySpeedWithZombiesAlive;
+
+    // el "dia" del mensaje de radio final (posicion rescueWaitDays - 1 del array de la radio)
+    public int FinaleDay => rescueWaitDays;
+
+    public bool HasRequiredEndingItem => requiredEndingItem != null && playerInventory != null && playerInventory.GetItemCount(requiredEndingItem) > 0;
 
     private float daySpeedMultiplier = 1f;
     private bool initialized;
@@ -86,7 +93,7 @@ public class GameProgressController : MonoBehaviour
 
     private void Update()
     {
-        if (!initialized || IsWorldPaused || IsGameEnded || IsWaitingForRadio)
+        if (!initialized || IsWorldPaused || IsGameEnded || IsWaitingForRadio || IsFinaleActive)
             return;
 
         DecreasePhaseTime(Time.deltaTime);
@@ -136,7 +143,7 @@ public class GameProgressController : MonoBehaviour
 
     public void ConsumeTime(float seconds = 0f)
     {
-        if (!initialized || IsGameEnded || IsWorldPaused || IsWaitingForRadio || seconds <= 0f)
+        if (!initialized || IsGameEnded || IsWorldPaused || IsWaitingForRadio || IsFinaleActive || seconds <= 0f)
             return;
 
         DecreasePhaseTime(seconds);
@@ -156,17 +163,15 @@ public class GameProgressController : MonoBehaviour
             return;
         }
 
-        // se cambia de dia
-        CurrentDay++;
-
-        // check para el final
-        if (CurrentDay >= rescueWaitDays)
+        // termino la ultima noche: no se cambia de dia, queda de noche y arranca el final
+        if (CurrentDay + 1 >= rescueWaitDays)
         {
-            bool hasRequiredItem = requiredEndingItem != null && playerInventory != null && playerInventory.GetItemCount(requiredEndingItem) > 0;
-
-            EndGame(hasRequiredItem ? GameEnding.Victory : GameEnding.Defeat);
+            StartFinale();
             return;
         }
+
+        // se cambia de dia
+        CurrentDay++;
 
         // transicion de noche a dia si la partida sigue
         CurrentPhase = DayNightPhase.Day;
@@ -178,6 +183,22 @@ public class GameProgressController : MonoBehaviour
         NotifyPhaseProgress();
 
         OnRadioWaitStarted?.Invoke();
+    }
+
+    private void StartFinale()
+    {
+        IsFinaleActive = true;
+        PhaseRemainingTime = 0f;
+        NotifyPhaseProgress();
+
+        // si no hay FinaleSequence en la escena, se comporta como antes
+        if (OnFinaleStarted == null)
+        {
+            EndGame(HasRequiredEndingItem ? GameEnding.Victory : GameEnding.Defeat);
+            return;
+        }
+
+        OnFinaleStarted.Invoke();
     }
 
     private void NotifyPhaseProgress()
@@ -202,6 +223,7 @@ public class GameProgressController : MonoBehaviour
         CurrentEnding = GameEnding.None;
 
         IsWaitingForRadio = false;
+        IsFinaleActive = false;
 
         OnDayChanged?.Invoke(CurrentDay);
         OnPhaseChanged?.Invoke(CurrentPhase);
@@ -217,6 +239,7 @@ public class GameProgressController : MonoBehaviour
         CurrentEnding = ending;
         PhaseRemainingTime = 0f;
         IsWaitingForRadio = false;
+        IsFinaleActive = false;
 
         if (!IsWorldPaused)
         {
