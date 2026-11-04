@@ -87,6 +87,8 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
+        if (GameProgressController.Instance != null && GameProgressController.Instance.IsFinaleActive) return;
+
         if (health && health.IsDead) return;
 
         if (playerController != null && (playerController.IsStunned || playerController.IsBusy)) return;

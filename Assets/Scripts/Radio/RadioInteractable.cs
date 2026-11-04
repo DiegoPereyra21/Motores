@@ -15,10 +15,11 @@ public class RadioMessage
 // La radio de la cabaña. El jugador la usa con E (via PlayerInteraction, igual que un objeto looteable) para escuchar
 // el mensaje del dia actual. Congela el mundo con GameProgressController.PauseWorld() mientras se usa la radio para escuchar el mensaje.
 // El mensaje del Dia 1 suena solo al arrancar la escena. Los de los dias siguientes hay que ir a buscarlos a la radio.
+// Al terminar la ultima noche queda disponible el mensaje final (posicion rescueWaitDays - 1), se escucha una sola vez.
 // IMPORTANTE: tiene que estar en la capa "Interact" y con un collider, sino el raycast del player no la detecta.
 public class RadioInteractable : MonoBehaviour, IInteractable
 {
-    [Header("Mensajes (posicion 0 = Dia 1, 1 = Dia 2, 2 = Dia 3)")]
+    [Header("Mensajes (posicion 0 = Dia 1, 1 = Dia 2, 2 = Dia 3, 3 = final)")]
     [SerializeField] private RadioMessage[] messages;
 
     [Header("Referencias")]
@@ -45,6 +46,9 @@ public class RadioInteractable : MonoBehaviour, IInteractable
 
     private readonly HashSet<int> heardDays = new();
 
+    // durante el final la radio pasa el mensaje final en vez del del dia actual
+    private int ActiveDay => gameProgress.IsFinaleActive ? gameProgress.FinaleDay : gameProgress.CurrentDay;
+
 
     // Start y no Awake: asi GameProgressController.Instance ya existe seguro
     private void Start()
@@ -66,6 +70,7 @@ public class RadioInteractable : MonoBehaviour, IInteractable
         FindMissingPlayerReferences();
 
         gameProgress.OnDayChanged += HandleDayChanged;
+        gameProgress.OnFinaleStarted += HandleFinaleStarted;
 
         // el primer mensaje suena solo: el jugador arranca al lado de la radio
         if (playIntroOnStart)
@@ -75,7 +80,10 @@ public class RadioInteractable : MonoBehaviour, IInteractable
     private void OnDestroy()
     {
         if (gameProgress != null)
+        {
             gameProgress.OnDayChanged -= HandleDayChanged;
+            gameProgress.OnFinaleStarted -= HandleFinaleStarted;
+        }
     }
 
     // lo llama PlayerInteraction cuando el jugador apunta a la radio y aprieta E
@@ -84,13 +92,20 @@ public class RadioInteractable : MonoBehaviour, IInteractable
         if (action == null || listenAction == null || action.ActionId != listenAction.ActionId || !CanOpenInteraction(interactor))
             return false;
 
-        return StartListening(gameProgress.CurrentDay);
+        return StartListening(ActiveDay);
     }
 
     // arranca un dia nuevo: si hay un mensaje que todavia no se escucho, avisa al jugador que vaya a la radio
     private void HandleDayChanged(int day)
     {
         if (day > HighestHeardDay && !IsListening)
+            messageUI.SetNewMessageHint(true);
+    }
+
+    // termino la ultima noche: aviso de mensaje nuevo (si justo estaba escuchando, se muestra al cerrar)
+    private void HandleFinaleStarted()
+    {
+        if (!IsListening)
             messageUI.SetNewMessageHint(true);
     }
 
@@ -145,6 +160,10 @@ public class RadioInteractable : MonoBehaviour, IInteractable
         // el aviso del objetivo queda un rato en pantalla ("Usa la mesa de trabajo...", etc.)
         messageUI.ShowObjectiveHint(GetMessageForDay(currentMessageDay).objectiveHint);
 
+        // si arranco el final mientras se re-escuchaba otro mensaje, se avisa recien ahora
+        if (gameProgress.IsFinaleActive && !heardDays.Contains(gameProgress.FinaleDay))
+            messageUI.SetNewMessageHint(true);
+
         OnMessageFinished?.Invoke(currentMessageDay);
     }
 
@@ -177,10 +196,14 @@ public class RadioInteractable : MonoBehaviour, IInteractable
         if (interactor == null || gameProgress == null || IsListening || gameProgress.IsGameEnded || gameProgress.IsWorldPaused)
             return false;
 
+        // el mensaje final se escucha una sola vez, despues solo queda tirar la bengala
+        if (gameProgress.IsFinaleActive && heardDays.Contains(gameProgress.FinaleDay))
+            return false;
+
         if (Time.unscaledTime < lastCloseTime + reopenBlockTime)
             return false;
 
-        return GetMessageForDay(gameProgress.CurrentDay) != null;
+        return GetMessageForDay(ActiveDay) != null;
     }
 
     public IReadOnlyList<InteractionOption> GetActions(GameObject interactor)
@@ -190,7 +213,7 @@ public class RadioInteractable : MonoBehaviour, IInteractable
         if (!CanOpenInteraction(interactor) || listenAction == null)
             return options;
 
-        bool alreadyHeard = heardDays.Contains(gameProgress.CurrentDay);
+        bool alreadyHeard = heardDays.Contains(ActiveDay);
 
         string actionName = alreadyHeard ? "Volver a escuchar" : "Escuchar radio";
 

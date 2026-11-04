@@ -15012,6 +15012,37 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
+--- !u!1 &3651651228388324260
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 157168932592203954}
+  m_Layer: 6
+  m_Name: attackPoint (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &157168932592203954
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3651651228388324260}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.0031403056, y: 0.006920601, z: 0.7074046, w: 0.70676804}
+  m_LocalPosition: {x: 0.00011214239, y: 0.0005989234, z: 0.011391596}
+  m_LocalScale: {x: 0.0014611474, y: 0.0014611479, z: 0.04169543}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7882756278774412343}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4017396629244015042
 GameObject:
   m_ObjectHideFlags: 0
@@ -15141,37 +15172,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &3651651228388324260
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 157168932592203954}
-  m_Layer: 6
-  m_Name: attackPoint (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &157168932592203954
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3651651228388324260}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0.0031403056, y: 0.006920601, z: 0.7074046, w: 0.70676804}
-  m_LocalPosition: {x: 0.00011214239, y: 0.0005989234, z: 0.011391596}
-  m_LocalScale: {x: 0.0014611474, y: 0.0014611479, z: 0.04169543}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7882756278774412343}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4460915945790478616
 GameObject:
   m_ObjectHideFlags: 0
@@ -20110,6 +20110,7 @@ GameObject:
   - component: {fileID: 3881723904312049808}
   - component: {fileID: 2164108943230245708}
   - component: {fileID: 8131467032854619556}
+  - component: {fileID: 770960366103857789}
   - component: {fileID: 5343336580200845003}
   - component: {fileID: 2153651938353057487}
   - component: {fileID: 8343001647361465839}
@@ -20222,6 +20223,26 @@ MonoBehaviour:
   moveAction: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   sprintAction: {fileID: -7471211009204490832, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   stunImmunityTime: 1
+--- !u!114 &770960366103857789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5953249167122860971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3848a4f3b569bd4186c8fbc78a75725, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StartingInventory
+  inventory: {fileID: 6829460794486340077}
+  startingItems:
+  - item: {fileID: 11400000, guid: 070ecd4fc48a8ac42b80e89ca5935b5c, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: 33a5f359781a07a4d8153c1268584083, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: 1bf9447b7e6a3f849b8831662951c62e, type: 2}
+    amount: 1
 --- !u!114 &5343336580200845003
 MonoBehaviour:
   m_ObjectHideFlags: 0

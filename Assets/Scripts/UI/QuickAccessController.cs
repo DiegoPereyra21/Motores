@@ -39,6 +39,9 @@ public class QuickAccessController : MonoBehaviour
 
     private void Update()
     {
+        if (GameProgressController.Instance != null && GameProgressController.Instance.IsFinaleActive)
+            return;
+
         if (Keyboard.current == null)
             return;
 
@@ -320,6 +323,9 @@ public class QuickAccessController : MonoBehaviour
 
     private void OnUseItem(InputAction.CallbackContext context)
     {
+        if (GameProgressController.Instance != null && GameProgressController.Instance.IsFinaleActive)
+            return;
+
         // no consumir objetos mientras el inventario esta abierto
         if (inventoryUI != null && inventoryUI.IsInventoryOpen)
             return;

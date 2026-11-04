@@ -17,7 +17,7 @@ public class InteractionUI : MonoBehaviour
     private VisualElement interactionPrompt;
     private VisualElement interactionMenu;
     private VisualElement actionsContainer;
-
+    private bool forcedPrompt; // cartel fijo (bengala), ignora los cambios de objetivo
     private Label promptKey;
     private Label promptText;
     private Label menuTitle;
@@ -79,6 +79,8 @@ public class InteractionUI : MonoBehaviour
 
     private void HandleTargetChanged(IInteractable target)
     {
+        if (forcedPrompt) return;
+
         if (target != null && !playerInteraction.IsMenuOpen)
         {
             if (promptText != null)
@@ -94,12 +96,16 @@ public class InteractionUI : MonoBehaviour
 
     private void HandleMenuOpened(IReadOnlyList<InteractionOption> actions)
     {
+        if (forcedPrompt) return;
+
         HidePrompt();
         ShowMenu(actions);
     }
 
     private void HandleMenuClosed()
     {
+        if (forcedPrompt) return;
+
         HideMenu();
 
         if (playerInteraction.CurrentTarget != null)
@@ -113,6 +119,23 @@ public class InteractionUI : MonoBehaviour
         {
             HidePrompt();
         }
+    }
+
+    public void ShowForcedPrompt(string key, string text)
+    {
+        forcedPrompt = true;
+        HideMenu();
+
+        if (promptKey != null) promptKey.text = key;
+        if (promptText != null) promptText.text = text;
+
+        ShowPrompt();
+    }
+
+    public void HideForcedPrompt()
+    {
+        forcedPrompt = false;
+        HidePrompt();
     }
 
     private void ShowPrompt()

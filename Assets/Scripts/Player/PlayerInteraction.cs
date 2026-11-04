@@ -87,6 +87,11 @@ public class PlayerInteraction : MonoBehaviour
     {
         IInteractable newTarget = FindTarget();
 
+        // durante el final solo se puede usar la radio
+        GameProgressController progress = GameProgressController.Instance;
+        if (progress != null && progress.IsFinaleActive && newTarget is not RadioInteractable)
+            newTarget = null;
+
         // si cambio el objetivo, cerramos el menu anterior
         if (!ReferenceEquals(CurrentTarget, newTarget))
         {
