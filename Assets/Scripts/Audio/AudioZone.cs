@@ -83,7 +83,7 @@ public class AudioZone : MonoBehaviour
 
         float time = shouldPlay ? fadeIn : fadeOut;
         level = Mathf.MoveTowards(level, shouldPlay ? 1f : 0f, Time.unscaledDeltaTime / Mathf.Max(time, 0.01f));
-        source.volume = baseVolume * level;
+        source.volume = baseVolume * Mathf.SmoothStep(0f, 1f, level); //curva suave: arranca y termina despacio
 
         if (shouldPlay && !source.isPlaying)
             source.Play();

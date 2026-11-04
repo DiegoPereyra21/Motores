@@ -18,7 +18,7 @@ public class AmbienceController : MonoBehaviour
     [SerializeField] private RadioInteractable radio; //si esta vacia se busca sola
 
     [Header("Fades (segundos)")]
-    [SerializeField] private float dayNightFade = 4f; //al pasar de dia a noche y al reves
+    [SerializeField] private float dayNightFade = 12f; //al pasar de dia a noche y al reves (largo a proposito: el cambio de luz es gradual)
     [SerializeField] private float endingFade = 1.5f; //al terminar la partida
 
     [Header("Debug")]
@@ -101,7 +101,7 @@ public class AmbienceController : MonoBehaviour
             if (source == null) continue;
 
             level[i] = Mathf.MoveTowards(level[i], target[i], Time.unscaledDeltaTime / Mathf.Max(fadeTime, 0.01f));
-            source.volume = baseVolume[i] * level[i];
+            source.volume = baseVolume[i] * Mathf.SmoothStep(0f, 1f, level[i]); //curva suave: arranca y termina despacio, sin cortes
 
             if (target[i] > 0f && !source.isPlaying)
                 source.Play();
