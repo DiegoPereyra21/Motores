@@ -20357,7 +20357,7 @@ MonoBehaviour:
   interactAction: {fileID: 1882285110174411008, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   cancelAction: {fileID: 7727032971491509709, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   cameraPivot: {fileID: 1459768277271011018}
-  interactRange: 5.23
+  interactRange: 1.5
   interactLayer:
     serializedVersion: 2
     m_Bits: 256

@@ -86,10 +86,12 @@ public class RadioInteractable : MonoBehaviour, IInteractable
         }
     }
 
-    // lo llama PlayerInteraction cuando el jugador apunta a la radio y aprieta E
     public bool Interact(InteractionActionData action, GameObject interactor)
     {
         if (action == null || listenAction == null || action.ActionId != listenAction.ActionId || !CanOpenInteraction(interactor))
+            return false;
+
+        if (AnyZombieAlive())
             return false;
 
         return StartListening(ActiveDay);
@@ -133,6 +135,7 @@ public class RadioInteractable : MonoBehaviour, IInteractable
 
         IsListening = true;
         currentMessageDay = day;
+
 
         SetPlayerControl(false);
         messageUI.SetNewMessageHint(false);
@@ -191,6 +194,12 @@ public class RadioInteractable : MonoBehaviour, IInteractable
         if (playerAttack == null) playerAttack = FindFirstObjectByType<PlayerAttack>();
     }
 
+    // los zombies muertos pierden el tag Enemy (EnemyDeath), asi que solo cuentan los vivos
+    private static bool AnyZombieAlive()
+    {
+        return GameObject.FindWithTag("Enemy") != null;
+    }
+
     public bool CanOpenInteraction(GameObject interactor)
     {
         if (interactor == null || gameProgress == null || IsListening || gameProgress.IsGameEnded || gameProgress.IsWorldPaused)
@@ -217,7 +226,13 @@ public class RadioInteractable : MonoBehaviour, IInteractable
 
         string actionName = alreadyHeard ? "Volver a escuchar" : "Escuchar radio";
 
-        options.Add(new InteractionOption(listenAction, displayName: actionName));
+        // con zombies vivos la accion queda deshabilitada y muestra el mensaje (mismo sistema que las escaleras)
+        options.Add(new InteractionOption(
+            listenAction,
+            isAvailable: !AnyZombieAlive(),
+            unavailableReason: "Todavia quedan zombies vivos. Eliminalos a todos antes de usar la radio.",
+            feedbackType: OpeningPlacementError.PlayerUnavailable,
+            displayName: actionName));
 
         return options;
     }
