@@ -6,20 +6,6 @@
             <ui:Label text="-" name="SeparatorLabel" style="font-size: 30px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); -unity-text-align: middle-center; left: 16px;"/>
             <ui:Label text="Label" name="TimeLabel" class="time-label" style="font-size: 30px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); -unity-text-align: middle-center; left: 21px;"/>
         </ui:VisualElement>
-        <ui:VisualElement name="Equipment" class="equipment">
-            <ui:VisualElement name="Radio" class="indicator" style="width: 200px; height: 200px; top: -37px;">
-                <ui:Label name="RadioAlert" text="Sin mensaje" class="radio-alert"/>
-                <ui:VisualElement name="RadioIcon" class="radio-icon" style="background-image: url(&quot;project://database/Assets/Art/Icons/icons/item_radio.png?fileID=2800000&amp;guid=3fb63e730365ed94188a2d95022fb864&amp;type=3#item_radio&quot;); -unity-background-scale-mode: scale-to-fit; width: 150px; height: 150px; right: -27px; top: -30px;"/>
-            </ui:VisualElement>
-            <ui:VisualElement name="Backpack" class="indicator" style="width: 170px; height: 170px; -unity-background-scale-mode: stretch-to-fill; top: 318px; right: -68px;">
-                <ui:VisualElement name="BackpackIcon" class="backpack-icon" style="background-image: url(&quot;project://database/Assets/Art/Icons/icons/item_mochila.png?fileID=2800000&amp;guid=326c574c73d438347adebd1fc3a890c4&amp;type=3#item_mochila&quot;); width: 130px; height: 150px; display: flex; -unity-background-scale-mode: stretch-to-fill;"/>
-                <ui:Label name="KeyLabel" text="I" class="key-label" style="left: 2px; bottom: -1px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); -unity-font-style: bold;"/>
-            </ui:VisualElement>
-            <ui:VisualElement name="Tutorial" class="indicator" style="width: 170px; height: 170px; -unity-background-scale-mode: stretch-to-fill; top: -16px; right: -68px;">
-                <ui:VisualElement name="TutorialIcon" class="backpack-icon" style="background-image: url(&quot;project://database/Assets/Art/Icons/icons/item_tutorial.png?fileID=2800000&amp;guid=e90de5c72fdf3c047b2fdcdce8bbeae0&amp;type=3#item_tutorial&quot;); width: 120px; height: 110px; display: flex; -unity-background-scale-mode: stretch-to-fill;"/>
-                <ui:Label name="KeyLabel" text="T" class="key-label" style="left: 0; bottom: 18px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); -unity-font-style: bold;"/>
-            </ui:VisualElement>
-        </ui:VisualElement>
         <ui:VisualElement name="Health" class="health">
             <ui:Label name="HealthLabel" text="Salud" enable-rich-text="true" style="font-size: 25px; right: 7px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;);"/>
             <ui:VisualElement name="HealthBar" class="health-bar">
@@ -66,6 +52,20 @@
                 <ui:Label name="InteractionFeedbackTitle" text="MATERIALES INSUFICIENTES" class="interaction-feedback-title"/>
             </ui:VisualElement>
             <ui:Label name="InteractionFeedbackText" picking-mode="Ignore" class="interaction-feedback-text"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="Equipment" class="equipment">
+            <ui:VisualElement name="Radio" class="indicator" style="width: 200px; height: 200px; top: 0; right: -10px; flex-direction: column; justify-content: flex-start; align-items: center; align-self: center; align-content: flex-start;">
+                <ui:VisualElement name="RadioIcon" class="radio-icon" style="background-image: url(&quot;project://database/Assets/Art/Icons/icons/item_radio_off.png?fileID=2800000&amp;guid=96eac2d5eab5bc8439c37ed495b17877&amp;type=3#item_radio_off&quot;); -unity-background-scale-mode: scale-to-fit; width: 150px; height: 150px; right: -27px; top: -30px;"/>
+                <ui:Label name="RadioAlert" text="Sin mensajes" class="radio-alert" style="display: flex; padding-top: 0; margin-top: -20px; left: 33px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); font-size: 20px;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="Backpack" class="indicator" style="width: 170px; height: 170px; -unity-background-scale-mode: stretch-to-fill; top: 318px; right: -68px;">
+                <ui:VisualElement name="BackpackIcon" class="backpack-icon" style="background-image: url(&quot;project://database/Assets/Art/Icons/icons/item_mochila.png?fileID=2800000&amp;guid=326c574c73d438347adebd1fc3a890c4&amp;type=3#item_mochila&quot;); width: 130px; height: 150px; display: flex; -unity-background-scale-mode: stretch-to-fill;"/>
+                <ui:Label name="KeyLabel" text="I" class="key-label" style="left: 2px; bottom: -1px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); -unity-font-style: bold;"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="Tutorial" class="indicator" style="width: 170px; height: 170px; -unity-background-scale-mode: stretch-to-fill; top: -16px; right: -68px;">
+                <ui:VisualElement name="TutorialIcon" class="backpack-icon" style="background-image: url(&quot;project://database/Assets/Art/Icons/icons/item_tutorial.png?fileID=2800000&amp;guid=e90de5c72fdf3c047b2fdcdce8bbeae0&amp;type=3#item_tutorial&quot;); width: 120px; height: 110px; display: flex; -unity-background-scale-mode: stretch-to-fill;"/>
+                <ui:Label name="KeyLabel" text="T" class="key-label" style="left: 0; bottom: 18px; -unity-font-definition: url(&quot;project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf?fileID=12800000&amp;guid=97e524c46899f544dab576384d085a88&amp;type=3#SpecialElite-Regular&quot;); -unity-font-style: bold;"/>
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
