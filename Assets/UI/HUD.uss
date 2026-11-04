@@ -55,7 +55,14 @@
 }
 
 .radio-alert {
-    display: none;
+    display: flex;
+    width: 150px;
+    max-width: 150px;
+
+    white-space: normal;
+    overflow: visible;
+
+    -unity-text-align: middle-center;
 }
 
 .key-label {

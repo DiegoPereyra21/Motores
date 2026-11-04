@@ -40091,7 +40091,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &184075544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95790,7 +95790,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &340441900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -782373,8 +782373,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 936247502}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.67223406, z: 0, w: 0.74033874}
-  m_LocalPosition: {x: 335.29672, y: 13.22, z: 113.71459}
+  m_LocalRotation: {x: 0.46534804, y: 0.25288674, z: -0.14068432, w: 0.8364852}
+  m_LocalPosition: {x: 319.39188, y: 30.269737, z: 26.714745}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1286859,10 +1286859,6 @@ PrefabInstance:
       propertyPath: inventoryUI
       value: 
       objectReference: {fileID: 360846085}
-    - target: {fileID: 3172682545380626138, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
-      propertyPath: interactRange
-      value: 1.5
-      objectReference: {fileID: 0}
     - target: {fileID: 5953249167122860971, guid: 01dd5c0049b9f8647afcece5a312e346, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1301185,7 +1301181,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1763961741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1370153,9 +1370149,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1712976868}
     - target: {fileID: 1069845118292833332, guid: 3d92d9bc565ce7748ab43fe2ec871ca3, type: 3}
+      propertyPath: radioOnIcon
+      value: 
+      objectReference: {fileID: 2800000, guid: 5ede68eabcb1165409765e05dcbb33a2, type: 3}
+    - target: {fileID: 1069845118292833332, guid: 3d92d9bc565ce7748ab43fe2ec871ca3, type: 3}
       propertyPath: playerHealth
       value: 
       objectReference: {fileID: 1712976869}
+    - target: {fileID: 1069845118292833332, guid: 3d92d9bc565ce7748ab43fe2ec871ca3, type: 3}
+      propertyPath: radioOffIcon
+      value: 
+      objectReference: {fileID: 2800000, guid: 96eac2d5eab5bc8439c37ed495b17877, type: 3}
     - target: {fileID: 1069845118292833332, guid: 3d92d9bc565ce7748ab43fe2ec871ca3, type: 3}
       propertyPath: playerInventory
       value: 
@@ -1370168,6 +1370172,10 @@ PrefabInstance:
       propertyPath: playerInteraction
       value: 
       objectReference: {fileID: 1712976876}
+    - target: {fileID: 1069845118292833332, guid: 3d92d9bc565ce7748ab43fe2ec871ca3, type: 3}
+      propertyPath: radioInteractable
+      value: 
+      objectReference: {fileID: 1112746348}
     - target: {fileID: 1069845118292833332, guid: 3d92d9bc565ce7748ab43fe2ec871ca3, type: 3}
       propertyPath: quickAccessController
       value: 

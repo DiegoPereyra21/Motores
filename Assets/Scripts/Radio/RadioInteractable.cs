@@ -36,7 +36,9 @@ public class RadioInteractable : MonoBehaviour, IInteractable
     // el dia mas alto cuyo mensaje ya se escucho (0 = ninguno). Lo va a usar la mesa de crafteo para desbloquear recetas.
     public int HighestHeardDay { get; private set; }
     public bool IsListening { get; private set; }
+    public bool HasPendingMessage { get; private set; }
 
+    public event Action<bool> OnPendingMessageChanged;
     public event Action<int> OnMessageStarted;  // avisa el dia del mensaje que arranca (para el audio de Wwise, por ejemplo)
     public event Action<int> OnMessageFinished; // avisa el dia del mensaje que termino (o fue salteado)
 
@@ -101,14 +103,14 @@ public class RadioInteractable : MonoBehaviour, IInteractable
     private void HandleDayChanged(int day)
     {
         if (day > HighestHeardDay && !IsListening)
-            messageUI.SetNewMessageHint(true);
+            SetPendingMessage(true);
     }
 
     // termino la ultima noche: aviso de mensaje nuevo (si justo estaba escuchando, se muestra al cerrar)
     private void HandleFinaleStarted()
     {
         if (!IsListening)
-            messageUI.SetNewMessageHint(true);
+            SetPendingMessage(true);
     }
 
     private bool StartListening(int day)
@@ -138,7 +140,7 @@ public class RadioInteractable : MonoBehaviour, IInteractable
 
 
         SetPlayerControl(false);
-        messageUI.SetNewMessageHint(false);
+        SetPendingMessage(false);
 
         OnMessageStarted?.Invoke(day);
         messageUI.Play(message, HandleMessageFinished);
@@ -165,7 +167,7 @@ public class RadioInteractable : MonoBehaviour, IInteractable
 
         // si arranco el final mientras se re-escuchaba otro mensaje, se avisa recien ahora
         if (gameProgress.IsFinaleActive && !heardDays.Contains(gameProgress.FinaleDay))
-            messageUI.SetNewMessageHint(true);
+            SetPendingMessage(true);
 
         OnMessageFinished?.Invoke(currentMessageDay);
     }
@@ -235,5 +237,15 @@ public class RadioInteractable : MonoBehaviour, IInteractable
             displayName: actionName));
 
         return options;
+    }
+
+    private void SetPendingMessage(bool pending)
+    {
+        HasPendingMessage = pending;
+
+        if (messageUI != null)
+            messageUI.SetNewMessageHint(pending);
+
+        OnPendingMessageChanged?.Invoke(pending);
     }
 }
