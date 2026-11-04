@@ -53,7 +53,6 @@ public class InventoryUI : MonoBehaviour
     private Label tooltipItemName;
     private Label tooltipCategory;
     private Label tooltipAmount;
-    private Label tooltipDurability;
     private Button hoverToggleButton;
     private bool hoverInfoEnabled = true;
 
@@ -116,7 +115,6 @@ public class InventoryUI : MonoBehaviour
         tooltipItemName = root.Q<Label>("TooltipItemName");
         tooltipCategory = root.Q<Label>("TooltipCategory");
         tooltipAmount = root.Q<Label>("TooltipAmount");
-        tooltipDurability = root.Q<Label>("TooltipDurability");
         hoverToggleButton = root.Q<Button>("HoverToggleButton");
 
         if (inventoryGrid == null)
@@ -246,16 +244,9 @@ public class InventoryUI : MonoBehaviour
             count.AddToClassList("slot-count");
             count.pickingMode = PickingMode.Ignore;
 
-            // muestra la durabilidad si el objeto es un arma
-            Label durability = new Label();
-            durability.name = "SlotDurability";
-            durability.AddToClassList("slot-durability");
-            durability.pickingMode = PickingMode.Ignore;
-
             slot.Add(image);
             slot.Add(title);
             slot.Add(count);
-            slot.Add(durability);
 
             // seleccionar un objeto para moverlo
             slot.RegisterCallback<PointerDownEvent>(evt => OnSlotPointerDown(evt, slotIndex));
@@ -500,12 +491,10 @@ public class InventoryUI : MonoBehaviour
             Label title = slot.Q<Label>("SlotTitle");
             Image image = slot.Q<Image>("SlotImage");
             Label count = slot.Q<Label>("SlotCount");
-            Label durability = slot.Q<Label>("SlotDurability");
 
             title.text = "";
             image.image = null;
             count.text = "";
-            durability.text = "";
 
             slot.RemoveFromClassList("slot-occupied");
 
@@ -530,12 +519,6 @@ public class InventoryUI : MonoBehaviour
 
             if (inventorySlot.amount > 1)
                 count.text = inventorySlot.amount.ToString();
-
-            // mostrar la durabilidad actual de cada arma
-            if (inventorySlot.item.IsWeapon() && inventorySlot.item.TryGetWeaponData(out WeaponData weaponData))
-            {
-                durability.text = $"{inventorySlot.weaponDurability}/{weaponData.maxDurability}";
-            }
 
             slot.AddToClassList("slot-occupied");
         }
@@ -634,13 +617,6 @@ public class InventoryUI : MonoBehaviour
         tooltipItemName.text = slot.item.itemName;
         tooltipCategory.text = GetTooltipCategory(slot.item);
         tooltipAmount.text = $"Cantidad: {slot.amount}";
-
-        tooltipDurability.text = "";
-
-        if (slot.item.IsWeapon() && slot.item.TryGetWeaponData(out WeaponData weaponData))
-        {
-            tooltipDurability.text = $"Durabilidad: {slot.weaponDurability}/{weaponData.maxDurability}";
-        }
 
         itemTooltip.style.display = DisplayStyle.Flex;
 

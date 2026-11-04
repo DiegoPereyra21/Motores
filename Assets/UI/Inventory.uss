@@ -166,18 +166,6 @@
     -unity-font-definition: url("project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf");
 }
 
-.slot-durability {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 4px;
-
-    color: rgb(112, 49, 46);
-    font-size: 11px;
-    -unity-font-style: bold;
-    -unity-text-align: middle-center;
-}
-
 .quick-access-pocket {
     width: 270px;
     min-width: 270px;
@@ -243,8 +231,7 @@
 
 .inventory-slot.slot-dragging .slot-image,
 .inventory-slot.slot-dragging .slot-title,
-.inventory-slot.slot-dragging .slot-count,
-.inventory-slot.slot-dragging .slot-durability {
+.inventory-slot.slot-dragging .slot-count{
     visibility: hidden;
 }
 

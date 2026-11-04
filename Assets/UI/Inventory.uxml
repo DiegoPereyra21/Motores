@@ -36,7 +36,6 @@
                     <ui:Label text="Label" name="TooltipCategory" class="item-tooltip-category"/>
                     <ui:VisualElement name="TooltipDivider" class="item-tooltip-divider" style="flex-grow: 1;"/>
                     <ui:Label text="Label" name="TooltipAmount" class="item-tooltip-detail"/>
-                    <ui:Label text="Label" name="TooltipDurability" class="item-tooltip-detail"/>
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
