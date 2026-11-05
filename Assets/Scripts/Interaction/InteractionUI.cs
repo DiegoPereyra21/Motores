@@ -121,6 +121,17 @@ public class InteractionUI : MonoBehaviour
         }
     }
 
+    private void HandleActionExecuted(InteractionOption option)
+    {
+        if (option == null || string.IsNullOrWhiteSpace(option.ResultMessage))
+            return;
+
+        if (promptText != null)
+            promptText.text = option.ResultMessage;
+
+        ShowPrompt();
+    }
+
     public void ShowForcedPrompt(string key, string text)
     {
         forcedPrompt = true;
