@@ -29,10 +29,12 @@ public class PlayerInteraction : MonoBehaviour
     public event Action OnMenuClosed;
 
     private PlayerController playerController;
+    private RadioInteractable radioInteractable;
 
     private void Awake()
     {
         playerController = GetComponent<PlayerController>();
+        radioInteractable = FindFirstObjectByType<RadioInteractable>();
     }
 
     private void Update()
@@ -181,7 +183,21 @@ public class PlayerInteraction : MonoBehaviour
         {
             IInteractable interactable = hit.collider.GetComponentInParent<IInteractable>();
 
-            if (interactable != null && interactable.CanOpenInteraction(gameObject))
+            if (interactable == null)
+                return null;
+
+            // si hay un mensaje pendiente, solamente se permite interactuar con la radio y los cadaveres
+            if (radioInteractable != null && radioInteractable.HasPendingMessage)
+            {
+                bool isRadio = interactable is RadioInteractable;
+
+                bool isLootableCorpse = interactable is LootableInteractable lootable && lootable.RequiresZombieDeath;
+
+                if (!isRadio && !isLootableCorpse)
+                    return null;
+            }
+
+            if (interactable.CanOpenInteraction(gameObject))
                 return interactable;
         }
 

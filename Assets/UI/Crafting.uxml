@@ -16,7 +16,7 @@
                     <ui:Button text="EQUIPABLES" name="EquipableButton" class="category-button" style="-unity-font-definition: url(&quot;project://database/Assets/Font/static/Oswald-Regular.ttf?fileID=12800000&amp;guid=80cfea8fbdccc014d9b200a632620baf&amp;type=3#Oswald-Regular&quot;); font-size: 20px;"/>
                     <ui:Button text="COLOCABLES" name="PlaceablesButton" class="category-button" style="-unity-font-definition: url(&quot;project://database/Assets/Font/static/Oswald-Regular.ttf?fileID=12800000&amp;guid=80cfea8fbdccc014d9b200a632620baf&amp;type=3#Oswald-Regular&quot;); font-size: 20px;"/>
                 </ui:VisualElement>
-                <ui:ScrollView name="RecipeScrollView" class="recipe-scroll-view">
+                <ui:ScrollView  name="RecipeScrollView" class="recipe-scroll-view" style="flex-grow: 1; flex-shrink: 1; min-height: 0;" mode="Vertical">
                     <ui:VisualElement name="RecipeList" class="recipe-list" style="flex-grow: 1;">
                         <ui:Button text="Button" name="RecipeSlot" class="recipe-slot" style="height: 130px; max-height: 130px; align-self: auto; flex-grow: 0;">
                             <ui:VisualElement name="RecipeIconFrame" class="recipe-icon-frame" style="flex-grow: 1; flex-direction: column; flex-shrink: 1; width: 0; height: 120px; min-width: 120px; min-height: 120px;">
