@@ -18,6 +18,7 @@ public class PhaseAudioSource : MonoBehaviour
     [SerializeField] private ActivePhase activeIn = ActivePhase.Always;
     [SerializeField] private bool waitForFirstRadioMessage = true;
     [SerializeField] private bool fadeOutOnGameEnd = true;
+    [SerializeField] private bool randomStartTime = false; //arranca el loop en un punto al azar (sirve cuando varias fuentes usan el mismo clip, asi no suenan sincronizadas)
 
     [Header("Fade")]
     [SerializeField] private float fadeTime = 3f; //segundos
@@ -103,7 +104,12 @@ public class PhaseAudioSource : MonoBehaviour
         source.volume = baseVolume * Mathf.SmoothStep(0f, 1f, level); //curva suave: arranca y termina despacio
 
         if (shouldPlay && !source.isPlaying)
+        {
+            if (randomStartTime && source.clip != null)
+                source.time = Random.Range(0f, source.clip.length * 0.99f);
+
             source.Play();
+        }
         else if (!shouldPlay && level <= 0f && source.isPlaying)
             source.Stop();
     }
