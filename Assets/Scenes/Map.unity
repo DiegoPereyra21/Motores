@@ -694989,8 +694989,8 @@ MonoBehaviour:
   barricadeItem: {fileID: 11400000, guid: 9a669aeb58e36ae49b5da0ee4c4c81e7, type: 2}
   plankPrefab: {fileID: 4161833231063843385, guid: b1f6ff980167a6d49bb49f930d0897bc, type: 3}
   plankCount: 6
-  minAngle: 25
-  maxAngle: 55
+  minAngle: -10
+  maxAngle: 15
   depthVariation: 0.05
   onPlaceStarted:
     m_PersistentCalls:
@@ -865835,8 +865835,8 @@ MonoBehaviour:
   barricadeItem: {fileID: 11400000, guid: 9a669aeb58e36ae49b5da0ee4c4c81e7, type: 2}
   plankPrefab: {fileID: 0}
   plankCount: 6
-  minAngle: 25
-  maxAngle: 55
+  minAngle: -10
+  maxAngle: 10
   depthVariation: 0.05
   onPlaceStarted:
     m_PersistentCalls:
@@ -912303,8 +912303,8 @@ MonoBehaviour:
   barricadeItem: {fileID: 11400000, guid: 9a669aeb58e36ae49b5da0ee4c4c81e7, type: 2}
   plankPrefab: {fileID: 4161833231063843385, guid: b1f6ff980167a6d49bb49f930d0897bc, type: 3}
   plankCount: 6
-  minAngle: 25
-  maxAngle: 55
+  minAngle: -10
+  maxAngle: 15
   depthVariation: 0.05
   onPlaceStarted:
     m_PersistentCalls:
@@ -947166,8 +947166,8 @@ MonoBehaviour:
   barricadeItem: {fileID: 11400000, guid: 9a669aeb58e36ae49b5da0ee4c4c81e7, type: 2}
   plankPrefab: {fileID: 4161833231063843385, guid: b1f6ff980167a6d49bb49f930d0897bc, type: 3}
   plankCount: 6
-  minAngle: 25
-  maxAngle: 55
+  minAngle: -8
+  maxAngle: 8
   depthVariation: 0.05
   onPlaceStarted:
     m_PersistentCalls:
@@ -1018664,8 +1018664,8 @@ MonoBehaviour:
   barricadeItem: {fileID: 11400000, guid: 9a669aeb58e36ae49b5da0ee4c4c81e7, type: 2}
   plankPrefab: {fileID: 4161833231063843385, guid: b1f6ff980167a6d49bb49f930d0897bc, type: 3}
   plankCount: 6
-  minAngle: 25
-  maxAngle: 55
+  minAngle: -10
+  maxAngle: 15
   depthVariation: 0.05
   onPlaceStarted:
     m_PersistentCalls:
@@ -1367485,8 +1367485,8 @@ MonoBehaviour:
   barricadeItem: {fileID: 11400000, guid: 9a669aeb58e36ae49b5da0ee4c4c81e7, type: 2}
   plankPrefab: {fileID: 4161833231063843385, guid: b1f6ff980167a6d49bb49f930d0897bc, type: 3}
   plankCount: 6
-  minAngle: 25
-  maxAngle: 55
+  minAngle: -10
+  maxAngle: 10
   depthVariation: 0.05
   onPlaceStarted:
     m_PersistentCalls:

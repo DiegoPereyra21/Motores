@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,9 +15,8 @@ public class Barricade : MonoBehaviour, IDamageable
     private float currentDurability;
 
     public bool IsBroken => currentDurability <= 0f;
-    public float Normalized => maxDurability > 0f
-        ? currentDurability / maxDurability
-        : 0f;
+
+    public float Normalized => maxDurability > 0f ? currentDurability / maxDurability : 0f;
 
     public event Action<float> OnDurabilityChanged;
     public event Action OnBroken;
@@ -49,6 +49,7 @@ public class Barricade : MonoBehaviour, IDamageable
             return;
 
         currentDurability = Mathf.Max(currentDurability - amount, 0f);
+
         OnDurabilityChanged?.Invoke(Normalized);
 
         if (IsBroken)
@@ -74,11 +75,10 @@ public class Barricade : MonoBehaviour, IDamageable
 
     private void BuildPlanks(GameObject plankPrefab, Vector2 openingSize, int plankCount, float minAngle, float maxAngle, float depthVariation)
     {
+        int count = Mathf.Max(0, plankCount);
+
         Vector3 prefabScale = plankPrefab.transform.localScale;
-
         float plankLength = openingSize.x * 1.08f;
-
-        int count = Mathf.Clamp(plankCount, 1, 12);
 
         for (int i = 0; i < count; i++)
         {
@@ -103,17 +103,16 @@ public class Barricade : MonoBehaviour, IDamageable
 
             plank.transform.localPosition = new Vector3(0f, y, depth);
 
-            plank.transform.localRotation = Quaternion.Euler(0f, 90f, 90f + angle);
+            float tiltX = UnityEngine.Random.Range(minAngle, maxAngle);
+
+            if (UnityEngine.Random.value < 0.5f)
+                tiltX *= -1f;
+
+            plank.transform.localRotation = Quaternion.Euler(tiltX, 90f, 90f + angle);
 
             plank.transform.localScale = new Vector3(prefabScale.x, prefabScale.y, plankLength);
 
             planks.Add(plank);
-        }
-
-        for (int i = planks.Count - 1; i > 0; i--)
-        {
-            int j = UnityEngine.Random.Range(0, i + 1);
-            (planks[i], planks[j]) = (planks[j], planks[i]);
         }
     }
 
