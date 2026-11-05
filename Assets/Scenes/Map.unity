@@ -79377,6 +79377,7 @@ GameObject:
   - component: {fileID: 268278362}
   - component: {fileID: 268278361}
   - component: {fileID: 268278364}
+  - component: {fileID: 268278365}
   m_Layer: 8
   m_Name: BarrelOil (2)
   m_TagString: Untagged
@@ -79475,6 +79476,29 @@ MonoBehaviour:
       m_Calls: []
   availableActions:
   - {fileID: 11400000, guid: 98df85e0e69bdad4d91e6f0056308409, type: 2}
+--- !u!136 &268278365
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 268278360}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.0036
+  m_Height: 0.015
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0.004}
 --- !u!1 &269056877
 GameObject:
   m_ObjectHideFlags: 0
@@ -1013250,6 +1013274,7 @@ GameObject:
   - component: {fileID: 1560912718}
   - component: {fileID: 1560912717}
   - component: {fileID: 1560912716}
+  - component: {fileID: 1560912719}
   m_Layer: 0
   m_Name: BarrelOil (1)
   m_TagString: Untagged
@@ -1013329,6 +1013354,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &1560912719
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1560912715}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.0036
+  m_Height: 0.015
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0.004}
 --- !u!1 &1563392172 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1719600768118491697, guid: 732316b86e5b14a438a8c80b295702cb, type: 3}
@@ -1305543,6 +1305591,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 36e829c83794da04faa826427fa80718, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1801061694}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 36e829c83794da04faa826427fa80718, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1801061698}
   m_SourcePrefab: {fileID: 100100000, guid: 36e829c83794da04faa826427fa80718, type: 3}
 --- !u!1 &1801061693 stripped
 GameObject:
@@ -1306905,6 +1306956,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 36e829c83794da04faa826427fa80718, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1814364157}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 36e829c83794da04faa826427fa80718, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1814364161}
   m_SourcePrefab: {fileID: 100100000, guid: 36e829c83794da04faa826427fa80718, type: 3}
 --- !u!1 &1814364156 stripped
 GameObject:
@@ -1328485,7 +1328539,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1964883623
 Transform:
   m_ObjectHideFlags: 0
@@ -1371516,6 +1371570,7 @@ GameObject:
   - component: {fileID: 1422525965808830198}
   - component: {fileID: 3580217252242694071}
   - component: {fileID: 7352140577156426171}
+  - component: {fileID: 7352140577156426172}
   m_Layer: 8
   m_Name: CrateMetal2
   m_TagString: Untagged
@@ -1373660,6 +1373715,7 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
+
   m_SourcePrefab: {fileID: 100100000, guid: 27b7958fd60da8143bc5e4508a8666dd, type: 3}
 --- !u!33 &7249220242395749026
 MeshFilter:
@@ -1373679,7 +1373735,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74718df5518103e498ac00f929723698, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::LootableInteractable
   lootTable: {fileID: 11400000, guid: bd8944e7a59727743bea4e0554e878d7, type: 2}
   requireZombieDeath: 0
@@ -1373688,6 +1373744,29 @@ MonoBehaviour:
       m_Calls: []
   availableActions:
   - {fileID: 11400000, guid: 98df85e0e69bdad4d91e6f0056308409, type: 2}
+--- !u!136 &9182736450123456789
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4446442261558764244}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.0036
+  m_Height: 0.015
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0.004}
 --- !u!1001 &7298060091888807300
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1373899,6 +1373978,27 @@ MonoBehaviour:
       m_Calls: []
   availableActions:
   - {fileID: 11400000, guid: 98df85e0e69bdad4d91e6f0056308409, type: 2}
+--- !u!65 &7352140577156426172
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708868132088678050}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.010000001, y: 0.010000001, z: 0.015000001}
+  m_Center: {x: -2.2359069e-10, y: 0.00000023802629, z: 0.0075}
 --- !u!1001 &7358329247431449703
 PrefabInstance:
   m_ObjectHideFlags: 0
