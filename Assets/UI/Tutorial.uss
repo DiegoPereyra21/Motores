@@ -1,34 +1,295 @@
+
+#TutorialWindow Label {
+    -unity-font-definition: url("project://database/Assets/Font/Special_Elite/SpecialElite-Regular.ttf");
+}
+
 .tutorial-overlay {
     position: absolute;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
+
     align-items: center;
     justify-content: center;
-    background-color: rgba(10, 9, 7, 0.95);
-    background-image: none;
+
+    background-color: rgba(0, 0, 0, 0.48);
 }
 
 .tutorial-window {
-    width: 65%;
-    max-width: 800px;
-    min-height: 300px;
-    padding: 32px;
+    width: 760px;
+    height: 100%;
+    max-width: 92%;
+    max-height: 100%;
+
+    flex-direction: column;
+    align-items: stretch;
+
+    padding: 48px 55px;
+
+    -unity-background-image-tint-color: rgb(218, 220, 207);
+}
+
+.tutorial-header {
+    width: 100%;
     align-items: center;
     justify-content: center;
-    background-color: rgb(48, 44, 34);
-    border-width: 2px;
-    border-color: rgb(169, 154, 106);
-    border-top-width: 0;
-    border-right-width: 0;
-    border-bottom-width: 0;
-    border-left-width: 0;
-    border-left-color: rgba(169, 154, 106, 0);
-    border-right-color: rgba(169, 154, 106, 0);
-    border-top-color: rgba(169, 154, 106, 0);
-    border-bottom-color: rgba(169, 154, 106, 0);
-    -unity-background-image-tint-color: rgb(255, 255, 255);
-    background-image: url("project://database/Assets/Art/Icons/icons/tutorial%201.png?fileID=21300000&guid=727dfccf4da98874abce16349e00ace9&type=3#tutorial 1");
-    -unity-background-scale-mode: scale-to-fit;
+
+    margin-bottom: 18px;
+}
+
+.tutorial-title {
+    color: rgb(54, 43, 32);
+
+    font-size: 32px;
+    letter-spacing: 2px;
+
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.tutorial-separator {
+    width: 100%;
+    height: 2px;
+    flex-shrink: 0;
+
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    background-color: rgba(91, 76, 52, 0.65);
+}
+
+.instructions-container {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-height: 0;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.instruction-row {
+    width: 100%;
+
+    height: 62px;
+    min-height: 62px;
+    max-height: 62px;
+
+    flex-shrink: 0;
+
+    flex-direction: row;
+    align-items: center;
+
+    margin-top: 3px;
+    margin-bottom: 3px;
+
+    padding-left: 12px;
+    padding-right: 12px;
+
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(125, 119, 94, 0.55);
+}
+
+.input-container {
+    width: 190px;
+    min-width: 190px;
+    max-width: 190px;
+
+    flex-shrink: 0;
+
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.key-group {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.keycap {
+    width: 35px;
+    min-width: 35px;
+    max-width: 35px;
+
+    height: 38px;
+    flex-shrink: 0;
+
+    margin-left: 2px;
+    margin-right: 2px;
+
+    padding-left: 6px;
+    padding-right: 6px;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgb(207, 195, 162);
+
+    border-top-width: 2px;
+    border-bottom-width: 3px;
+    border-left-width: 2px;
+    border-right-width: 2px;
+
+    border-top-color: rgb(229, 216, 184);
+    border-bottom-color: rgb(91, 76, 52);
+    border-left-color: rgb(145, 130, 100);
+    border-right-color: rgb(145, 130, 100);
+}
+
+.keycap-label {
+    color: rgb(35, 42, 35);
+    font-size: 20px;
+
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.mouse-icon {
+    width: 38px;
+    min-width: 38px;
+    max-width: 38px;
+
+    height: 48px;
+    min-height: 48px;
+    max-height: 48px;
+
+    flex-shrink: 0;
+
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    align-items: flex-start;
+    justify-content: center;
+
+    background-color: rgb(207, 195, 162);
+
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    border-right-width: 2px;
+
+    border-top-color: rgb(91, 76, 52);
+    border-bottom-color: rgb(91, 76, 52);
+    border-left-color: rgb(91, 76, 52);
+    border-right-color: rgb(91, 76, 52);
+
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    border-bottom-left-radius: 14px;
+    border-bottom-right-radius: 14px;
+}
+
+.mouse-button {
+    width: 50%;
+    height: 20px;
+
+    flex-shrink: 0;
+
+    background-color: rgb(174, 162, 133);
+
+    border-bottom-width: 1px;
+    border-bottom-color: rgb(91, 76, 52);
+}
+
+.mouse-button.left {
+    border-right-width: 1px;
+    border-right-color: rgb(91, 76, 52);
+
+    border-top-left-radius: 14px;
+}
+
+.mouse-button.right {
+    border-top-right-radius: 14px;
+}
+
+.mouse-button.left-active {
+    background-color: rgb(126, 53, 51);
+}
+
+.mouse-button.right-active {
+    background-color: rgb(126, 53, 51);
+}
+
+.mouse-wheel {
+    width: 4px;
+    height: 8px;
+
+    margin-top: 3px;
+
+    background-color: rgb(91, 76, 52);
+
+    border-radius: 3px;
+}
+
+.input-label {
+    width: 100%;
+    flex-shrink: 1;
+
+    color: rgb(218, 207, 181);
+    font-size: 15px;
+
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.instruction-arrow {
+    width: 30px;
+    min-width: 30px;
+    max-width: 30px;
+
+    flex-shrink: 0;
+
+    color: rgb(126, 53, 51);
+    font-size: 22px;
+
+    margin-left: 10px;
+    margin-right: 10px;
+
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.instruction-label {
+    flex-grow: 1;
+    flex-shrink: 1;
+
+    min-width: 0;
+
+    margin-left: 0;
+
+    color: rgb(218, 207, 181);
+    font-size: 19px;
+
+    white-space: normal;
+    -unity-text-align: middle-left;
+}
+
+.instruction-row.long-instruction {
+    height: 62px;
+    min-height: 62px;
+    max-height: 62px;
+}
+
+.long-instruction .input-label {
+    font-size: 11px;
+    white-space: normal;
+}
+
+.long-instruction .instruction-label {
+    font-size: 15px;
+}
+
+.tutorial-footer {
+    flex-shrink: 0;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 8px;
 }
