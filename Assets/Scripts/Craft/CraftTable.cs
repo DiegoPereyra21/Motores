@@ -15,17 +15,54 @@ public class CraftTable : MonoBehaviour
     private Animator playerAnimator;
     private int currentDay = 1;
     private bool isCrafting;
+    private bool playerInside;
+    private bool pendingCrafting;
+    private RadioInteractable radioInteractable;
 
     private void Awake()
     {
+        radioInteractable = FindFirstObjectByType<RadioInteractable>();
+
         if (playerController != null)
             playerAnimator = playerController.GetComponentInChildren<Animator>();
     }
 
+    private void Update()
+    {
+        if (pendingCrafting && !isCrafting)
+            TryOpenCrafting();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player") || isCrafting)
+        if (!other.CompareTag("Player"))
             return;
+
+        playerInside = true;
+        TryOpenCrafting();
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (!other.CompareTag("Player"))
+            return;
+
+        playerInside = false;
+        pendingCrafting = false;
+    }
+
+    private void TryOpenCrafting()
+    {
+        if (!playerInside || isCrafting)
+            return;
+
+        if (radioInteractable != null && radioInteractable.HasPendingMessage)
+        {
+            pendingCrafting = true;
+            return;
+        }
+
+        pendingCrafting = false;
 
         if (craftingUI == null || craftingProgression == null)
         {
@@ -43,9 +80,7 @@ public class CraftTable : MonoBehaviour
 
         currentDay = GameProgressController.Instance.CurrentDay;
 
-        CraftingRecipe[] allRecipes = craftingProgression.GetAllRecipes();
-
-        craftingUI.Show(allRecipes, currentDay);
+        craftingUI.Show(craftingProgression.GetAllRecipes(), currentDay);
 
         isCrafting = true;
 
@@ -73,6 +108,7 @@ public class CraftTable : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        pendingCrafting = false;
     }
 
     private void OnDisable()

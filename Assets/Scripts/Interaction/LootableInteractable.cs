@@ -13,6 +13,7 @@ public class LootableInteractable : MonoBehaviour, IInteractable
     [SerializeField] private List<InteractionActionData> availableActions;
 
     private bool isLooted = false;
+    public bool RequiresZombieDeath => requireZombieDeath;
 
     public bool Interact(InteractionActionData action, GameObject interactor)
     {
